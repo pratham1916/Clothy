@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Mens = () => {
+const Womens = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Mens = () => {
   )
 }
 
-export default Mens
+export default Womens
