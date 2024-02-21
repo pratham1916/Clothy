@@ -13,9 +13,6 @@
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 250px;
-    /* margin: auto 1rem; */
-    /* font-family: arial; */
-    /* padding: 5px; */
 }
 
 .card_content {
@@ -42,4 +39,63 @@
 .price {
     color: grey;
     font-size: 22px;
+}
+
+.next_component {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.first_next,
+.second_next {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.first_next_h2,
+.first_next_p,
+.second_next>p {
+    text-align: center;
+}
+
+.first_next_h2 {
+    font-size: 55px;
+}
+
+.first_next_h2,
+.first_next_p {
+    max-width: 100%;
+    font-size: 15px;
+}
+
+.first_next img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.second_next>p {
+    font-size: 110px;
+    z-index: 0;
+}
+
+.shopping_man {
+    object-fit: contain;
+    width: 100%;
+    max-width: 420px;
+    position: absolute;
+    clip-path: polygon(6% 5%, 96% 6%, 74% 52%, 96% 88%, 66% 88%, 41% 88%, 1% 88%, 27% 51%);
+    z-index: 1;
+}
+
+@media (max-width: 620px) {
+    .second_next>p {
+        font-size: 80px;
+    }
 }
