@@ -6,6 +6,8 @@ import c3 from "../images/c3.jpeg"
 import c4 from "../images/c4.jpeg"
 import c5 from "../images/c5.jpeg"
 import p1c2 from "../images/p1c2.png"
+import arr from "../images/arr.png"
+
 const Home = () => {
   return (
     <div >
@@ -26,6 +28,21 @@ const Home = () => {
         </div>
         <img src={p1c2} alt="img6" />
       </div>
+      <div id="box">
+
+        <div id='bx'>
+          <img id='i2'  src={arr} alt="" /><img id='i1'  src={c2} alt="" /></div>
+        <div id="box1">
+          <div id='box3'><h4>Pattern</h4> <p>Colourful & Print</p></div>
+          <div id='box4'><h5>We are the online platform platform for fashion and lifestyle. </h5></div>
+          <div id='box5'><p>We are groen from a pioneer in e-commerce to become a leading Europian online platfrom.
+          </p>
+            <p>Read more --</p></div>
+          <div id='box6'><h4>Material</h4> <p>100% cotton & polyester</p></div>
+        </div>
+
+      </div>
+
       <div id="head">
         <p>FOLLOW US ON</p>
         <h4><i class="fa-brands fa-instagram"></i> @clothy.fashion</h4>
