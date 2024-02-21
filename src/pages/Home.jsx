@@ -1,11 +1,22 @@
 import React from 'react'
-import Footer from '../components/Footer'
+// import '../style/Home'
 
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
-      <Footer/>
+      <div id="head">
+        <p>FOLLOW US ON</p>
+        <h4><i class="fa-brands fa-instagram"></i> @clothy.fashion</h4>
+    </div>
+    <div id="card-container">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+
+      
     </div>
   )
 }
