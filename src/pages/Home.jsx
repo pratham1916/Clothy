@@ -1,6 +1,11 @@
 import React from 'react'
 import "../style/Home.css"
-
+import c1 from "../images/c1.jpg"
+import c2 from "../images/c2.jpeg"
+import c3 from "../images/c3.jpeg"
+import c4 from "../images/c4.jpeg"
+import c5 from "../images/c5.jpeg"
+import p1c2 from "../images/p1c2.png"
 const Home = () => {
   return (
     <div >
@@ -19,18 +24,18 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTe7SXrSx0SbDoBGck3EglBrSGa8XOOFuNJunq6AgnowZQSw7NT" alt="" />
+        <img src={p1c2} alt="img6" />
       </div>
       <div id="head">
         <p>FOLLOW US ON</p>
         <h4><i class="fa-brands fa-instagram"></i> @clothy.fashion</h4>
       </div>
       <div id="card-container">
-        <div className="card"><img src="" alt="" /></div>
-        <div className="card"></div>
-        <div className="card"></div>
-        <div className="card"></div>
-        <div className="card"></div>
+        <div className="card"><img src={c1} alt="img1" /></div>
+        <div className="card"><img src={c2} alt="img2" /></div>
+        <div className="card"><img src={c3} alt="img3" /></div>
+        <div className="card"><img src={c4} alt="img4" /></div>
+        <div className="card"><img src={c5} alt="img5" /></div>
       </div>
 
 
