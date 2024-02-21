@@ -11,17 +11,18 @@ import Register from '../components/Register'
 
 const AllRoutes = () => {
   return (
-    <Routes>
-        <Route path='/' element={<Home/>}></Route>
-        <Route path='/mens' element={<Mens/>}></Route>
-        <Route path='/womens' element={<Womens/>}></Route>
-        <Route path='/accessories' element={<Accessories/>}></Route>
-        <Route path='/cart' element={<Cart/>}></Route>
-        <Route path='/wishlist' element={<Wishlist/>}></Route>
-        <Route path='/login' element={<Login/>}></Route>
-        <Route path='/register' element={<Register/>}></Route>
-
-    </Routes>
+    <div style={{marginTop:"80px"}}>
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/mens' element={<Mens />}></Route>
+        <Route path='/womens' element={<Womens />}></Route>
+        <Route path='/accessories' element={<Accessories />}></Route>
+        <Route path='/cart' element={<Cart />}></Route>
+        <Route path='/wishlist' element={<Wishlist />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/register' element={<Register />}></Route>
+      </Routes>
+    </div>
   )
 }
 

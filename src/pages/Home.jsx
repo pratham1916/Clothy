@@ -5,8 +5,6 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../style/Home.css"
 
-
-
 const Home = () => {
   const product = productData.map((item, index) => (
     <Product
@@ -20,11 +18,11 @@ const Home = () => {
 
   const carouselOptions = {
     responsive: responsive,
-    autoPlay: true,  // Set autoPlay to true for automatic sliding
-    autoPlaySpeed: 2000,  // Set the speed of autoPlay (in milliseconds)
-    showDots: false,  // Hide the dots navigation
+    autoPlay: true, 
+    autoPlaySpeed: 2000,
+    showDots: false,
     arrows: false,
-    infinite: true,  // Hide the left and right sliding buttons
+    infinite: true,
   };
 
   return (
