@@ -1,20 +1,17 @@
-import { Avatar, Badge, Box, Button, ButtonGroup, HStack, IconButton, Spacer, Text, Wrap, WrapItem } from '@chakra-ui/react'
+import { Avatar, Badge, Box, Button, ButtonGroup, HStack, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Text, Wrap, WrapItem, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { IoSearch } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa";
-
 import "../style/Navbar.css"
-import { SearchIcon } from '@chakra-ui/icons';
+import Profile from './Profile';
 
 const Navbar = () => {
     return (
-        <HStack px={20}>
+        <HStack px={{ base: 8, md: 20 }} spacing="24px" align="center" justify="space-between">
             <Box>
-                <Link to="/"><Text fontSize='30px' as='b'>Clothy</Text></Link>
+                <Link to="/"><Text fontSize={{ base: '30px', md: '30px' }} as='b'>Clothy</Text></Link>
             </Box>
-            <Spacer />
             <HStack display={{ base: 'none', md: 'flex' }} spacing="12">
                 <Box className='active' as='b'>
                     <Link to="/" >Home</Link>
@@ -29,7 +26,6 @@ const Navbar = () => {
                     <Link to="/accessories">Accessories</Link>
                 </Box>
             </HStack>
-            <Spacer />
             <HStack spacing="5">
                 <Box fontSize='22px'>
                     <Link to="/wishlist"><FaRegHeart /></Link>
@@ -37,14 +33,9 @@ const Navbar = () => {
                 <Box fontSize='22px'>
                     <Link to="/cart"><FaCartShopping /></Link>
                 </Box>
-                <Wrap>
-                    <WrapItem>
-                        <Avatar size='sm' name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
-                    </WrapItem>
-                </Wrap>
+                <Profile />
             </HStack>
         </HStack>
     )
 }
-
 export default Navbar

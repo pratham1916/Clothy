@@ -6,6 +6,8 @@ import Womens from '../pages/Womens'
 import Accessories from '../pages/Accessories'
 import Wishlist from '../pages/Wishlist'
 import Cart from '../pages/Cart'
+import Login from '../components/Login'
+import Register from '../components/Register'
 
 const AllRoutes = () => {
   return (
@@ -16,6 +18,9 @@ const AllRoutes = () => {
         <Route path='/accessories' element={<Accessories/>}></Route>
         <Route path='/cart' element={<Cart/>}></Route>
         <Route path='/wishlist' element={<Wishlist/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/register' element={<Register/>}></Route>
+
     </Routes>
   )
 }
