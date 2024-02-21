@@ -17,7 +17,7 @@ const Navbar = () => {
                     <Link to="/" >Home</Link>
                 </Box>
                 <Box as='b'>
-                    <Link to="/men">Mens</Link>
+                    <Link to="/mens">Mens</Link>
                 </Box>
                 <Box as='b'>
                     <Link to="/women">Women</Link>
