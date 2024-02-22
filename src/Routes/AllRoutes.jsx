@@ -9,14 +9,17 @@ import Cart from '../pages/Cart'
 import Login from '../components/Login'
 import Register from '../components/Register'
 import PrivateRoute from './PrivateRoute'
+import SingleProduct from '../components/SingleProduct'
 
 const AllRoutes = () => {
   return (
     <div style={{marginTop:"80px"}}>
       <Routes>
         <Route path='/' element={<Home />}></Route>
-        <Route path='/mens' element={<Mens />}></Route>
-        <Route path='/womens' element={<Womens />}></Route>
+        <Route path='/mens' element={<Mens/>}></Route>
+        <Route path='/womens' element={<Womens/>}></Route>
+        <Route path='/mens/:id' element={<PrivateRoute><SingleProduct/></PrivateRoute>}></Route>
+        <Route path='/womens/:id' element={<PrivateRoute><SingleProduct/></PrivateRoute>}></Route>
         <Route path='/accessories' element={<Accessories />}></Route>
         <Route path='/cart' element={<PrivateRoute><Cart/></PrivateRoute>}></Route>
         <Route path='/wishlist' element={<PrivateRoute><Wishlist /></PrivateRoute>}></Route>
