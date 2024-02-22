@@ -1,40 +1,52 @@
+.App{
+    padding: 0 6%;
+}
 .product-image {
     width: 100%;
     height: 13em;
     object-fit: cover;
 }
+
 .product-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 10px;
 }
+
 .product-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px;
 }
-.product-header > h2 {
+
+.product-header>h2 {
     font-size: 18px;
     font-weight: 600;
 }
-.product-header > p {
+
+.product-header>p {
     font-size: 14px;
 }
+
 .product-icons {
     display: flex;
     gap: 10px;
 }
+
 .product-price {
     font-size: 22px;
 }
+
 @media (max-width: 1024px) {
     .product-image {
         height: 14em;
     }
-    .product-header > h2 {
+
+    .product-header>h2 {
         font-size: 16px;
     }
-    .product-header > p {
+
+    .product-header>p {
         font-size: 12px;
     }
 }
@@ -50,7 +62,51 @@
     .product-image {
         height: 12em;
     }
+
     .product-price {
         font-size: 20px;
+    }
+}
+
+/* ------------------------------------- */
+
+.inspiration-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+.inspiration-text h2 {
+    font-size: 25px;
+    font-weight:  bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.inspiration-text p {
+    font-size: 15px;
+    color: #666;
+}
+
+.inspiration-visual {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.inspiration-visual img {
+    border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+    .inspiration-container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inspiration-text, .inspiration-visual {
+        flex: 1;
     }
 }

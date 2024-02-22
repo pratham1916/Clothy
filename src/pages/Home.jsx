@@ -4,6 +4,7 @@ import { productData, responsive } from '../slider/data';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../style/Home.css"
+import shopping from "../assets/shopping_men.jpg"
 
 const Home = () => {
   const product = productData.map((item, index) => (
@@ -18,7 +19,7 @@ const Home = () => {
 
   const carouselOptions = {
     responsive: responsive,
-    autoPlay: true, 
+    autoPlay: true,
     autoPlaySpeed: 2000,
     showDots: false,
     arrows: false,
@@ -30,6 +31,15 @@ const Home = () => {
       <Carousel {...carouselOptions}>
         {product}
       </Carousel>
+      <div className="inspiration-container">
+            <div className="inspiration-text">
+                <h2>Outfit Inspiration: Snag Their Style</h2>
+                <p>Open Communication and participation are pivotal elements of our company culture. How a bold idea Spawned a leading European Online platform.</p>
+            </div>
+            <div className="inspiration-visual">
+                <img className="style-image" src={shopping} alt="Shopping" />
+            </div>
+        </div>
     </div>
   );
 }

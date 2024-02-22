@@ -110,8 +110,8 @@
         display: block;
     }
     #nav-menu{
-        padding-top: 10px;
-        padding-bottom: 20px;
+        
+        padding: 7px 5%;
     }
     .navbar {
         display: none;
