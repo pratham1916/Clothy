@@ -4,8 +4,25 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 
 export const REGISTER = "REGISTER";
 
-export const MensData_Loading = "MensData_Loading";
-export const MensData_Success = "MensData_Success";
-export const MensData_Fail = "MensData_Fail";
+
+
+export const  GET_MENS_DATA="GET_MENS_DATA";
+export  const  GET_MENS_REQUEST="GET_MENS_REQUEST";
+export  const  GET_MENS_ERROR="GET_MENS_ERROR";
+
+export  const  GET_WOMENS_REQUEST="GET_MENS_REQUEST";
+export  const  GET_WOMENS_ERROR="GET_MENS_ERROR";
+export const  GET_WOMENS_DATA="GET_WOMENS_DATA";
+
+
+export  const  ADD_TO_CART_REQUEST="ADD_TO_CART_REQUEST";
+export  const  ADD_TO_CART_SUCCESS="ADD_TO_CART_SUCCESS";
+export const  ADD_TO_CART_ERROR="ADD_TO_CART_ERROR";
+
+export  const  ADD_TO_WHITE_LIST_REQUEST="ADD_TO_WHITE_LIST_REQUEST";
+export  const  ADD_TO_WHITE_LIST_SUCCESS="ADD_TO_WHITE_LIST_SUCCESS";
+export const  ADD_TO_WHITE_LIST_ERROR="ADD_TO_WHITE_LIST_ERROR";
+
+
 
 
