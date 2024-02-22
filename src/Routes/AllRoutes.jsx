@@ -13,7 +13,7 @@ import SingleProduct from '../components/SingleProduct'
 
 const AllRoutes = () => {
   return (
-    <div style={{marginTop:"80px"}}>
+    <div style={{marginTop:"60px"}}>
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/mens' element={<Mens/>}></Route>

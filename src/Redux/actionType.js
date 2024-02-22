@@ -2,9 +2,9 @@ export const LOGIN_LOADING = "LOGIN_LOADING";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS" ;
 export const LOGIN_FAIL = "LOGIN_FAIL";
 
-export const REGISTER = "REGISTER";
-
-
+export const REGISTER_LOADING = "REGISTER_LOADING";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = 'REGISTER_FAIL';
 
 export const  GET_MENS_DATA="GET_MENS_DATA";
 export  const  GET_MENS_REQUEST="GET_MENS_REQUEST";
@@ -13,7 +13,6 @@ export  const  GET_MENS_ERROR="GET_MENS_ERROR";
 export  const  GET_WOMENS_REQUEST="GET_MENS_REQUEST";
 export  const  GET_WOMENS_ERROR="GET_MENS_ERROR";
 export const  GET_WOMENS_DATA="GET_WOMENS_DATA";
-
 
 export  const  ADD_TO_CART_REQUEST="ADD_TO_CART_REQUEST";
 export  const  ADD_TO_CART_SUCCESS="ADD_TO_CART_SUCCESS";

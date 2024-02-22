@@ -1,42 +1,58 @@
-import React from 'react'
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
-
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import '../style/Register.css'
 
 const Register = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
+    const [backgroundImage, setBackgroundImage] = useState('');
+  
+    const handleFileUpload = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setBackgroundImage(`url(${e.target.result})`);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  
     return (
-        <>
-            <Button onClick={onOpen}>Open Modal</Button>
-
-            <Modal
-                initialFocusRef={initialRef}
-                finalFocusRef={finalRef}
-                isOpen={isOpen}
-                onClose={onClose}
-            >
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Register if yor are new here!</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                        <FormControl>
-                            <Input ref={initialRef} placeholder='Username' />
-                        </FormControl>
-
-                        <FormControl mt={4}>
-                            <Input type='password' placeholder='Password' />
-                        </FormControl>
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme='orange' mr={3}>Register</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </>
-    )
-}
-
-export default Register
+      <div className="register-body">
+        <div className="register-container">
+        <div className="card-preview-container">
+          <div className="photo-preview" style={{ backgroundImage: backgroundImage }}>
+          </div>
+        </div>
+  
+        <form>
+          <div className="input-group">
+            <span>Full Name</span>
+            <input type="text" className="input-field" />
+          </div>
+          <div className="input-group">
+            <span>Email</span>
+            <input type="text" className="input-field" />
+          </div>
+          <div className="input-group">
+            <span>Password</span>
+            <input type="password" className="input-field" />
+          </div>
+          <div className="input-group">
+            <span>Upload Photo</span>
+            <input type="file" accept="image/*" onChange={handleFileUpload} />
+          </div>
+  
+          <div className="login-link-container">
+            <p>
+              Already have an account? &nbsp;  
+              <Link to="/login"><b>Login</b></Link>
+            </p>
+          </div>
+          <input type="submit" value="Register" className="submit-button" />
+        </form>
+      </div>
+      </div>
+    );
+  };
+  
+  export default Register;

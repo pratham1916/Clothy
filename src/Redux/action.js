@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import {
   ADD_TO_CART_ERROR,
@@ -13,7 +12,12 @@ import {
   GET_WOMENS_DATA,
   GET_WOMENS_ERROR,
   GET_WOMENS_REQUEST,
+  LOGIN_FAIL,
+  LOGIN_LOADING,
+  LOGIN_SUCCESS,
 } from "./actionType";
+
+
 export const getMensRequest = () => {
   return { type: GET_MENS_REQUEST };
 };
@@ -33,6 +37,26 @@ export const getWoMensRequest = () => {
 export const getWoMensError = () => {
   return { type: GET_WOMENS_ERROR };
 };
+
+export const LoginUser = (email, password) => async (dispatch) => {
+  dispatch({ type: LOGIN_LOADING });
+  try {
+    const res = await axios.get(`https://clothy-api.onrender.com/users`);
+    const user = res.data.find(user => user.email === email && user.password === password);
+    if (user) {
+      dispatch({ type: LOGIN_SUCCESS });
+      alert("Login Successful");
+    } else {
+      dispatch({ type: LOGIN_FAIL });
+      alert("Login Unsuccessful");
+    }
+  } catch (error) {
+    console.log("Error:", error);
+    dispatch({ type: LOGIN_FAIL });
+    alert("An error occurred. Please try again.");
+  }
+};
+
 
 export const getData =
   (page = 1) =>
@@ -70,10 +94,7 @@ export const getData =
     }
   };
 
-
   // add to cart
-
-
 
   const AddToCartRequest=()=>{
    return{type:ADD_TO_CART_REQUEST}
@@ -86,7 +107,7 @@ export const getData =
     return{type:ADD_TO_CART_ERROR}
    }
     
-    export const  addToCart=(obj)=> async(dispatch)=>{
+    export const addToCart=(obj)=> async(dispatch)=>{
             try{
               dispatch(AddToCartRequest())
               let res = await axios.post(`https://clothy-api.onrender.com/carts/`,{obj});

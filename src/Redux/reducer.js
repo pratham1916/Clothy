@@ -8,19 +8,6 @@ const initialState_Login = {
     isError: false,
     isAuth: false,
 }
-export const LoginReducer = (state = initialState_Login, action) => {
-    switch (action.type) {
-        case LOGIN_LOADING:
-            return { ...state, isLoading: true, isError: false }
-        case LOGIN_SUCCESS:
-            return { ...state, isLoading: false, isError: false, isAuth: true }
-        case LOGIN_FAIL:
-            return { ...state, isLoading: false, isError: true }
-        default:
-            return state;
-    }
-}
-
 const mansInitialSate={
     mensData:[],
     isLoading:false,
@@ -35,6 +22,18 @@ const womansInitialSate={
 }
 
 
+export const LoginReducer = (state = initialState_Login, action) => {
+    switch (action.type) {
+        case LOGIN_LOADING:
+            return { ...state, isLoading: true, isError: false }
+        case LOGIN_SUCCESS:
+            return { ...state, isLoading: false, isError: false, isAuth: true }
+        case LOGIN_FAIL:
+            return { ...state, isLoading: false, isError: true }
+        default:
+            return state;
+    }
+}
 
 export const mensReducer =(state=mansInitialSate,action)=>{
    

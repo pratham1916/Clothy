@@ -12,11 +12,8 @@ function Mens() {
   const {mensData} = useSelector((state) => state.mens);
   const {isloading} = useSelector((state) => state.mens);
   const {isError} = useSelector((state) => state.mens);
-  const dispatch = useDispatch()
-  console.log(totalMens,"line 16")
-  console.log(mensData,"line 14")
-  console.log(array.length,"line 17")
-    // const [data,setData] = useState([]);
+  const dispatch = useDispatch();
+    
     useEffect(()=>{
         dispatch(getData(page));
     },[page]);
