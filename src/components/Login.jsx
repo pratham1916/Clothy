@@ -1,46 +1,43 @@
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React from 'react';
+import { Input } from '@chakra-ui/react';
+import "../style/Login.css";
 
 const Login = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
-
-    useEffect(() => {
-        onOpen();
-    }, [onOpen]);
-
     return (
         <>
-        <h1>Pratham</h1>
-        <Modal
-            initialFocusRef={initialRef}
-            finalFocusRef={finalRef}
-            isOpen={isOpen}
-            onClose={onClose}
-        >
-            <ModalOverlay />
-            <ModalContent>
-                <ModalHeader>Login!</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={6}>
-                    <FormControl>
-                        <Input ref={initialRef} placeholder='Username' />
-                    </FormControl>
+            <div className="container">
+                <div className="card-container">
+                    <div className="front"></div>
+                </div>
 
-                    <FormControl mt={4}>
-                        <Input type='password' placeholder='Password' />
-                    </FormControl>
-                </ModalBody>
+                <form action="">
+                    <div className="inputBox">
+                        <span>Username</span>
+                        <input type="text" className="card-number-input" />
+                    </div>
+                    <div className="inputBox">
+                        <span>Password</span>
+                        <input type="text" className="card-holder-input" />
+                    </div>
 
-                <ModalFooter>
-                    <Button colorScheme='orange' mr={3}>Login</Button>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+                    <div>
+                        <p className="register">
+                            Don't have an account?
+                            <a href="#"><b>Register</b></a>
+                        </p>
+                    </div>
+                    <input type="submit" value="Login" className="submit-btn" id="submit" />
+                </form>
+            </div>
+
+            <div className="toast success hiddentoast">
+                <div className="toast-message">
+                    <span className="toast-text"></span>
+                    <button className="toast-close">X</button>
+                </div>
+            </div>
         </>
-        
-    )
+    );
 }
 
-export default Login
+export default Login;
