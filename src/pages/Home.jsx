@@ -34,8 +34,8 @@ const Home = () => {
           <img id='i2'  src={arr} alt="" /><img id='i1'  src={c2} alt="" /></div>
         <div id="box1">
           <div id='box3'><h4>Pattern</h4> <p>Colourful & Print</p></div>
-          <div id='box4'><h5>We are the online platform platform for fashion and lifestyle. </h5></div>
-          <div id='box5'><p>We are groen from a pioneer in e-commerce to become a leading Europian online platfrom.
+          <div id='box4'><h4>We are the online platform platform for fashion and lifestyle. </h4></div>
+          <div id='box5'><p id='px'>We are groen from a pioneer in e-commerce to become a leading Europian online platfrom.
           </p>
             <p>Read more --</p></div>
           <div id='box6'><h4>Material</h4> <p>100% cotton & polyester</p></div>
