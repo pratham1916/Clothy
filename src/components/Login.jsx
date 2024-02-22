@@ -1,42 +1,45 @@
 import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Login = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
+
+    useEffect(() => {
+        onOpen();
+    }, [onOpen]);
+
     return (
         <>
-            <Button onClick={onOpen}>Open Modal</Button>
+        <h1>Pratham</h1>
+        <Modal
+            initialFocusRef={initialRef}
+            finalFocusRef={finalRef}
+            isOpen={isOpen}
+            onClose={onClose}
+        >
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Login!</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6}>
+                    <FormControl>
+                        <Input ref={initialRef} placeholder='Username' />
+                    </FormControl>
 
-            <Modal
-                initialFocusRef={initialRef}
-                finalFocusRef={finalRef}
-                isOpen={isOpen}
-                onClose={onClose}
-            >
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Login!</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                        <FormControl>
-                            
-                            <Input ref={initialRef} placeholder='Username' />
-                        </FormControl>
+                    <FormControl mt={4}>
+                        <Input type='password' placeholder='Password' />
+                    </FormControl>
+                </ModalBody>
 
-                        <FormControl mt={4}>
-                            
-                            <Input type='password' placeholder='Password' />
-                        </FormControl>
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme='orange' mr={3}>Login</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+                <ModalFooter>
+                    <Button colorScheme='orange' mr={3}>Login</Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
         </>
+        
     )
 }
 
