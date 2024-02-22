@@ -1,20 +1,18 @@
 import React from "react";
 
-export default function Product(props) {
+export default function Product({ url, name, price }) {
     return (
-        <div className="card">
-            <img className="product--image" src={props.url} alt="product image" />
-            <div className="card_content">
-                <div className="card_heading">
-                    <h2>{props.name}</h2>
-                    <p className="price">{props.price}</p>
+        <div className="product-card">
+            <img className="product-image" src={url} alt="product" />
+            <div className="product-content">
+                <div className="product-header">
+                    <h2>{name}</h2>
+                    <p className="product-price">{price}</p>
                 </div>
-                <div className="card_icon">
-                    <i class="fa-solid fa-basket-shopping"></i><i class="fa-regular fa-heart"></i>
+                <div className="product-icons">
+                    <i className="fa-solid fa-basket-shopping"></i><i className="fa-regular fa-heart"></i>
                 </div>
-
             </div>
-
         </div>
     );
 }
