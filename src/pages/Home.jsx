@@ -12,6 +12,12 @@ import c4 from "../assets/c4.jpeg"
 import c5 from "../assets/c5.jpeg"
 import p1c2 from "../assets/p1c2.png"
 import arr from "../assets/arr.png"
+import lgo from "../assets/lgo.png"
+import logo2 from "../assets/logo2.png"
+import logo1 from "../assets/logo1.png"
+import cnv1 from "../assets/cnv1.png"
+import cnv3 from "../assets/cnv3.png"
+
 const Home = () => {
   const product = productData.map((item, index) => (
     <Product
@@ -35,6 +41,21 @@ const Home = () => {
   return (
 
     <div>
+
+      <div id="cnv">
+        <div id="cnv1"><img src={cnv1} alt="cnv1" /></div>
+        <div id="cnv2"><h1>CLOTHS ARE THE SPIRIT OF FASHION</h1></div>
+        <div id="cnv3"><img src={cnv3} alt="cnv3" /></div>
+      </div>
+
+
+      <div id="newbx">
+        <div id="newbx1"><img src={logo1} alt="newbx1" /></div>
+        <div id="newbx2"><img src={lgo} alt="newbx2" /></div>
+        <div id="newbx3"><img src={logo2} alt="newbx3" /></div>
+      </div>
+
+
       <div className='text-container'>
         <div id='tex1'>
           <h1 id='hea1'>WE THINK YOU'LL <span id='spa1'>LIKE THESE</span></h1>
@@ -67,7 +88,7 @@ const Home = () => {
         </div>
 
       </div>
-
+      <h3 id='newarrivals'>New Arrivals </h3>
       <div className="App">
         <Carousel {...carouselOptions}>
           {product}
