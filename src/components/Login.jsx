@@ -3,24 +3,46 @@ import "../style/Login.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginUser } from '../Redux/action';
+import { useToast } from '@chakra-ui/react';
+
 
 const Login = () => {
+    const toast = useToast();
 
-    const [email,setEmail] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
-    const login = useSelector(state=>state.login);
-    const dispatch  = useDispatch();
-    const navigate  = useNavigate();
+    const login = useSelector(state => state.login);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    useEffect(()=>{
-        if(login.isAuth){
+
+
+    useEffect(() => {
+        if (login.isAuth) {
             navigate('/');
         }
-    },[login,navigate]) 
+    }, [login, navigate])
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(LoginUser(email,password));
+        dispatch(LoginUser(email, password));
+        if (login.isAuth) {
+            toast({
+                title: "Login Successful",
+                position: 'top',
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Login Unsuccessful",
+                position: 'top',
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        }
     }
 
     return (
@@ -29,15 +51,15 @@ const Login = () => {
                 <div className="card-container">
                     <div className="front"></div>
                 </div>
-               
+
                 <form onSubmit={handleSubmit} >
                     <div className="inputBox">
                         <span>Username</span>
-                        <input type="email" name='email' value={email} onChange={(e)=>setEmail(e.target.value)} required />
+                        <input type="email" name='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </div>
                     <div className="inputBox">
                         <span>Password</span>
-                        <input type="text" name='password' value={password} onChange={(e)=>setPassword(e.target.value)}  required/>
+                        <input type="text" name='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                     <div>
                         <p className="register">
