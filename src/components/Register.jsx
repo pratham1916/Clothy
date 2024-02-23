@@ -3,15 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import '../style/Register.css'
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../Redux/action";
+import { useToast } from "@chakra-ui/react";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "",phoneNumber:"",image:"",type:"user" });
   const register = useSelector(state=>state.register);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(()=>{
-    console.log(register);
     if(register.success){
       navigate('/login')
     }
@@ -22,7 +23,7 @@ const Register = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-    dispatch(RegisterUser(form))
+    dispatch(RegisterUser(form,toast))
   }
 
   const [backgroundImage, setBackgroundImage] = useState('');
@@ -33,6 +34,7 @@ const Register = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setBackgroundImage(`url(${e.target.result})`);
+        // setForm({ ...form, image: e.target.result });
       };
       reader.readAsDataURL(file);
     }
@@ -66,7 +68,7 @@ const Register = () => {
           </div>
           <div className="input-group">
             <span>Upload Photo</span>
-            <input type="file" accept="image/*" name="image" value= {form.image} onChange={handleFileUpload} />
+            <input type="file" accept="image/*" name="image" onChange={handleFileUpload} />
           </div>
 
           <div className="login-link-container">

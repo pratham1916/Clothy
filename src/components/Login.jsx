@@ -3,6 +3,7 @@ import "../style/Login.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginUser } from '../Redux/action';
+import { useToast } from '@chakra-ui/react';
 
 const Login = () => {
 
@@ -11,16 +12,17 @@ const Login = () => {
     const login = useSelector(state=>state.login);
     const dispatch  = useDispatch();
     const navigate  = useNavigate();
+    const toast = useToast();
 
-    useEffect(()=>{
-        if(login.isAuth){
+    useEffect(() => {
+        if (login.isAuth) {
             navigate('/');
         }
-    },[login,navigate]) 
+    }, [login, navigate]);
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        dispatch(LoginUser(email,password));
+        dispatch(LoginUser(email,password,toast));
     }
 
     return (
