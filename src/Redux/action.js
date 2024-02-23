@@ -158,13 +158,53 @@ export const addToCart = (obj) => async (dispatch) => {
   }
 }
 
-const AddToWhitelistRequest = () => {
-  return { type: ADD_TO_WHITE_LIST_REQUEST }
-}
-const AddToWhitelistSuccess = (payload) => {
-  return { type: ADD_TO_WHITE_LIST_SUCCESS, payload }
-}
+export  const AddWhiteListRequest=()=>{
+  return{type:ADD_TO_WHITE_LIST_REQUEST}
+ }
+export const AddToWhileListSuccess=(payload)=>{
+   return{type:ADD_TO_WHITE_LIST_SUCCESS,payload}
+  }
 
-const AddToWhitelistError = () => {
-  return { type: ADD_TO_WHITE_LIST_ERROR }
-}
+export  const AddToWhileListError=()=>{
+   return{type:ADD_TO_WHITE_LIST_ERROR}
+  }
+   
+   export const  addToWhiteList=(obj)=> async(dispatch)=>{
+           try{
+             dispatch(AddWhiteListRequest())
+             let res = await axios.post(`https://clothy-api.onrender.com/womens`,{...obj});
+             console.log(res.data,"line 92");
+             dispatch(AddToWhileListSuccess({...res.data.obj,id:res.data.id}))
+           }catch(err){
+             console.log("line 95",err)
+              dispatch(AddToWhileListError())
+           }
+    } 
+
+
+
+    
+   export const getWhitelistRequest=()=>{
+    return{type:GET_WHITE_LIST_REQUEST}
+   }
+   export const getWhitelistSuccess=(payload)=>{
+     return{type:GET_WHITE_LIST_SUCCESS,payload}
+    }
+ 
+  export  const getWhitelistError=()=>{
+     return{type:GET_WHITE_LIST_ERROR}
+    }
+
+
+    export const getWhiteLists=(id=1)=> async(dispatch)=>{
+      try{
+        dispatch(getWhitelistRequest())
+        let res = await axios.get(`https://clothy-api.onrender.com/wishlist`);
+        const wishlist = res.data.find(cart => cart.userId === id);
+        console.log(res.data,"line 92");
+        dispatch(getWhitelistSuccess(whitelist))
+      }catch(err){
+        console.log("line 95",err)
+         dispatch(getWhitelistErro())
+      }
+} 
