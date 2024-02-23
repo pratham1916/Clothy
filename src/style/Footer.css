@@ -91,5 +91,7 @@
 @media (min-width: 1200px) {
     .footer-info {
         justify-content: space-between;
+
+      
     }
 }

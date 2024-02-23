@@ -132,6 +132,42 @@
 }
 
 /*                 box                    */
+#cnv {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#cnv2>h1 {
+    font-weight: bolder;
+    font-size: 80px;
+    line-height: 80px;
+}
+
+#cnv>div>img {
+    width: 60%;
+}
+
+#cnv3 {
+    margin-left: 90px;
+}
+
+#newbx {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    padding: 90px;
+    align-items: center;
+    justify-content: center;
+}
+
+#newbx>img {
+    width: 90%;
+}
+
 #box {
     display: flex;
     justify-content: center;
@@ -143,8 +179,10 @@
 
 #bx {
     width: 100%;
-    border: 1px solid black;
-    border-radius: 10%;
+    border: 2px solid rgb(128, 127, 127);
+
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
 }
 
 #i2 {
@@ -205,7 +243,46 @@
     padding-top: 30%
 }
 
+#newarrivals {
+    font-size: 30px;
+    font-weight: 600;
+    padding: 90px;
+}
+
 @media (max-width: 767px) {
+
+    #cnv {
+        grid-template-columns: repeat(2, 1fr);
+        padding: none;
+    }
+
+    #cnv2>h1 {
+        font-size: 50px;
+        line-height: 60px;
+    }
+
+    #cnv3>img {
+        margin-left: -100px;
+        width: 90%;
+    }
+
+    #cnv>div {
+        width: 90%;
+    }
+
+    #newbx {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 50px;
+    }
+
+    #newbx>div {
+        padding-bottom: 10%;
+    }
+
+    #newbx>img {
+        width: 90%;
+    }
+
     #box {
         display: block;
         height: auto;
@@ -248,6 +325,38 @@
 }
 
 @media (max-width: 480px) {
+
+
+    #cnv{
+        grid-template-columns: repeat(1,1fr);
+        padding: 15%;
+    }
+    #cnv2>h1{
+        font-size: 20px;
+        line-height: 30px;
+    }
+    #cnv3>img{
+        margin-left:-100px;
+        width: 100%;
+    }
+    #cnv>div{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+
+
+    #newbx {
+        grid-template-columns: repeat(1, 1fr);
+        padding: 20px;
+    }
+
+    #newbx>div {
+        padding-bottom: 10%;
+        width: 80%;
+    }
+
+
     .text-container {
         text-align: start;
         padding: 20px;
@@ -368,6 +477,10 @@
     .card img {
         width: 100%;
         height: 100%;
+    }
+
+    #newarrivals {
+        padding: 30px;
     }
 }
 
