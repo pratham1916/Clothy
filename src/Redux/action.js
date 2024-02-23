@@ -15,6 +15,10 @@ import {
   LOGIN_FAIL,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
+  REGISTER_FAIL,
+  REGISTER_LOADING,
+  REGISTER_SUCCESS,
+  USER_PRESENT,
 } from "./actionType";
 
 
@@ -42,9 +46,13 @@ export const LoginUser = (email, password) => async (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
   try {
     const res = await axios.get(`https://clothy-api.onrender.com/users`);
-    const user = res.data.find(user => user.email === email && user.password === password);
-    if (user) {
-      dispatch({ type: LOGIN_SUCCESS });
+    console.log(res);
+    const user = res.data.filter(user => user.email === email && user.password === password);
+    console.log(user);
+
+    if (user.length == 1) {
+      localStorage.setItem("Users",JSON.stringify(user[0]));
+      dispatch({ type: LOGIN_SUCCESS }) ;
       alert("Login Successful");
     } else {
       dispatch({ type: LOGIN_FAIL });
@@ -57,6 +65,39 @@ export const LoginUser = (email, password) => async (dispatch) => {
   }
 };
 
+export const RegisterUser = ({name, email, password, phoneNumber,image,type}) => async (dispatch) =>{
+  console.log(image);
+  return;
+  try {
+    const res = await axios.get(`https://clothy-api.onrender.com/users`);
+    const user = res.data.filter(user => {
+      if(user?.email && user.email === email){
+        return true;
+      }
+    });
+    console.log(user);
+    if(user.length == 1){
+      alert('This account already exists');
+      dispatch({type:USER_PRESENT})
+    }
+    else{
+      dispatch({type:REGISTER_LOADING});
+      await axios.post('https://clothy-api.onrender.com/users',
+      {name,email,password,phoneNumber,image,type})
+      .then((res)=>{
+        dispatch({type:REGISTER_SUCCESS})
+        alert( "Registration successful! You can now log in.")
+      })
+      .catch(err=>{
+        dispatch({type:REGISTER_FAIL}),
+        alert( "Registration Fail!")
+      })
+    }
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
 
 export const getData =
   (page = 1) =>
