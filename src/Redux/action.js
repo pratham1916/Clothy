@@ -43,57 +43,105 @@ export const getWoMensError = () => {
 };
 
 
-export const LoginUser = (email, password) => async (dispatch) => {
-
+export const LoginUser = (email, password, toast) => async (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
-
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/users`);
-    console.log(res);
+    const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => user.email === email && user.password === password);
-    console.log(user);
 
     if (user.length == 1) {
       localStorage.setItem("Users", JSON.stringify(user[0]));
       dispatch({ type: LOGIN_SUCCESS });
-
+      toast({
+        title: "Login Successful",
+        description: "You're now logged in.",
+        position: 'top',
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } else {
       dispatch({ type: LOGIN_FAIL });
-
+      toast({
+        title: "Account not found",
+        description: "Please check your credentials and try again.",
+        position: 'top',
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   } catch (error) {
     console.log("Error:", error);
     dispatch({ type: LOGIN_FAIL });
-
+    toast({
+      title: "An error occurred.",
+      description: "Unable to log in. Please try again later.",
+      status: "error",
+      position: 'top',
+      duration: 3000,
+      isClosable: true,
+    });
   }
 };
 
-export const RegisterUser = ({ name, email, password, phoneNumber, image, type }) => async (dispatch) => {
-
+export const RegisterUser = ({ name, email, password, phoneNumber, image, type }, toast) => async (dispatch) => {
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/users`);
+    const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => {
       if (user?.email && user.email === email) {
         return true;
       }
     });
-    console.log(user);
     if (user.length == 1) {
       dispatch({ type: USER_PRESENT })
-    } else {
+      toast({
+        title: "User Already Exist",
+        description: "Please try with new email!",
+        position: 'top',
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    else {
       dispatch({ type: REGISTER_LOADING });
-      await axios.post('https://clothy-api.onrender.com/users', { name, email, password, phoneNumber, image, type })
+      await axios.post('https://clothy-api.onrender.com/users',
+        { name, email, password, phoneNumber, image, type })
         .then((res) => {
           dispatch({ type: REGISTER_SUCCESS })
-
+          toast({
+            title: "Registration successful!",
+            description: "You can Login Now!",
+            position: 'top',
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
         })
         .catch(err => {
-          dispatch({ type: REGISTER_FAIL })
-
+          dispatch({ type: REGISTER_FAIL }),
+            toast({
+              title: "Register Unsuccessful!",
+              description: "Please check your credentials and try again.",
+              position: 'top',
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
         })
     }
-  } catch (error) {
-    console.log(error);
+  }
+  catch (error) {
+    dispatch({ type: REGISTER_FAIL }),
+      toast({
+        title: "An error occurred.",
+        description: "Unable to Register! Please try again later.",
+        position: 'top',
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
   }
 }
 
@@ -158,53 +206,51 @@ export const addToCart = (obj) => async (dispatch) => {
   }
 }
 
-export  const AddWhiteListRequest=()=>{
-  return{type:ADD_TO_WHITE_LIST_REQUEST}
- }
-export const AddToWhileListSuccess=(payload)=>{
-   return{type:ADD_TO_WHITE_LIST_SUCCESS,payload}
+export const AddWhiteListRequest = () => {
+  return { type: ADD_TO_WHITE_LIST_REQUEST }
+}
+export const AddToWhileListSuccess = (payload) => {
+  return { type: ADD_TO_WHITE_LIST_SUCCESS, payload }
+}
+
+export const AddToWhileListError = () => {
+  return { type: ADD_TO_WHITE_LIST_ERROR }
+}
+
+export const addToWhiteList = (obj) => async (dispatch) => {
+  try {
+    dispatch(AddWhiteListRequest())
+    let res = await axios.post(`https://clothy-api.onrender.com/womens`, { ...obj });
+    console.log(res.data, "line 92");
+    dispatch(AddToWhileListSuccess({ ...res.data.obj, id: res.data.id }))
+  } catch (err) {
+    console.log("line 95", err)
+    dispatch(AddToWhileListError())
   }
+}
 
-export  const AddToWhileListError=()=>{
-   return{type:ADD_TO_WHITE_LIST_ERROR}
+
+export const getWhitelistRequest = () => {
+  return { type: GET_WHITE_LIST_REQUEST }
+}
+export const getWhitelistSuccess = (payload) => {
+  return { type: GET_WHITE_LIST_SUCCESS, payload }
+}
+
+export const getWhitelistError = () => {
+  return { type: GET_WHITE_LIST_ERROR }
+}
+
+
+export const getWhiteLists = (id = 1) => async (dispatch) => {
+  try {
+    dispatch(getWhitelistRequest())
+    let res = await axios.get(`https://clothy-api.onrender.com/wishlist`);
+    const wishlist = res.data.find(cart => cart.userId === id);
+    console.log(res.data, "line 92");
+    dispatch(getWhitelistSuccess(whitelist))
+  } catch (err) {
+    console.log("line 95", err)
+    dispatch(getWhitelistErro())
   }
-   
-   export const  addToWhiteList=(obj)=> async(dispatch)=>{
-           try{
-             dispatch(AddWhiteListRequest())
-             let res = await axios.post(`https://clothy-api.onrender.com/womens`,{...obj});
-             console.log(res.data,"line 92");
-             dispatch(AddToWhileListSuccess({...res.data.obj,id:res.data.id}))
-           }catch(err){
-             console.log("line 95",err)
-              dispatch(AddToWhileListError())
-           }
-    } 
-
-
-
-    
-   export const getWhitelistRequest=()=>{
-    return{type:GET_WHITE_LIST_REQUEST}
-   }
-   export const getWhitelistSuccess=(payload)=>{
-     return{type:GET_WHITE_LIST_SUCCESS,payload}
-    }
- 
-  export  const getWhitelistError=()=>{
-     return{type:GET_WHITE_LIST_ERROR}
-    }
-
-
-    export const getWhiteLists=(id=1)=> async(dispatch)=>{
-      try{
-        dispatch(getWhitelistRequest())
-        let res = await axios.get(`https://clothy-api.onrender.com/wishlist`);
-        const wishlist = res.data.find(cart => cart.userId === id);
-        console.log(res.data,"line 92");
-        dispatch(getWhitelistSuccess(whitelist))
-      }catch(err){
-        console.log("line 95",err)
-         dispatch(getWhitelistErro())
-      }
 } 
