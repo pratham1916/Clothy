@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { addToCart } from '../Redux/action';
 import "../style/ProductCard.css"
+import StarRating from './StarRating';
 
 
 function ProductCard({ category, color, currency, description, id, imageURL, name, price, rating, size, stock }) {
@@ -37,11 +38,11 @@ function ProductCard({ category, color, currency, description, id, imageURL, nam
       <h1 className="product-detail">{name}</h1>
       <p className="product-detail">{description}</p>
       <div className="category-rating">
-        <p className="product-detail">Category: {category}</p>
-        <p className="product-detail">"rating": {rating}</p>
+        <p className="product-detail"><b>Category:</b> {category}</p>
+        <p className="product-detail"><StarRating rating={rating} /></p>
       </div>
       <div className="price-button">
-        <p className="product-detail">"price": {price}</p>
+        <p className="product-detail"><b>Price:</b> ${price}</p>
         <div className="button-container">
           <button className="action-button" onClick={handleAddToCart}><i class="fa-solid fa-cart-shopping"></i></button>
           <button className="action-button"><i class="fa-solid fa-heart"></i></button>
