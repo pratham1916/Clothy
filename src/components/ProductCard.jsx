@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { addToCart, addToWhiteList } from '../Redux/action';
-
+import "../style/ProductCard.css"
 function ProductCard({ele,ShowButton}) {
   const {category,color,currency,description,id,imageURL,name,price,rating,size,stock}=ele;
   let user = JSON.parse(localStorage.getItem("Users"))||{};
@@ -62,70 +62,28 @@ function ProductCard({ele,ShowButton}) {
        dispatch(addToWhiteList(obj,user.id))
       }
   return (
-    <div style={{display:"flex",flexDirection:"column",justifyContent:"space-around",alignItems:"start",gap:"10px",backgroundColor:"black",zIndex:"0"}}
-      onClick={handleClick}
-    >
-        <p>"category":{category}</p>
-        <p>"color":{color}</p>
-        <p>"currency":{currency}</p>
-        <p>"id":{id}</p>
-        <p>"name":{name}</p>
-        <p>"price":{price}</p>
-        <p>"rating":{rating}</p>
-        <p>"size":{size}</p>
-        <p>"stock":{stock}</p>
-        <div style={{display:"flex",justifyContent:'center',alignItems:"center",gap:"10px",alignSelf:"center"}}>
-      { ShowButton=="default"||ShowButton=="whishlist"?(<button  onClick={(e) => { e.stopPropagation(); handleAddToCart() }}>Add to Cart</button>):""}
-       {  ShowButton=="default"||ShowButton=="cart"? (<button  onClick={(e) => { e.stopPropagation(); handleWhishList() }}>Add to while list</button>):""}
+    <div onClick={handleClick}  className="product-card">
+      <img src={imageURL} alt="" />
+      <h1 className="product-detail">{name}</h1>
+      <p className="product-detail">{description}</p>
+      <div className="category-rating">
+        <p className="product-detail">Category: {category}</p>
+        <p className="product-detail">"rating": {rating}</p>
+      </div>
+      <div className="price-button">
+        <p className="product-detail">"price": {price}</p>
+        <div className="button-container">
+        { ShowButton=="default"||ShowButton=="whishlist"?(<button className="action-button"  onClick={(e) => { e.stopPropagation(); handleAddToCart() }}><i class="fa-solid fa-cart-shopping"></i></button>):""}
+        {  ShowButton=="default"||ShowButton=="cart"? (<button className="action-button"   onClick={(e) => { e.stopPropagation(); handleWhishList() }}><i class="fa-solid fa-heart"></i></button>):""}
+         </div>
         </div>
-    </div>
+
+        </div>
+     
+   
   )
 }
 
 export default ProductCard;
 
- // const {mensData} = useSelector((state) => state.mens);
-  //const{category,color,currency,description,id,imageURL,name,price,rating,size,stock}=data;
-  //  const navigate = useNavigation();
-  //  const params = useParams();
-  //  console.log(params)
-  //  console.log(location,"line 8")
-  //  function handleNavigate(){
-    //   navigate(`${location}/${id}`,{
-      //     state:location
-      //   })
-      //  }
-      //navigate("/new-route", { state: { key: "value" } });
-// category
-// : 
-// "T-Shirts"
-// color
-// : 
-// (3) ['Black', 'White', 'Grey']
-// currency
-// : 
-// "USD"
-// description
-// : 
-// "A classic cotton t-shirt perfect for everyday wear."
-// id
-// : 
-// 1
-// imageURL
-// : 
-// "https://placeholder.com/images/menswear/tshirt1.jpg"
-// name
-// : 
-// "Classic Cotton T-Shirt"
-// price
-// : 
-// 19.99
-// rating
-// : 
-// 4.5
-// size
-// : 
-// (4) ['S', 'M', 'L', 'XL']
-// stock
-// : 
-// 100
+ 

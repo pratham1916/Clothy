@@ -3,7 +3,7 @@ import { getData, } from '../Redux/action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
 import ProductCard from '../components/ProductCard';
-
+import "../style/Mens.css"
 function Mens() {
   const {totalMens} = useSelector((state) => state.mens);
   const[page,setPage] = useState(1);
@@ -24,19 +24,16 @@ function Mens() {
       return <h1>Error</h1>
     }
   return (
-    <div style={{width:"100%"}}>
-    <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"10px",width:"100%",backgroundColor:"red"}}>
-    {mensData.map((ele)=> <ProductCard key={ele.id} ele= {ele}  ShowButton={"default"}   />)}
-    
+    <div className="Mens-container">
+    <div className="products-grid">
+      {mensData.map((ele) => <ProductCard key={ele.id} ele= {ele}  ShowButton={"default"} />)}
     </div>
-    <div style={{width:"100%",display:'flex',justifyContent:"center",alignItems:"center",gap:"20px"}}>
-        {array.map((e,ind)=>{
-          return(
-            <button  key={ind+1} onClick={()=> setPage(ind+1)} >{ind+1}</button>
-          )
-        })}
+    <div className="pagination">
+      {array.map((e, ind) => (
+        <button className={`page-button ${page === ind + 1 ? 'active' : ''}`} key={ind + 1} onClick={() => setPage(ind + 1)}>{ind + 1}</button>
+      ))}
     </div>
-    </div>
+  </div>
   )
 }
 

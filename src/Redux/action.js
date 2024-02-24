@@ -25,7 +25,28 @@ import {
   REGISTER_SUCCESS,
   USER_PRESENT,
 } from "./actionType";
-
+import axios from "axios";
+import {
+  ADD_TO_CART_ERROR,
+  ADD_TO_CART_REQUEST,
+  ADD_TO_CART_SUCCESS,
+  ADD_TO_WHITE_LIST_ERROR,
+  ADD_TO_WHITE_LIST_REQUEST,
+  ADD_TO_WHITE_LIST_SUCCESS,
+  GET_MENS_DATA,
+  GET_MENS_ERROR,
+  GET_MENS_REQUEST,
+  GET_WOMENS_DATA,
+  GET_WOMENS_ERROR,
+  GET_WOMENS_REQUEST,
+  LOGIN_FAIL,
+  LOGIN_LOADING,
+  LOGIN_SUCCESS,
+  REGISTER_FAIL,
+  REGISTER_LOADING,
+  REGISTER_SUCCESS,
+  USER_PRESENT,
+} from "./actionType";
 
 export const getMensRequest = () => {
   return { type: GET_MENS_REQUEST };
@@ -48,57 +69,105 @@ export const getWoMensError = () => {
 };
 
 
-export const LoginUser = (email, password) => async (dispatch) => {
-
+export const LoginUser = (email, password, toast) => async (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
-
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/users`);
-    console.log(res);
+    const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => user.email === email && user.password === password);
-    console.log(user);
 
     if (user.length == 1) {
       localStorage.setItem("Users", JSON.stringify(user[0]));
       dispatch({ type: LOGIN_SUCCESS });
-
+      toast({
+        title: "Login Successful",
+        description: "You're now logged in.",
+        position: 'top',
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } else {
       dispatch({ type: LOGIN_FAIL });
-
+      toast({
+        title: "Account not found",
+        description: "Please check your credentials and try again.",
+        position: 'top',
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   } catch (error) {
     console.log("Error:", error);
     dispatch({ type: LOGIN_FAIL });
-
+    toast({
+      title: "An error occurred.",
+      description: "Unable to log in. Please try again later.",
+      status: "error",
+      position: 'top',
+      duration: 3000,
+      isClosable: true,
+    });
   }
 };
 
-export const RegisterUser = ({ name, email, password, phoneNumber, image, type }) => async (dispatch) => {
-
+export const RegisterUser = ({ name, email, password, phoneNumber, image, type }, toast) => async (dispatch) => {
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/users`);
+    const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => {
       if (user?.email && user.email === email) {
         return true;
       }
     });
-    console.log(user);
     if (user.length == 1) {
       dispatch({ type: USER_PRESENT })
-    } else {
+      toast({
+        title: "User Already Exist",
+        description: "Please try with new email!",
+        position: 'top',
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    else {
       dispatch({ type: REGISTER_LOADING });
-      await axios.post('https://clothy-api.onrender.com/users', { name, email, password, phoneNumber, image, type })
+      await axios.post('https://clothy-api.onrender.com/users',
+        { name, email, password, phoneNumber, image, type })
         .then((res) => {
           dispatch({ type: REGISTER_SUCCESS })
-
+          toast({
+            title: "Registration successful!",
+            description: "You can Login Now!",
+            position: 'top',
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
         })
         .catch(err => {
-          dispatch({ type: REGISTER_FAIL })
-
+          dispatch({ type: REGISTER_FAIL }),
+            toast({
+              title: "Register Unsuccessful!",
+              description: "Please check your credentials and try again.",
+              position: 'top',
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
         })
     }
-  } catch (error) {
-    console.log(error);
+  }
+  catch (error) {
+    dispatch({ type: REGISTER_FAIL }),
+      toast({
+        title: "An error occurred.",
+        description: "Unable to Register! Please try again later.",
+        position: 'top',
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
   }
 }
 
