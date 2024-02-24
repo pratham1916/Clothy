@@ -1,38 +1,68 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { addToCart } from '../Redux/action';
+import { addToCart, addToWhiteList } from '../Redux/action';
 import "../style/ProductCard.css"
-
-
-function ProductCard({ category, color, currency, description, id, imageURL, name, price, rating, size, stock }) {
+function ProductCard({ele,ShowButton}) {
+  const {category,color,currency,description,id,imageURL,name,price,rating,size,stock}=ele;
+  let user = JSON.parse(localStorage.getItem("Users"))||{};
+  const login = useSelector(state=>state.login);
   const dispatch = useDispatch()
-  const location = useLocation();
-  const navigate = useNavigate();
-  function handleClick() {
-    navigate(`${location.pathname}/${id}`, {
-      state: location.pathname
-    })
-  }
+      const location = useLocation();
+      console.log(location)
+    const navigate = useNavigate();
+      function handleClick(){
+        navigate(`${location.pathname}/${+ele.id}`,{
+          state:{data:{...ele,userId:user.id},pathname:location.pathname,user}
+        })
+      }
 
-  function handleAddToCart() {
-    let obj = {
-      userId: id,
-      price,
-      color,
-      currency,
-      category,
-      description,
-      name,
-      rating,
-      size,
-      stock
-    }
-    dispatch(addToCart(obj));
+      function handleAddToCart(){
+           if(!login.isAuth){
+             alert("you need to login first");
+             navigate("/login");
+             return;
+           }
+         
+        let obj={
+          userId:+id,
+          price,
+          color,
+          currency,
+          category,
+          description,
+          name,
+          rating,
+          size,
+          stock
+        }
+           dispatch(addToCart(obj,user.id));
 
-  }
+      }
+
+      function handleWhishList(){
+        if(!login.isAuth){
+          alert("you need to login first");
+          return;
+        }
+      
+     let obj={
+       userId:id,
+       price,
+       color,
+       currency,
+       category,
+       description,
+       name,
+       rating,
+       size,
+       stock
+     } 
+
+       dispatch(addToWhiteList(obj,user.id))
+      }
   return (
-    <div onClick={handleClick} className="product-card">
+    <div onClick={handleClick}  className="product-card">
       <img src={imageURL} alt="" />
       <h1 className="product-detail">{name}</h1>
       <p className="product-detail">{description}</p>
@@ -43,12 +73,17 @@ function ProductCard({ category, color, currency, description, id, imageURL, nam
       <div className="price-button">
         <p className="product-detail">"price": {price}</p>
         <div className="button-container">
-          <button className="action-button" onClick={handleAddToCart}><i class="fa-solid fa-cart-shopping"></i></button>
-          <button className="action-button"><i class="fa-solid fa-heart"></i></button>
+        { ShowButton=="default"||ShowButton=="whishlist"?(<button className="action-button"  onClick={(e) => { e.stopPropagation(); handleAddToCart() }}><i class="fa-solid fa-cart-shopping"></i></button>):""}
+        {  ShowButton=="default"||ShowButton=="cart"? (<button className="action-button"   onClick={(e) => { e.stopPropagation(); handleWhishList() }}><i class="fa-solid fa-heart"></i></button>):""}
+         </div>
         </div>
-      </div>
-    </div>
+
+        </div>
+     
+   
   )
 }
 
 export default ProductCard;
+
+ 
