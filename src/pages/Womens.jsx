@@ -1,24 +1,31 @@
 import { useEffect, useState,  } from 'react'
-import {  getWoMensData } from '../Redux/action';
-
+import {  getWoMensData, getWomansData } from '../Redux/action';
+import { getData, } from '../Redux/action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
 import ProductCard from '../components/ProductCard';
 
 function Womens() {
-  const {totalWoMens} = useSelector((state) => state.womens);
-  const[page,setPage] = useState(1);
-  const array = new Array(Math.ceil(+totalWoMens/10)).fill(0);
-  const {womensData} = useSelector((state) => state.womens);
-  const {isloading} = useSelector((state) => state.womens);
-  const {isError} = useSelector((state) => state.womens);
-  const dispatch = useDispatch()
-  console.log(totalWoMens,"line 16")
-  console.log(womensData,"line 14")
-  console.log(array.length,"line 17")
-    // const [data,setData] = useState([]);
+  // womensData: [],
+  // isLoading: false,
+  // isError: false,
+  // totalWoMens:0
+  //womens:womensReducer,
+  // const {totalMens} = useSelector((state) => state.mens);
+  // const[page,setPage] = useState(1);
+  // const array = new Array(Math.ceil(+totalMens/10)).fill(0);
+  // const {mensData} = useSelector((state) => state.mens);
+  // const {isloading} = useSelector((state) => state.mens);
+  // const {isError} = useSelector((state) => state.mens);
+  const dispatch = useDispatch();
+     const{totalWoMens} = useSelector(state=>state.womens);
+     const[page,setPage] = useState(1);
+     const array = new Array(Math.ceil(+totalWoMens/12)).fill(0);
+     const{womensData} = useSelector(state=>state.womens);
+     const{isloading} = useSelector(state=>state.womens);
+     const {isError} = useSelector(state=>state.womens);
     useEffect(()=>{
-        dispatch(getWoMensData(page));
+        dispatch( getWomansData(page));
     },[page]);
 
     if(isloading){
@@ -27,13 +34,10 @@ function Womens() {
     if(isError){
       return <h1>Error</h1>
     }
-    if(womensData.length==0){
-      return <h1 style={{margin:"auto",textAlign:"center"}}>no data found</h1>
-    }
   return (
     <div style={{width:"100%"}}>
     <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"10px",width:"100%",backgroundColor:"red"}}>
-    {womensData.map((ele)=> <ProductCard key={ele.id} {...ele}/>)}
+    {womensData.map((ele)=> <ProductCard key={ele.id} ele= {ele}  ShowButton={"default"}/>)}
     
     </div>
     <div style={{width:"100%",display:'flex',justifyContent:"center",alignItems:"center",gap:"20px"}}>

@@ -1,21 +1,31 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { addToCart } from '../Redux/action';
+import { addToCart, addToWhiteList } from '../Redux/action';
 
-function ProductCard({category,color,currency,description,id,imageURL,name,price,rating,size,stock}) {
-    const dispatch = useDispatch()
+function ProductCard({ele,ShowButton}) {
+  const {category,color,currency,description,id,imageURL,name,price,rating,size,stock}=ele;
+  let user = JSON.parse(localStorage.getItem("Users"))||{};
+  const login = useSelector(state=>state.login);
+  const dispatch = useDispatch()
       const location = useLocation();
+      console.log(location)
     const navigate = useNavigate();
       function handleClick(){
-        navigate(`${location.pathname}/${id}`,{
-          state:location.pathname
+        navigate(`${location.pathname}/${+ele.id}`,{
+          state:{data:{...ele,userId:user.id},pathname:location.pathname,user}
         })
       }
 
       function handleAddToCart(){
+           if(!login.isAuth){
+             alert("you need to login first");
+             navigate("/login");
+             return;
+           }
+         
         let obj={
-          userId:id,
+          userId:+id,
           price,
           color,
           currency,
@@ -26,8 +36,30 @@ function ProductCard({category,color,currency,description,id,imageURL,name,price
           size,
           stock
         }
-           dispatch(addToCart(obj));
+           dispatch(addToCart(obj,user.id));
 
+      }
+
+      function handleWhishList(){
+        if(!login.isAuth){
+          alert("you need to login first");
+          return;
+        }
+      
+     let obj={
+       userId:id,
+       price,
+       color,
+       currency,
+       category,
+       description,
+       name,
+       rating,
+       size,
+       stock
+     } 
+
+       dispatch(addToWhiteList(obj,user.id))
       }
   return (
     <div style={{display:"flex",flexDirection:"column",justifyContent:"space-around",alignItems:"start",gap:"10px",backgroundColor:"black",zIndex:"0"}}
@@ -43,8 +75,8 @@ function ProductCard({category,color,currency,description,id,imageURL,name,price
         <p>"size":{size}</p>
         <p>"stock":{stock}</p>
         <div style={{display:"flex",justifyContent:'center',alignItems:"center",gap:"10px",alignSelf:"center"}}>
-        <button style={{zIndex:"2"}}  onClick={handleAddToCart}>Add to Cart</button>
-        <button style={{zIndex:"2"}}>Add to while list</button>
+      { ShowButton=="default"||ShowButton=="whishlist"?(<button  onClick={(e) => { e.stopPropagation(); handleAddToCart() }}>Add to Cart</button>):""}
+       {  ShowButton=="default"||ShowButton=="cart"? (<button  onClick={(e) => { e.stopPropagation(); handleWhishList() }}>Add to while list</button>):""}
         </div>
     </div>
   )
