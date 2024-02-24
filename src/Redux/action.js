@@ -150,12 +150,9 @@ export const getData =
     async (dispatch) => {
       try {
         dispatch(getMensRequest());
-
         const res = await axios.get(
-          `https://clothy-api.onrender.com/mens?_page=${page}&_limit=10`
+          `https://clothy-api.onrender.com/mens?_page=${page}&_limit=12`
         );
-        console.log(res.data);
-        console.log(res.headers.get("x-total-count"));
         dispatch(getMensData({ data: res.data, totalMens: res.headers.get("x-total-count") }));
       } catch (err) {
         dispatch(getWoMensError());
