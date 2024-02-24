@@ -1,0 +1,113 @@
+.singleproductcontainer {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* gap: 15px; */
+    padding: 60px;
+}
+
+.singleproductcontainer img {
+    height: 400px;
+}
+
+.singleInfo {
+    padding: 0 0 0 32px;
+}
+
+.singleInfo>h4 {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 8px;
+}
+
+.singleInfo>p {
+    margin: 0 0 16px;
+}
+
+.single_button {
+    margin: 0 0 16px;
+}
+
+.singleInfo>h5 {
+    margin: 0 0 18px;
+}
+
+.product-para {
+    margin-top: 18px;
+    max-width: 450px;
+}
+
+
+/* singleProduct.css */
+
+
+/* ... existing styles ... */
+
+.single_button {
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.quantity-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.quantity-button {
+    padding: 8px;
+    font-size: 16px;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+}
+
+.quantity {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .singleproductcontainer {
+        flex-direction: column;
+        align-items: center;
+    }
+    .singleproductcontainer img {
+        width: 100%;
+        /* Make the image responsive */
+        height: auto;
+        margin-bottom: 20px;
+    }
+    .singleInfo {
+        padding: 0;
+        text-align: center;
+    }
+    .singleInfo>h4 {
+        font-size: 20px;
+    }
+    .single_button {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .quantity-container {
+        gap: 5px;
+    }
+}
+
+
+/* Additional media queries for even smaller screens if needed */
+
+@media screen and (max-width: 480px) {
+    .singleproductcontainer {
+        padding: 40px;
+    }
+    .singleInfo>h4 {
+        font-size: 18px;
+    }
+    .product-para {
+        max-width: 100%;
+    }
+}
