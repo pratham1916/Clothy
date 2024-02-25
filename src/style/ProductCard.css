@@ -1,55 +1,123 @@
 .product-card {
     cursor: pointer;
-    padding: 5px 5px 15px 5px;
+    padding: 10px;
     border-radius: 8px;
     background-color: #f9f9f9;
-    width: 280px; 
+    width: 280px;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
 
+.product-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
 .product-card img {
-    width: 100%; 
-    height: 300px; 
-    object-fit: cover; 
-    border-radius: 5px; 
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
 }
+
+.product-details {
+    padding: 10px;
+}
+
 .product-card h1 {
-    font-weight: 800;
-    font-size: 20px;
-    overflow: hidden; 
-    white-space: nowrap; 
-    text-overflow: ellipsis; 
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .product-detail {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.category-rating,
+.price-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.price-button {
+    font-size: 16px;
+    font-weight: 600;
     color: #333;
 }
-.category-rating, .price-button{
-    display: flex;
-    justify-content:space-between ;
-}
+
 .button-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 7px;
 }
+
 .action-button {
     background: #fc4a1a;
-    padding: 2px 9px;
+    padding: 9px;
     border-radius: 50%;
-    font-weight: 800;
-    font-size: 18px;
-    border: 1px solid transparent;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    transition: background 0.3s ease-in-out;
 }
-.action-button i{
-    font-size: 13px;
-}
+
 .action-button:hover {
-    border: 1px solid #fc4a1a;
-    background-color: white;
+    background: #ff7861;
+    transition: 0.3s ease-in-out;
+    transform: scale(1.03);
+    color: red;
+}
+
+.action-button i {
+    font-size: 14px;
+}
+
+
+/* .action-button:active i {
+    color: red;
+} */
+
+
+/* Media queries  */
+
+@media only screen and (max-width: 768px) {
+    .product-card {
+        width: 100%;
+    }
+    .product-card img {
+        height: 150px;
+    }
+    .product-card h1 {
+        font-size: 16px;
+    }
+    .button-container {
+        gap: 5px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .product-card img {
+        height: 120px;
+    }
+    .product-card h1 {
+        font-size: 14px;
+    }
+    .price-button {
+        font-size: 14px;
+    }
+    .action-button {
+        padding: 7px;
+        font-size: 14px;
+    }
 }

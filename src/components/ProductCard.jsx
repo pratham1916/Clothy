@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { addToCart, addToWhiteList } from '../Redux/action';
 import "../style/ProductCard.css"
+import StarRating from './StarRating';
+
 function ProductCard({ele,ShowButton}) {
   const {category,color,currency,description,id,imageURL,name,price,rating,size,stock}=ele;
   let user = JSON.parse(localStorage.getItem("Users"))||{};
@@ -67,11 +69,11 @@ function ProductCard({ele,ShowButton}) {
       <h1 className="product-detail">{name}</h1>
       <p className="product-detail">{description}</p>
       <div className="category-rating">
-        <p className="product-detail">Category: {category}</p>
-        <p className="product-detail">"rating": {rating}</p>
+        <p className="product-detail"><b>Category:</b> {category}</p>
+        <p className="product-detail"><StarRating rating={rating} /></p>
       </div>
       <div className="price-button">
-        <p className="product-detail">"price": {price}</p>
+        <p className="product-detail"><b>Price:</b> ${price}</p>
         <div className="button-container">
         { ShowButton=="default"||ShowButton=="whishlist"?(<button className="action-button"  onClick={(e) => { e.stopPropagation(); handleAddToCart() }}><i class="fa-solid fa-cart-shopping"></i></button>):""}
         {  ShowButton=="default"||ShowButton=="cart"? (<button className="action-button"   onClick={(e) => { e.stopPropagation(); handleWhishList() }}><i class="fa-solid fa-heart"></i></button>):""}
