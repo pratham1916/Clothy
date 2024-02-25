@@ -6,7 +6,7 @@ import { ADD_TO_CART_ERROR, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, ADD_TO_WHI
 const initialState_Login = {
     isLoading: false,
     isError: false,
-    isAuth: JSON.parse(localStorage.getItem("Users")) ? true:false,
+    isAuth: JSON.parse(localStorage.getItem("Users")) ? true : false,
     users: {}
 }
 const initialState_Register = {
@@ -25,7 +25,7 @@ const womansInitialSate = {
     womensData: [],
     isLoading: false,
     isError: false,
-    totalWoMens:0
+    totalWoMens: 0
 }
 
 
@@ -50,9 +50,9 @@ export const RegisterReducer = (state = initialState_Register, action) => {
         case REGISTER_SUCCESS:
             return { ...state, isLoading: false, isError: false, success: true }
         case REGISTER_FAIL:
-            return { ...state, isLoading: false, isError: true , isData:false}
+            return { ...state, isLoading: false, isError: true, isData: false }
         case USER_PRESENT:
-            return { ...state,isData:true}
+            return { ...state, isData: true }
         default:
             return state;
     }
@@ -106,12 +106,12 @@ export const cartReducer = (state = cartInitialSate, action) => {
             return { ...state, cart: [...state, action.payload.data], totleCart: action.payload.totleCart };
         case ADD_TO_CART_ERROR:
             return { ...state, isError: true };
-            case GET_CART_REQUEST :
-            return {...state,isLoading:true,};
-            case GET_CART_SUCCESS:
-                return {...state,cart:[...action.payload]};
-             case GET_CART_ERROR :
-                return {...state,isError:true}   
+        case GET_CART_REQUEST:
+            return { ...state, isLoading: true, };
+        case GET_CART_SUCCESS:
+            return { ...state, cart: [...action.payload] };
+        case GET_CART_ERROR:
+            return { ...state, isError: true }
         default:
             return state;
     }
@@ -135,17 +135,13 @@ export const whitelistReducer = (state = whitelistInitialSate, action) => {
             return { ...state, whitelist: action.payload.data, totalWhitelist: action.payload.totalWhitelist };
         case ADD_TO_WHITE_LIST_ERROR:
             return { ...state, isError: true };
-            case GET_WHITE_LIST_REQUEST :
-                return {...state,isLoading:true};
-                case GET_WHITE_LIST_SUCCESS :
-                    return {...state,whitelist:[...action.payload]};
-                    case GET_WHITE_LIST_ERROR :
-                        return {...state,isError:true}
+        case GET_WHITE_LIST_REQUEST:
+            return { ...state, isLoading: true };
+        case GET_WHITE_LIST_SUCCESS:
+            return { ...state, whitelist: [...action.payload] };
+        case GET_WHITE_LIST_ERROR:
+            return { ...state, isError: true }
         default:
             return state;
     }
 }
-
-
-
-

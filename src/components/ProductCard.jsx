@@ -4,67 +4,73 @@ import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { addToCart, addToWhiteList } from '../Redux/action';
 import "../style/ProductCard.css"
 import StarRating from './StarRating';
+import { useToast } from '@chakra-ui/react';
 
-function ProductCard({ele,ShowButton}) {
-  const {category,color,currency,description,id,imageURL,name,price,rating,size,stock}=ele;
-  let user = JSON.parse(localStorage.getItem("Users"))||{};
-  const login = useSelector(state=>state.login);
+function ProductCard({ ele, ShowButton }) {
+  const { category, color, currency, description, id, imageURL, name, price, rating, size, stock } = ele;
+  let user = JSON.parse(localStorage.getItem("Users")) || {};
+  const login = useSelector(state => state.login);
   const dispatch = useDispatch()
-      const location = useLocation();
-      console.log(location)
-    const navigate = useNavigate();
-      function handleClick(){
-        navigate(`${location.pathname}/${+ele.id}`,{
-          state:{data:{...ele,userId:user.id},pathname:location.pathname,user}
-        })
-      }
+  const location = useLocation();
+  console.log(location)
+  const navigate = useNavigate();
+  const toast = useToast();
+  function handleClick() {
+    navigate(`${location.pathname}/${+ele.id}`, {
+      state: { data: { ...ele, userId: user.id }, pathname: location.pathname, user }
+    })
+  }
 
-      function handleAddToCart(){
-           if(!login.isAuth){
-             alert("you need to login first");
-             navigate("/login");
-             return;
-           }
-         
-        let obj={
-          userId:+id,
-          price,
-          color,
-          currency,
-          category,
-          description,
-          name,
-          rating,
-          size,
-          stock
-        }
-           dispatch(addToCart(obj,user.id));
+  function handleAddToCart() {
+    if (!login.isAuth) {
+      alert("you need to login first");
+      navigate("/login");
+      return;
+    }
 
-      }
 
-      function handleWhishList(){
-        if(!login.isAuth){
-          alert("you need to login first");
-          return;
-        }
-      
-     let obj={
-       userId:id,
-       price,
-       color,
-       currency,
-       category,
-       description,
-       name,
-       rating,
-       size,
-       stock
-     } 
+    let obj = {
+      userId: +id,
+      imageURL,
+      price,
+      color,
+      currency,
+      category,
+      description,
+      name,
+      rating,
+      size,
+      stock
+    }
+    dispatch(addToCart(obj, user.id));
 
-       dispatch(addToWhiteList(obj,user.id))
-      }
+  }
+
+  function handleWhishList() {
+    if (!login.isAuth) {
+      alert("you need to login first");
+      return;
+    }
+
+
+
+    let obj = {
+      userId: id,
+      price,
+      color,
+      currency,
+      category,
+      description,
+      name,
+      rating,
+      size,
+      stock
+    }
+
+    dispatch(addToWhiteList(obj, user.id))
+  }
   return (
-    <div onClick={handleClick}  className="product-card">
+    <div onClick={handleClick} className="product-card">
       <img src={imageURL} alt="" />
       <h1 className="product-detail">{name}</h1>
       <p className="product-detail">{description}</p>
@@ -75,17 +81,16 @@ function ProductCard({ele,ShowButton}) {
       <div className="price-button">
         <p className="product-detail"><b>Price:</b> ${price}</p>
         <div className="button-container">
-        { ShowButton=="default"||ShowButton=="whishlist"?(<button className="action-button"  onClick={(e) => { e.stopPropagation(); handleAddToCart() }}><i class="fa-solid fa-cart-shopping"></i></button>):""}
-        {  ShowButton=="default"||ShowButton=="cart"? (<button className="action-button"   onClick={(e) => { e.stopPropagation(); handleWhishList() }}><i class="fa-solid fa-heart"></i></button>):""}
-         </div>
+          {ShowButton == "default" || ShowButton == "whishlist" ? (<button className="action-button" onClick={(e) => { e.stopPropagation(); handleAddToCart() }}><i class="fa-solid fa-cart-shopping"></i></button>) : ""}
+          {ShowButton == "default" || ShowButton == "cart" ? (<button className="action-button" onClick={(e) => { e.stopPropagation(); handleWhishList() }}><i class="fa-solid fa-heart"></i></button>) : ""}
         </div>
+      </div>
 
-        </div>
-     
-   
+    </div>
+
+
   )
 }
 
 export default ProductCard;
 
- 

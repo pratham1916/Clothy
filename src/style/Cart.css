@@ -1,0 +1,12 @@
+.not-found {
+    font-size: 23px;
+    text-align: center;
+    padding: 50px;
+    background-color: #fc4a1a;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    align-items: center;
+}
