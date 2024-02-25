@@ -81,12 +81,14 @@
     color: rgb(117, 116, 116);
 }
 
-.text2 {
+#text2 {
     display: flex;
-    justify-content: space-between;
+    
     margin-top: 5%;
 }
-
+#text23{
+    margin-left: 15%;
+}
 .text2 div {
     width: 50%;
 }
@@ -341,23 +343,27 @@
     border-top-left-radius: 10%;
     border-bottom-left-radius: 10%;
 }
-
-#i2 {
+.img-circle-large{
+    height: 100%;
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+}
+/* #i2 {
     width: 30%;
     height: 30%;
     clip-path: circle(46.1% at 50% 50%);
 
     margin-left: 5%;
 
-}
+} */
 
-#i1 {
+/* #i1 {
     border-radius: 15px;
     clip-path: circle(109.9% at 99% 100%);
     width: 60%;
     margin-left: 30%;
     margin-top: 0%;
-}
+} */
 
 #box1 {
     width: 90%;
@@ -553,6 +559,8 @@
     #bx img {
         max-width: 100%;
         height: auto;
+        border-radius: 10%;
+        margin-bottom: 20px;
     }
 
     #box1 {
