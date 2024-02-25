@@ -64,39 +64,30 @@
 
 .action-button {
     background: #fc4a1a;
-    padding: 9px;
+    padding: 5px 9px;
     border-radius: 50%;
     font-weight: 700;
     font-size: 16px;
     color: #fff;
-    transition: background 0.3s ease-in-out;
+    border: 1px solid transparent;
 }
 
 .action-button:hover {
-    background: #ff7861;
-    transition: 0.3s ease-in-out;
-    transform: scale(1.03);
-    color: red;
+    background: white;
+    color: #fc4a1a;
+    border: 1px solid #fc4a1a;
 }
 
 .action-button i {
     font-size: 14px;
 }
 
-
-/* .action-button:active i {
-    color: red;
-} */
-
-
-/* Media queries  */
-
 @media only screen and (max-width: 768px) {
     .product-card {
         width: 100%;
     }
     .product-card img {
-        height: 150px;
+        height: 300px;
     }
     .product-card h1 {
         font-size: 16px;
@@ -108,7 +99,8 @@
 
 @media only screen and (max-width: 480px) {
     .product-card img {
-        height: 120px;
+        height: 230px;
+        object-fit: contain;
     }
     .product-card h1 {
         font-size: 14px;

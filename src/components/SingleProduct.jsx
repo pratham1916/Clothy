@@ -40,9 +40,6 @@ function SingleProduct() {
 
   };
   
-  const params = useParams();
-    const location = useLocation();
-    
     console.log(params)
     console.log(location.state.data)
     console.log(location.state.user)
@@ -61,14 +58,13 @@ function SingleProduct() {
       }
 
   return (
-    <div>
       <div className="singleproductcontainer">
-        <img src={user.imageURL} alt={user.name} />
+        <img src={location.state.data.imageURL} alt={location.state.data.name} />
         <div className="singleInfo">
-          <h4>{user.name}</h4>
-          <h5>{user.description}</h5>
-          <p className="product-detail"><b>Price:</b> ${user.price}</p>
-          <p className="product-detail"><StarRating rating={user.rating} /></p>
+          <h4>{location.state.data.name}</h4>
+          <h5>{location.state.data.description}</h5>
+          <p className="product-detail"><b>Price:</b> ${location.state.data.price}</p>
+          <p className="product-detail"><StarRating rating={location.state.data.rating} /></p>
           <div className="single_button">
 
             <div className="quantity-container">
@@ -77,7 +73,8 @@ function SingleProduct() {
               <button className="quantity-button" onClick={handleIncrement}>+</button>
             </div>
             <Button colorScheme='red' size='md' onClick={handleAddToCart}>ADD TO CART</Button>
-            <button onClick={buyProduct}> buy product</button>
+            <Button colorScheme='red' size='md' onClick={buyProduct}>Buy product</Button>
+            <button onClick={buyProduct}> </button>
           </div>
           <p className="product-para">
             Explore the details of this amazing product. Lorem ipsum dolor sit amet,

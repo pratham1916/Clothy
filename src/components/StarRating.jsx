@@ -18,7 +18,7 @@ const StarRating = ({ rating }) => {
         }
     }
 
-    return <div style={{ display: "flex" }}>{stars}</div>;
+    return <div style={{ display: "flex",color:"#fc4a1a" }}>{stars}</div>;
 
 }
 
