@@ -145,10 +145,14 @@
 
     .text2 {
         flex-direction: column;
+        
     }
 
     .text2 div {
         width: 100%;
+    }
+    #text2>div{
+        margin-bottom: 20px;
     }
 }
 
@@ -203,6 +207,9 @@
 
 .crousel-price {
     font-size: 22px;
+}
+#span1{
+    color: black;
 }
 
 @media (max-width: 1024px) {
@@ -323,6 +330,10 @@
         max-width: 300px;
         height: auto;
     }
+
+    #span1 {
+        font-size: 0.6em;
+    }
 }
 
 
@@ -348,22 +359,7 @@
     border-top-left-radius: 10%;
     border-bottom-left-radius: 10%;
 }
-/* #i2 {
-    width: 30%;
-    height: 30%;
-    clip-path: circle(46.1% at 50% 50%);
 
-    margin-left: 5%;
-
-} */
-
-/* #i1 {
-    border-radius: 15px;
-    clip-path: circle(109.9% at 99% 100%);
-    width: 60%;
-    margin-left: 30%;
-    margin-top: 0%;
-} */
 
 #box1 {
     width: 90%;
@@ -529,7 +525,13 @@
         margin-top: 20px;
 
     }
+#text23{
+    margin-left: 0px;
+}
 
+#text2{
+   flex-direction: column;
+}
     #tx21>p,
     h5 {
 
