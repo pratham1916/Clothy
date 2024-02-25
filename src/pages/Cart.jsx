@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../Redux/action';
 import "../style/Cart.css"
@@ -7,15 +7,29 @@ import "../style/Cart.css"
 import cart_banner from "../assets/cart_banner.jpg"
 import SingleCart from '../components/SingleCart';
 const Cart = () => {
+
   const { cart } = useSelector(state => state.cart);
-  console.log(cart);
+  // console.log(cart);
+  const [subtotals, setSubtotals] = useState({});
   const dispatch = useDispatch()
   let user = JSON.parse(localStorage.getItem("Users")) || {};
   const login = useSelector(state => state.login);
+
+
+
   useEffect(() => {
 
     dispatch(getCarts(user.id));
   }, []);
+
+  const updateSubtotal = useCallback((id, subtotal) => {
+    setSubtotals((prevSubtotals) => ({
+      ...prevSubtotals,
+      [id]: subtotal,
+    }));
+  }, []);
+
+  const total = Object.values(subtotals).reduce((acc, curr) => acc + curr, 0);
 
   return (
     <div className='cart-container'>
@@ -36,7 +50,7 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((ele) => <SingleCart key={ele.id} ele={ele} />)}
+              {cart.map((ele) => <SingleCart key={ele.id} ele={ele} updateSubtotal={updateSubtotal} />)}
             </tbody>
           </table>
         </section>
@@ -52,20 +66,22 @@ const Cart = () => {
           <div id="subtotal">
             <h3>Cart Totals</h3>
             <table>
-              <tr>
-                <td>Cart Subtotal</td>
-                <td>$7500</td>
+              <tbody>
+                <tr>
+                  <td>Cart Subtotal</td>
+                  <td>${total.toFixed(2)}</td>
+                </tr>
                 <tr>
                   <td>Shipping</td>
                   <td>Free</td>
                 </tr>
                 <tr>
                   <td><strong>Total</strong></td>
-                  <td><strong>$7500</strong></td>
+                  <td><strong>${total.toFixed(2)}</strong></td>
                 </tr>
-              </tr>
+              </tbody>
             </table>
-            <button class="normal">Proceed to checkout</button>
+            <button className="normal">Proceed to checkout</button>
           </div>
         </section>
 

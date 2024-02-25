@@ -3,7 +3,10 @@ import { Avatar, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, 
 
 const Profile = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    
+    const userDataString = localStorage.getItem("Users");
+    const userData = JSON.parse(userDataString) || {};
+    console.log(userData);
+
     return (
         <>
             <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -13,8 +16,12 @@ const Profile = () => {
                     <ModalCloseButton />
                     <ModalBody>
                         <Text fontWeight='bold' mb='1rem'>
-                            My Name is Pratham Nemade
+                            {userData.name}
                         </Text>
+                        <Text fontWeight='bold' mb='1rem'>
+                            {userData.email}
+                        </Text>
+
                     </ModalBody>
                 </ModalContent>
             </Modal>

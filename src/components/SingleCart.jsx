@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../style/singleCart.css";
 
-const SingleCart = ({ ele }) => {
+const SingleCart = ({ ele, updateSubtotal }) => {
     const { id, imageURL, name, price } = ele;
 
-    // State to manage the quantity
-    const [quantity, setQuantity] = useState(1);
 
-    // Calculate total based on quantity and price
+    const [quantity, setQuantity] = useState(1);
     const total = quantity * price;
 
-    // Handle quantity change
+    useEffect(() => {
+        updateSubtotal(id, quantity * price);
+    }, [quantity, id, price, updateSubtotal]);
+
     const handleQuantityChange = (event) => {
-        const newQuantity = parseInt(event.target.value, 10);
-        setQuantity(newQuantity);
+        setQuantity(Number(event.target.value));
     };
 
     return (
