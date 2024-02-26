@@ -1,5 +1,5 @@
 import React from 'react'
-import { GET_CART_ERROR, GET_CART_REQUEST, GET_CART_SUCCESS, GET_WHITE_LIST_ERROR, GET_WHITE_LIST_REQUEST, GET_WHITE_LIST_SUCCESS, LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS, REGISTER_FAIL, REGISTER_LOADING, REGISTER_SUCCESS, USER_PRESENT } from './actionType';
+import { DELELE_TO_CART_ERROR, DELETE_TO_CART_REQUEST, DELETE_TO_CART_SUCCESS, GET_CART_ERROR, GET_CART_REQUEST, GET_CART_SUCCESS, GET_WHITE_LIST_ERROR, GET_WHITE_LIST_REQUEST, GET_WHITE_LIST_SUCCESS, LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS, REGISTER_FAIL, REGISTER_LOADING, REGISTER_SUCCESS, USER_PRESENT } from './actionType';
 import { ADD_TO_CART_ERROR, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, ADD_TO_WHITE_LIST_ERROR, ADD_TO_WHITE_LIST_REQUEST, ADD_TO_WHITE_LIST_SUCCESS, GET_MENS_DATA, GET_MENS_ERROR, GET_MENS_REQUEST, GET_WOMENS_DATA, GET_WOMENS_ERROR, GET_WOMENS_REQUEST } from "./actionType"
 
 
@@ -103,7 +103,7 @@ export const cartReducer = (state = cartInitialSate, action) => {
         case ADD_TO_CART_REQUEST:
             return { ...state, isLoading: true };
         case ADD_TO_CART_SUCCESS:
-            return { ...state, cart: [...state, action.payload.data], totleCart: action.payload.totleCart };
+            return { ...state, cart:[...state.cart, action.payload] };
         case ADD_TO_CART_ERROR:
             return { ...state, isError: true };
         case GET_CART_REQUEST:
@@ -111,7 +111,11 @@ export const cartReducer = (state = cartInitialSate, action) => {
         case GET_CART_SUCCESS:
             return { ...state, cart: [...action.payload] };
         case GET_CART_ERROR:
-            return { ...state, isError: true }
+            return { ...state, isError: true };
+            case DELETE_TO_CART_REQUEST:
+                return{...state,isLoading:true};
+                case DELELE_TO_CART_ERROR :
+                    return {...state,isError:false}
         default:
             return state;
     }
