@@ -212,21 +212,25 @@ export const addToCart = (obj, userId) => async (dispatch) => {
     dispatch(AddToCartRequest())
     let res = await axios.post(`https://clothy-api.onrender.com/cart/`, { ...obj, userId });
     console.log(res.data, "line 92");
-    dispatch(AddToCartSuccess({ data:{...res.data, id: res.id},totleCart:res.headers.get("x-total-count") }))
-
+    dispatch(AddToCartSuccess({...res.data,id: res.id}))
+ 
   } catch (err) {
     console.log("line 95", err)
     dispatch(AddToCartError())
   }
 }
 
-export const deleteToCart = (id) => async (dispatch) => {
+export const deleteToCart = (id,userId) => async (dispatch) => {
   try {
     dispatch(DeleteToCartRequest())
     let res = await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
-    console.log(res.data, "line delete to cart");
-    dispatch(DeleteToCartSuccess({ data:{...res.data, id: res.id},totleCart:res.headers.get("x-total-count") }))
-
+  //  console.log(res,"line 227")
+  //   console.log(res.data, "line delete to cart");
+    
+   // dispatch(DeleteToCartSuccess(res.data))
+        getCarts(userId)
+    //  console.log(res,"res2");
+    //  console.log(res.data,"res2 data")
   } catch (err) {
     console.log("line 95", err)
     dispatch(DeleteToCartError())

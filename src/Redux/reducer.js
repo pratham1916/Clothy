@@ -103,7 +103,7 @@ export const cartReducer = (state = cartInitialSate, action) => {
         case ADD_TO_CART_REQUEST:
             return { ...state, isLoading: true };
         case ADD_TO_CART_SUCCESS:
-            return { ...state, cart: [...state, action.payload.data], totleCart: action.payload.totleCart };
+            return { ...state, cart:[...state.cart, action.payload] };
         case ADD_TO_CART_ERROR:
             return { ...state, isError: true };
         case GET_CART_REQUEST:
@@ -114,8 +114,6 @@ export const cartReducer = (state = cartInitialSate, action) => {
             return { ...state, isError: true };
             case DELETE_TO_CART_REQUEST:
                 return{...state,isLoading:true};
-                case DELETE_TO_CART_SUCCESS: 
-                return{...state,cart:state.filter((e)=>e.id!=action.data.id)};
                 case DELELE_TO_CART_ERROR :
                     return {...state,isError:false}
         default:

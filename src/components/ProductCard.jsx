@@ -44,7 +44,13 @@ function ProductCard({ ele, ShowButton }) {
       stock,
       id:deleteId
     }
-    dispatch(addToCart(obj, user.id));
+   // dispatch(addToCart(obj, user.id));
+    toast.promise(dispatch(addToCart(obj,user.id)), {
+      
+      success: {  position: 'top',title: 'added', description: 'Looks great' },
+      error: { position: 'top', title: ' rejected', description: 'Something wrong' },
+      loading: { position: 'top', title: ' pending', description: 'Please wait' },
+    })
 
   }
 
@@ -72,8 +78,13 @@ function ProductCard({ ele, ShowButton }) {
       cartId:deleteId,
       id:deleteId
     }
-
-    dispatch(addToWhiteList(obj, user.id))
+    toast.promise(dispatch(addToWhiteList(obj,user.id)), {
+    
+      success: { position: 'top', title: 'added ', description: 'Looks great' },
+      error: { position: 'top', title: 'rejected', description: 'Something wrong' },
+      loading: { position: 'top', title: ' pending', description: 'Please wait' },
+    })
+   //dispatch(addToWhiteList(obj, user.id))
   }
   return (
     <div onClick={handleClick} className="product-card">

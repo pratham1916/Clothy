@@ -6,8 +6,12 @@ import "../style/Cart.css"
 
 import cart_banner from "../assets/cart_banner.jpg"
 import SingleCart from '../components/SingleCart';
+import { useState } from 'react';
+import { useToast } from '@chakra-ui/react'
 const Cart = () => {
   const { cart } = useSelector(state => state.cart);
+  const { isloading } = useSelector(state => state.cart);
+  const { isError } = useSelector(state => state.cart);
   const[toggle,setToggle] = useState(false)
   console.log(cart);
   const dispatch = useDispatch()
@@ -16,8 +20,14 @@ const Cart = () => {
   useEffect(() => {
 
     dispatch(getCarts(user.id));
+    console.log("line 20 cart.jsx")
   }, [toggle]);
-
+  if (isloading) {
+    return <h1>loading</h1>
+  }
+  if (isError) {
+    return <h1>Error</h1>
+  }
   return (
     <div className='cart-container'>
       <img src={cart_banner} />
@@ -37,7 +47,7 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((ele) => <SingleCart key={ele.id} ele={ele} setToggle={setToggle} />)}
+              {cart.map((ele) => <SingleCart key={ele.id} ele={ele} setToggle={setToggle} state={toggle} />)}
             </tbody>
           </table>
         </section>
