@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../Redux/action';
 import "../style/Cart.css"
-
-
 import cart_banner from "../assets/cart_banner.jpg"
 import SingleCart from '../components/SingleCart';
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react'
+import { Link } from 'react-router-dom';
+import Payment from './Payment';
+``
 const Cart = () => {
   const { cart } = useSelector(state => state.cart);
   const { isloading } = useSelector(state => state.cart);
@@ -76,7 +77,8 @@ const Cart = () => {
                 </tr>
               </tr>
             </table>
-            <button class="normal">Proceed to checkout</button>
+            <Link className='normal' to={"/payment"} element={<Payment/>}>Proceed to checkout</Link>
+           
           </div>
         </section>
 
