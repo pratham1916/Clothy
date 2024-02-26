@@ -15,10 +15,11 @@ const Profile = () => {
             title: "Logout Successful",
             position: "top",
             description: "You are now logged out.",
-            status: "error",
+            status: "succes",
             duration: 3000,
             isClosable: true,
         });
+        window.location.reload(true);
     };
 
     const handleLoginButtonClick = () => {
@@ -32,8 +33,9 @@ const Profile = () => {
                 <ModalContent
                     borderRadius="md"
                     boxShadow="lg"
-                    mx={{ base: 4, md: 8 }}
-                    maxW={{ base: '95%', md: '75%' }}
+                    mx={{ base: 4, md: 4 }}
+                    maxW={{ base: '55%', md: '35%' }}
+                    p={"3"}
                 >
                     <ModalHeader
                         borderBottomWidth="1px"
@@ -45,7 +47,7 @@ const Profile = () => {
                         Profile
                     </ModalHeader>
                     <ModalCloseButton onClick={onClose} />
-                    <ModalBody p={{ base: 2, md: 4 }}>
+                    <ModalBody >
                         <Flex direction="column" align="center">
                             <Avatar size='lg' name={userData.name} src={userData.image} mb={4} />
                             <Text fontWeight='bold' mb='1rem' textAlign="center">

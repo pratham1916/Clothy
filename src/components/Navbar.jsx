@@ -38,10 +38,10 @@ const Navbar = () => {
                 </div>
             </nav>
             <div className="profile">
-                    <Link to="/cart" onClick={closeMenu}><i className="fa-solid fa-cart-shopping"></i></Link>
-                    <Link to="/wishlist" onClick={closeMenu}><i className="fa-regular fa-heart"></i></Link>
-                    <Link onClick={closeMenu}><Profile /></Link>
-                </div>
+                <Link to="/cart" onClick={closeMenu}><i className="fa-solid fa-cart-shopping"></i></Link>
+                <Link to="/wishlist" onClick={closeMenu}><i className="fa-regular fa-heart"></i></Link>
+                <Link onClick={closeMenu}><Profile /></Link>
+            </div>
             <i className="fa-solid fa-bars" id="menu-icon" onClick={toggleMenu}></i>
         </header>
     );
