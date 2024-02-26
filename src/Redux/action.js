@@ -6,6 +6,9 @@ import {
   ADD_TO_WHITE_LIST_ERROR,
   ADD_TO_WHITE_LIST_REQUEST,
   ADD_TO_WHITE_LIST_SUCCESS,
+  DELELE_TO_CART_ERROR,
+  DELETE_TO_CART_REQUEST,
+  DELETE_TO_CART_SUCCESS,
   GET_CART_ERROR,
   GET_CART_REQUEST,
   GET_CART_SUCCESS,
@@ -194,13 +197,22 @@ const AddToCartSuccess = (payload) => {
 const AddToCartError = () => {
   return { type: ADD_TO_CART_ERROR }
 }
+const DeleteToCartRequest = () => {
+  return { type: DELETE_TO_CART_REQUEST }
+}
+const DeleteToCartSuccess = (payload) => {
+  return { type: DELETE_TO_CART_SUCCESS, payload }
+}
+const DeleteToCartError = () => {
+  return { type: DELELE_TO_CART_ERROR }
+}
 
 export const addToCart = (obj, userId) => async (dispatch) => {
   try {
     dispatch(AddToCartRequest())
     let res = await axios.post(`https://clothy-api.onrender.com/cart/`, { ...obj, userId });
     console.log(res.data, "line 92");
-    dispatch(AddToCartSuccess({ ...res.data, id: res.id }))
+    dispatch(AddToCartSuccess({ data:{...res.data, id: res.id},totleCart:res.headers.get("x-total-count") }))
 
   } catch (err) {
     console.log("line 95", err)
@@ -208,6 +220,18 @@ export const addToCart = (obj, userId) => async (dispatch) => {
   }
 }
 
+export const deleteToCart = (id) => async (dispatch) => {
+  try {
+    dispatch(DeleteToCartRequest())
+    let res = await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
+    console.log(res.data, "line delete to cart");
+    dispatch(DeleteToCartSuccess({ data:{...res.data, id: res.id},totleCart:res.headers.get("x-total-count") }))
+
+  } catch (err) {
+    console.log("line 95", err)
+    dispatch(DeleteToCartError())
+  }
+}
 
 export const getCartRequest = () => {
   return { type: GET_CART_REQUEST }

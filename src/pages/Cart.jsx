@@ -8,6 +8,7 @@ import cart_banner from "../assets/cart_banner.jpg"
 import SingleCart from '../components/SingleCart';
 const Cart = () => {
   const { cart } = useSelector(state => state.cart);
+  const[toggle,setToggle] = useState(false)
   console.log(cart);
   const dispatch = useDispatch()
   let user = JSON.parse(localStorage.getItem("Users")) || {};
@@ -15,7 +16,7 @@ const Cart = () => {
   useEffect(() => {
 
     dispatch(getCarts(user.id));
-  }, []);
+  }, [toggle]);
 
   return (
     <div className='cart-container'>
@@ -36,7 +37,7 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((ele) => <SingleCart key={ele.id} ele={ele} />)}
+              {cart.map((ele) => <SingleCart key={ele.id} ele={ele} setToggle={setToggle} />)}
             </tbody>
           </table>
         </section>

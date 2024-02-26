@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { addToCart, addToWhiteList } from '../Redux/action';
@@ -7,8 +7,9 @@ import StarRating from './StarRating';
 import { useToast } from '@chakra-ui/react';
 
 function ProductCard({ ele, ShowButton }) {
-  const { category, color, currency, description, id, imageURL, name, price, rating, size, stock } = ele;
   let user = JSON.parse(localStorage.getItem("Users")) || {};
+  const { category, color, currency, description, id, imageURL, name, price, rating, size, stock } = ele;
+  const [deleteId,setDeleteID] = useState(Math.floor(Math.random()*(id*(+user.id))* new Date().getSeconds()* new Date().getMinutes()))
   const login = useSelector(state => state.login);
   const dispatch = useDispatch()
   const location = useLocation();
@@ -21,7 +22,7 @@ function ProductCard({ ele, ShowButton }) {
     })
   }
 
-  function handleAddToCart() {
+   function handleAddToCart() {
     if (!login.isAuth) {
       alert("you need to login first");
       navigate("/login");
@@ -40,7 +41,8 @@ function ProductCard({ ele, ShowButton }) {
       name,
       rating,
       size,
-      stock
+      stock,
+      id:deleteId
     }
     dispatch(addToCart(obj, user.id));
 
@@ -55,7 +57,8 @@ function ProductCard({ ele, ShowButton }) {
 
 
     let obj = {
-      userId: id,
+      imageURL,
+      userId:id,
       price,
       color,
       currency,
@@ -64,7 +67,10 @@ function ProductCard({ ele, ShowButton }) {
       name,
       rating,
       size,
-      stock
+      stock,
+      deleteId,
+      cartId:deleteId,
+      id:deleteId
     }
 
     dispatch(addToWhiteList(obj, user.id))
