@@ -1,41 +1,61 @@
-import { useEffect, useState, } from 'react'
-import { getData, } from '../Redux/action';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMensData } from '../Redux/action';
 import ProductCard from '../components/ProductCard';
-import "../style/Mens.css"
+import "../style/Mens.css";
+import { Spinner } from '@chakra-ui/react';
+
 function Mens() {
-  const { totalMens } = useSelector((state) => state.mens);
-  const [page, setPage] = useState(1);
-  const array = new Array(Math.ceil(+totalMens / 12)).fill(0);
-  const { mensData } = useSelector((state) => state.mens);
-  const { isloading } = useSelector((state) => state.mens);
-  const { isError } = useSelector((state) => state.mens);
   const dispatch = useDispatch();
+  const { totalMens, mensData, isloading, isError } = useSelector(state => state.mens);
+  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(totalMens / 12);
+  const array = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   useEffect(() => {
-    dispatch(getData(page));
-  }, [page]);
+    dispatch(getMensData(page));
+  }, [page, dispatch]);
 
-  if (isloading) {
-    return <h1>loading</h1>
-  }
-  if (isError) {
-    return <h1>Error</h1>
-  }
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  if (isloading) return <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />;
+  if (isError) return <h1>Error</h1>;
+
   return (
     <div className="Mens-container">
+      <div className="hero-image">
+        <input type="text" placeholder="Search..." className="search-input" />
+        <button className="filter-button">Filter</button>
+        <select className="sort-select">
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+        </select>
+      </div>
       <div className="products-grid">
-        {mensData.map((ele) => <ProductCard key={ele.id} ele={ele} ShowButton={"default"} />)}
+        {mensData.map(ele => (
+          <ProductCard key={ele.id} ele={ele} ShowButton="default" />
+        ))}
       </div>
       <div className="pagination">
-        {array.map((e, ind) => (
-          <button className={`page-button ${page === ind + 1 ? 'active' : ''}`} key={ind + 1} onClick={() => setPage(ind + 1)}>{ind + 1}</button>
+        {array.map(number => (
+          <button
+            className={`page-button ${page === number ? 'active' : ''}`}
+            key={number}
+            onClick={() => handlePageChange(number)}
+          >
+            {number}
+          </button>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default Mens
-
+export default Mens;

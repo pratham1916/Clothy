@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getCarts, getWhiteLists } from '../Redux/action';
 import ProductCard from '../components/ProductCard';
+import { getWishlists } from '../Redux/action';
 
 const Wishlist = () => {
 
@@ -15,7 +15,7 @@ console.log(user," user data")
  console.log(login,"line 7")
    useEffect(()=>{
     
-     dispatch(getWhiteLists(user.id));
+     dispatch(getWishlists(user.id));
    },[]);
    if (isloading) {
     return <h1>loading</h1>

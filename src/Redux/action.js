@@ -1,63 +1,41 @@
 import axios from "axios";
 import {
-  ADD_TO_CART_ERROR,
-  ADD_TO_CART_REQUEST,
-  ADD_TO_CART_SUCCESS,
-  ADD_TO_WHITE_LIST_ERROR,
-  ADD_TO_WHITE_LIST_REQUEST,
-  ADD_TO_WHITE_LIST_SUCCESS,
-  DELELE_TO_CART_ERROR,
-  DELETE_TO_CART_REQUEST,
-  DELETE_TO_CART_SUCCESS,
-  GET_CART_ERROR,
-  GET_CART_REQUEST,
-  GET_CART_SUCCESS,
-  GET_MENS_DATA,
-  GET_MENS_ERROR,
-  GET_MENS_REQUEST,
-  GET_WHITE_LIST_ERROR,
-  GET_WHITE_LIST_REQUEST,
-  GET_WHITE_LIST_SUCCESS,
-  GET_WOMENS_DATA,
-  GET_WOMENS_ERROR,
-  GET_WOMENS_REQUEST,
-  LOGIN_FAIL,
   LOGIN_LOADING,
   LOGIN_SUCCESS,
-  REGISTER_FAIL,
+  LOGIN_FAIL,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
+  REGISTER_FAIL,
   USER_PRESENT,
+  GET_MENS_DATA,
+  GET_MENS_REQUEST,
+  GET_MENS_ERROR,
+  GET_WOMENS_REQUEST,
+  GET_WOMENS_DATA,
+  GET_WOMENS_ERROR,
+  ADD_TO_CART_REQUEST,
+  ADD_TO_CART_SUCCESS,
+  ADD_TO_CART_ERROR,
+  ADD_TO_WISHLIST_REQUEST,
+  ADD_TO_WISHLIST_SUCCESS,
+  ADD_TO_WISHLIST_ERROR,
+  DELETE_FROM_CART_ERROR,
+  DELETE_FROM_CART_SUCCESS,
+  DELETE_FROM_CART_REQUEST,
+  GET_FROM_CART_REQUEST,
+  GET_FROM_CART_SUCCESS,
+  GET_FROM_CART_ERROR,
+  GET_FROM_WISHLIST_REQUEST,
+  GET_FROM_WISHLIST_SUCCESS,
+  GET_FROM_WISHLIST_ERROR,
 } from "./actionType";
 
-export const getMensRequest = () => {
-  return { type: GET_MENS_REQUEST };
-};
-export const getMensData = (payload) => {
-  return { type: GET_MENS_DATA, payload };
-};
-export const getMensError = () => {
-  return { type: GET_MENS_ERROR };
-};
-//---------
-export const getWoMensData = (payload) => {
-  return { type: GET_WOMENS_DATA, payload };
-};
-export const getWoMensRequest = () => {
-  return { type: GET_WOMENS_REQUEST };
-};
-export const getWoMensError = () => {
-  return { type: GET_WOMENS_ERROR };
-};
-
-
-export const LoginUser = (email, password, toast) => async (dispatch) => {
+export const loginUser = (email, password, toast) => async (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
   try {
     const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => user.email === email && user.password === password);
-
-    if (user.length == 1) {
+    if (user.length === 1) {
       localStorage.setItem("Users", JSON.stringify(user[0]));
       dispatch({ type: LOGIN_SUCCESS });
       toast({
@@ -80,7 +58,6 @@ export const LoginUser = (email, password, toast) => async (dispatch) => {
       });
     }
   } catch (error) {
-    console.log("Error:", error);
     dispatch({ type: LOGIN_FAIL });
     toast({
       title: "An error occurred.",
@@ -93,19 +70,15 @@ export const LoginUser = (email, password, toast) => async (dispatch) => {
   }
 };
 
-export const RegisterUser = ({ name, email, password, phoneNumber, image, type }, toast) => async (dispatch) => {
+export const registerUser = ({ name, email, password, phoneNumber, image, type }, toast) => async (dispatch) => {
   try {
     const res = await axios.get("https://clothy-api.onrender.com/users");
-    const user = res.data.filter(user => {
-      if (user?.email && user.email === email) {
-        return true;
-      }
-    });
-    if (user.length == 1) {
-      dispatch({ type: USER_PRESENT })
+    const userExists = res.data.some(user => user.email === email);
+    if (userExists) {
+      dispatch({ type: USER_PRESENT });
       toast({
         title: "User Already Exist",
-        description: "Please try with new email!",
+        description: "Please try with a new email!",
         position: 'top',
         status: "warning",
         duration: 3000,
@@ -114,202 +87,111 @@ export const RegisterUser = ({ name, email, password, phoneNumber, image, type }
     } else {
       dispatch({ type: REGISTER_LOADING });
       await axios.post('https://clothy-api.onrender.com/users', { name, email, password, phoneNumber, image, type })
-        .then((res) => {
-          dispatch({ type: REGISTER_SUCCESS })
+        .then(() => {
+          dispatch({ type: REGISTER_SUCCESS });
           toast({
             title: "Registration successful!",
-            description: "You can Login Now!",
+            description: "You can now log in.",
             position: 'top',
             status: "success",
             duration: 3000,
             isClosable: true,
           });
         })
-        .catch(err => {
-          dispatch({ type: REGISTER_FAIL }),
-            toast({
-              title: "Register Unsuccessful!",
-              description: "Please check your credentials and try again.",
-              position: 'top',
-              status: "error",
-              duration: 3000,
-              isClosable: true,
-            });
-        })
+        .catch(() => {
+          dispatch({ type: REGISTER_FAIL });
+          toast({
+            title: "Register Unsuccessful!",
+            description: "Please check your details and try again.",
+            position: 'top',
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        });
     }
   } catch (error) {
-    dispatch({ type: REGISTER_FAIL }),
-      toast({
-        title: "An error occurred.",
-        description: "Unable to Register! Please try again later.",
-        position: 'top',
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+    dispatch({ type: REGISTER_FAIL });
+    toast({
+      title: "An error occurred.",
+      description: "Unable to register. Please try again later.",
+      position: 'top',
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
   }
-}
+};
 
-export const getData =
-  (page = 1) =>
-    async (dispatch) => {
-      try {
-        dispatch(getMensRequest());
+export const getMensData = (page = 1) => async (dispatch) => {
+  dispatch({ type: GET_MENS_REQUEST });
+  try {
+    const res = await axios.get(`https://clothy-api.onrender.com/mens?_page=${page}&_limit=12`);
+    dispatch({ type: GET_MENS_DATA, payload: { data: res.data, totalMens: res.headers["x-total-count"] } });
+  } catch (err) {
+    dispatch({ type: GET_MENS_ERROR });
+  }
+};
 
-        const res = await axios.get(`https://clothy-api.onrender.com/mens?_page=${page}&_limit=12`);
-
-        dispatch(getMensData({ data: res.data, totalMens: res.headers.get("x-total-count") }));
-      } catch (err) {
-        dispatch(getMensError());
-        console.log(err);
-      }
-    };
-
-export const getWomansData =
-  (page = 1) =>
-    async (dispatch) => {
-      try {
-        dispatch(getWoMensRequest());
-
-        const res = await axios.get(
-          `https://clothy-api.onrender.com/womens?_page=${page}&_limit=12`
-        );
-        console.log(res);
-        console.log(res.data, "women data");
-        console.log(res.headers, " women line 63");
-        console.log(res.headers.get("x-total-count"));
-        dispatch(getWoMensData({ data: res.data, totalWoMens: res.headers.get("x-total-count") }));
-      } catch (err) {
-        dispatch(getWoMensError());
-        console.log(err);
-      }
-    };
-
-// add to cart
-
-const AddToCartRequest = () => {
-  return { type: ADD_TO_CART_REQUEST }
-}
-const AddToCartSuccess = (payload) => {
-  return { type: ADD_TO_CART_SUCCESS, payload }
-}
-
-const AddToCartError = () => {
-  return { type: ADD_TO_CART_ERROR }
-}
-const DeleteToCartRequest = () => {
-  return { type: DELETE_TO_CART_REQUEST }
-}
-const DeleteToCartSuccess = (payload) => {
-  return { type: DELETE_TO_CART_SUCCESS, payload }
-}
-const DeleteToCartError = () => {
-  return { type: DELELE_TO_CART_ERROR }
-}
+export const getWomensData = (page = 1) => async (dispatch) => {
+  dispatch({ type: GET_WOMENS_REQUEST });
+  try {
+    const res = await axios.get(`https://clothy-api.onrender.com/womens?_page=${page}&_limit=12`);
+    dispatch({ type: GET_WOMENS_DATA, payload: { data: res.data, totalWoMens: res.headers["x-total-count"] } });
+  } catch (err) {
+    dispatch({ type: GET_WOMENS_ERROR });
+  }
+};
 
 export const addToCart = (obj, userId) => async (dispatch) => {
+  dispatch({ type: ADD_TO_CART_REQUEST });
   try {
-    dispatch(AddToCartRequest())
-    let res = await axios.post(`https://clothy-api.onrender.com/cart/`, { ...obj, userId });
-    console.log(res.data, "line 92");
-    dispatch(AddToCartSuccess({...res.data,id: res.id}))
- 
+    const res = await axios.post(`https://clothy-api.onrender.com/cart`, { ...obj, userId });
+    dispatch({ type: ADD_TO_CART_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log("line 95", err)
-    dispatch(AddToCartError())
+    dispatch({ type: ADD_TO_CART_ERROR });
   }
-}
+};
 
-export const deleteToCart = (id,userId) => async (dispatch) => {
+export const deleteFromCart = (id, userId) => async (dispatch) => {
+  dispatch({ type: DELETE_FROM_CART_REQUEST });
   try {
-    dispatch(DeleteToCartRequest())
-    let res = await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
-  //  console.log(res,"line 227")
-  //   console.log(res.data, "line delete to cart");
-    
-   // dispatch(DeleteToCartSuccess(res.data))
-        getCarts(userId)
-    //  console.log(res,"res2");
-    //  console.log(res.data,"res2 data")
+    await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
+    dispatch({ type: DELETE_FROM_CART_SUCCESS });
+    getCarts(userId)(dispatch); 
   } catch (err) {
-    console.log("line 95", err)
-    dispatch(DeleteToCartError())
+    dispatch({ type: DELETE_FROM_CART_ERROR });
   }
-}
+};
 
-export const getCartRequest = () => {
-  return { type: GET_CART_REQUEST }
-}
-export const getCartSuccess = (payload) => {
-  return { type: GET_CART_SUCCESS, payload }
-}
-
-export const getCartError = () => {
-  return { type: GET_CART_ERROR }
-}
-
-export const getCarts = (id = 1) => async (dispatch) => {
+export const getCarts = (userId) => async (dispatch) => {
+  dispatch({ type: GET_FROM_CART_REQUEST });
   try {
-    dispatch(getCartRequest())
-    let res = await axios.get(`https://clothy-api.onrender.com/cart`);
-    const cart = res.data.filter(cart => cart.userId === id);
-    console.log(res.data, "line 92");
-    console.log(cart)
-    dispatch(getCartSuccess(cart))
+    const res = await axios.get(`https://clothy-api.onrender.com/cart`);
+    const cart = res.data.filter(cart => cart.userId === userId);
+    dispatch({ type: GET_FROM_CART_SUCCESS, payload: cart });
   } catch (err) {
-    console.log("line 95", err)
-    dispatch(getCartError())
+    dispatch({ type: GET_FROM_CART_ERROR });
   }
-}
+};
 
-export const AddWhiteListRequest = () => {
-  return { type: ADD_TO_WHITE_LIST_REQUEST }
-}
-export const AddToWhileListSuccess = (payload) => {
-  return { type: ADD_TO_WHITE_LIST_SUCCESS, payload }
-}
-
-export const AddToWhileListError = () => {
-  return { type: ADD_TO_WHITE_LIST_ERROR }
-}
-
-export const addToWhiteList = (obj, userId) => async (dispatch) => {
+export const addToWishlist = (obj, userId) => async (dispatch) => {
+  dispatch({ type: ADD_TO_WISHLIST_REQUEST });
   try {
-    dispatch(AddWhiteListRequest())
-    let res = await axios.post(`https://clothy-api.onrender.com/wishList`, { ...obj, userId });
-    console.log(res.data, "line 92");
-    dispatch(AddToWhileListSuccess({ ...res.data, id: res.data.id }))
+    const res = await axios.post(`https://clothy-api.onrender.com/wishlist`, { ...obj, userId });
+    dispatch({ type: ADD_TO_WISHLIST_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log("line 95", err)
-    dispatch(AddToWhileListError())
+    dispatch({ type: ADD_TO_WISHLIST_ERROR });
   }
-}
+};
 
-
-
-
-export const getWhitelistRequest = () => {
-  return { type: GET_WHITE_LIST_REQUEST }
-}
-export const getWhitelistSuccess = (payload) => {
-  return { type: GET_WHITE_LIST_SUCCESS, payload }
-}
-
-export const getWhitelistError = () => {
-  return { type: GET_WHITE_LIST_ERROR }
-}
-
-
-export const getWhiteLists = (id = 1) => async (dispatch) => {
+export const getWishlists = (userId) => async (dispatch) => {
+  dispatch({ type: GET_FROM_WISHLIST_REQUEST });
   try {
-    dispatch(getWhitelistRequest())
-    let res = await axios.get(`https://clothy-api.onrender.com/wishlist`);
-    const wishlist = res.data.filter(cart => cart.userId === id);
-    console.log(res.data, "line 92");
-    console.log(wishlist);
-    dispatch(getWhitelistSuccess(wishlist))
+    const res = await axios.get(`https://clothy-api.onrender.com/wishlist`);
+    const wishlist = res.data.filter(wishlist => wishlist.userId === userId);
+    dispatch({ type: GET_FROM_WISHLIST_SUCCESS, payload: wishlist });
   } catch (err) {
-    console.log("line 95", err)
-    dispatch(getWhitelistError())
+    dispatch({ type: GET_FROM_WISHLIST_ERROR });
   }
-}
+};
