@@ -1,19 +1,17 @@
-.Mens-container {
-    width: 100%;
-    padding: 0 6%;
-    background-color: #f9f9f9;
-}
-
 .hero-image {
     height: 50vh;
-    background-image: url('../assets/image4.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     gap: 20px;
 }
-
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
 .search-input, .filter-button, .sort-select {
     padding: 8px 15px;
     margin: 5px;
@@ -39,7 +37,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    padding: 20px 0;
+    padding: 2% 6%;
 }
 
 .pagination {
