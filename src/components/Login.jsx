@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import "../style/Login.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoginUser } from '../Redux/action';
 import { useToast } from '@chakra-ui/react';
+import { loginUser } from '../Redux/action';
 
 const Login = () => {
 
@@ -22,7 +22,7 @@ const Login = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        dispatch(LoginUser(email,password,toast));
+        dispatch(loginUser(email,password,toast));
     }
 
     return (

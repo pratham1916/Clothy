@@ -1,10 +1,9 @@
 import { useEffect, useState, } from 'react'
-import { getWoMensData, getWomansData } from '../Redux/action';
-import { getData, } from '../Redux/action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
 import ProductCard from '../components/ProductCard';
 import "../style/Womens.css"
+import { getWomensData } from '../Redux/action';
 
 function Womens() {
   const dispatch = useDispatch();
@@ -15,7 +14,7 @@ function Womens() {
   const { isloading } = useSelector(state => state.womens);
   const { isError } = useSelector(state => state.womens);
   useEffect(() => {
-    dispatch(getWomansData(page));
+    dispatch(getWomensData(page));
   }, [page]);
 
   if (isloading) {
