@@ -50,39 +50,24 @@ function ProductCard({ ele, ShowButton }) {
   };
 
   return (
-    <div className="product-card">
-        <div className="card-inner">
-            
-            <div className="card-front">
-                <img src={imageURL} alt={name} />
-                <h1 className="product-detail">{name}</h1>
-            </div>
-
-            
-            <div className="card-back">
-                <p className="product-detail">{description}</p>
-                <div className="category-rating">
-                    <p className="product-detail"><b>Category:</b> {category}</p>
-                    <p className="product-detail"><StarRating rating={rating} /></p>
-                </div>
-                <div className="price-button">
-                    <p className="product-detail"><b>Price:</b> ${price}</p>
-                    <div className="button-container">
-                      {ShowButton === "default" || ShowButton === "wishlist" ? 
-                        (<button className="action-button" onClick={handleAddToCart}>
-                          <i className="fa-solid fa-cart-shopping"></i>
-                        </button>) : null}
-                      {ShowButton === "default" || ShowButton === "cart" ? 
-                        (<button className="action-button" onClick={handleAddToWishlist}>
-                          <i className="fa-solid fa-heart"></i>
-                        </button>) : null}
-                    </div>
-                </div>
-            </div>
+    <div onClick={handleNavigation} className="product-card">
+      <img src={imageURL} alt={name} />
+      <h1 className="product-detail">{name}</h1>
+      <div className="price-button">
+        <p className="product-detail"><b>Price:</b> ${price}</p>
+        <div className="button-container">
+          {ShowButton === "default" || ShowButton === "wishlist" ? 
+            (<button className="action-button" onClick={handleAddToCart}>
+              <i className="fa-solid fa-cart-shopping"></i>
+            </button>) : null}
+          {ShowButton === "default" || ShowButton === "cart" ? 
+            (<button className="action-button" onClick={handleAddToWishlist}>
+              <i className="fa-solid fa-heart"></i>
+            </button>) : null}
         </div>
+      </div>
     </div>
-);
-
+  );
 }
 
 export default ProductCard;
