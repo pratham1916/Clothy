@@ -9,7 +9,7 @@ import { useToast } from '@chakra-ui/react';
 function ProductCard({ ele, ShowButton }) {
   let user = JSON.parse(localStorage.getItem("Users")) || {};
   const { category, color, currency, description, id, imageURL, name, price, rating, size, stock } = ele;
-  const [deleteId,setDeleteID] = useState(Math.floor(Math.random()*(id*(+user.id))* new Date().getSeconds()* new Date().getMinutes()))
+  const [deleteId, setDeleteID] = useState(Math.floor(Math.random() * (id * (+user.id)) * new Date().getSeconds() * new Date().getMinutes()))
   const login = useSelector(state => state.login);
   const dispatch = useDispatch()
   const location = useLocation();
@@ -22,7 +22,7 @@ function ProductCard({ ele, ShowButton }) {
     })
   }
 
-   function handleAddToCart() {
+  function handleAddToCart() {
     if (!login.isAuth) {
       alert("you need to login first");
       navigate("/login");
@@ -42,12 +42,12 @@ function ProductCard({ ele, ShowButton }) {
       rating,
       size,
       stock,
-      id:deleteId
+      id: deleteId
     }
-   // dispatch(addToCart(obj, user.id));
-    toast.promise(dispatch(addToCart(obj,user.id)), {
-      
-      success: {  position: 'top',title: 'added', description: 'Looks great' },
+    // dispatch(addToCart(obj, user.id));
+    toast.promise(dispatch(addToCart(obj, user.id)), {
+
+      success: { position: 'top', title: 'added', description: 'Looks great' },
       error: { position: 'top', title: ' rejected', description: 'Something wrong' },
       loading: { position: 'top', title: ' pending', description: 'Please wait' },
     })
@@ -64,7 +64,7 @@ function ProductCard({ ele, ShowButton }) {
 
     let obj = {
       imageURL,
-      userId:id,
+      userId: id,
       price,
       color,
       currency,
@@ -75,16 +75,16 @@ function ProductCard({ ele, ShowButton }) {
       size,
       stock,
       deleteId,
-      cartId:deleteId,
-      id:deleteId
+      cartId: deleteId,
+      id: deleteId
     }
-    toast.promise(dispatch(addToWhiteList(obj,user.id)), {
-    
+    toast.promise(dispatch(addToWhiteList(obj, user.id)), {
+
       success: { position: 'top', title: 'added ', description: 'Looks great' },
       error: { position: 'top', title: 'rejected', description: 'Something wrong' },
       loading: { position: 'top', title: ' pending', description: 'Please wait' },
     })
-   //dispatch(addToWhiteList(obj, user.id))
+    //dispatch(addToWhiteList(obj, user.id))
   }
   return (
     <div onClick={handleClick} className="product-card">
