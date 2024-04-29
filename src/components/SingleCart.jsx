@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import "../style/singleCart.css";
 import { useDispatch } from 'react-redux';
-import { deleteToCart } from '../Redux/action';
+import { deleteFromCart } from '../Redux/action';
 
 const SingleCart = ({ ele,setToggle,state }) => {
     const dispatch = useDispatch()
     const { userId,deleteId, id, imageURL, name, price } = ele;
-       console.log(ele,"line ")
     // State to manage the quantity
     const [quantity, setQuantity] = useState(1);
 
@@ -21,7 +20,7 @@ const SingleCart = ({ ele,setToggle,state }) => {
 
     return (
         <tr>
-            <td onClick={()=>{dispatch(deleteToCart(id,userId));setToggle(!state)}}><a href="#"><i className="far fa-times-circle"></i></a></td>
+            <td onClick={()=>{dispatch(deleteFromCart(id,userId));setToggle(!state)}}><a href="#"><i className="far fa-times-circle"></i></a></td>
             <td><img src={imageURL} alt={name} /></td>
             <td>{name}</td>
             <td>{price}</td>

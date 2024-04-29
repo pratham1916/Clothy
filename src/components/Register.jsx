@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../style/Register.css'
 import { useDispatch, useSelector } from "react-redux";
-import { RegisterUser } from "../Redux/action";
 import { useToast } from "@chakra-ui/react";
+import { registerUser } from "../Redux/action";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "", phoneNumber: "", image: "", type: "user" });
@@ -23,7 +23,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(RegisterUser(form, toast))
+    dispatch(registerUser(form, toast))
   }
 
   const [backgroundImage, setBackgroundImage] = useState('');

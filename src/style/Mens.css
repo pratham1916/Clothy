@@ -1,57 +1,109 @@
 .Mens-container {
     width: 100%;
     padding: 0 6%;
+    background-color: #f9f9f9;
+}
+
+.hero-image {
+    height: 50vh;
+    background-image: url('../assets/image4.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-input, .filter-button, .sort-select {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+}
+
+.search-input {
+    width: 300px;
+}
+
+.filter-button {
+    cursor: pointer;
+    background-color: #ff7e56;
+    color: white;
+}
+
+.sort-select {
+    cursor: pointer;
 }
 
 .products-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    width: 100%;
-    gap: 10px;
+    gap: 20px;
+    padding: 20px 0;
 }
 
 .pagination {
-    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 20px;
+    gap: 20px; 
+    padding: 20px 0; 
 }
 
 .page-button {
-    background: #ff7e56;
-    padding: 5px 13px;
-    border-radius: 50%;
-    margin: 20px 0;
-    font-weight: 800;
-    font-size: 18px;
-    border: 1px solid transparent;
+    background: linear-gradient(145deg, #ff9966, #ff5e62);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 }
 
-.page-button:hover {
-    border: 1px solid #fc4a1a;
-    background-color: white;
+.page-button:hover, .page-button:focus {
+    background-color: #ff7e56;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .page-button.active {
-    background: #fc4a1a;
-    color: white;
+    background: #fc4a1a; 
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
 }
+
 
 @media only screen and (max-width: 1200px) {
     .products-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr); 
     }
 }
 
 @media only screen and (max-width: 900px) {
     .products-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    .hero-image {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .search-input {
+        width: 100%;
     }
 }
 
 @media only screen and (max-width: 600px) {
     .products-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .hero-image {
+        height: 30vh;
     }
 }
