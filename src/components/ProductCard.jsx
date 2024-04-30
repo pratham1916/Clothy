@@ -120,7 +120,7 @@ function ProductCard({ ele, ShowButton }) {
       </div>
     </div>
   );
-  );
+
 }
 
 export default ProductCard;

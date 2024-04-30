@@ -1,12 +1,13 @@
 import React from 'react';
 import '../style/Footer.css';
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-container">
                 <div className="footer-brand">
-                    <h1>Clothy.</h1>
+                    <h1><span>Clothy.</span></h1>
                     <p>Fashion is a form of self-expression and autonomy at a particular period and place and in a specific context.</p>
                 </div>
                 <div className="footer-links">
@@ -32,17 +33,17 @@ const Footer = () => {
                     </div>
                     <div className="link-section">
                         <h4>Social</h4>
-                        <p>Instagram</p>
-                        <p>Twitter</p>
-                        <p>Facebook</p>
-                        <p>LinkedIn</p>
+                        <div><p><FaInstagram /></p><span>Instagram</span></div>
+                        <div><p><FaTwitter /></p><span>Twitter</span></div>
+                        <div> <p><FaFacebook /></p><span>Facebook</span></div>
+                        <div> <p><FaLinkedin /></p><span>LinkedIn</span></div>
                     </div>
                 </div>
             </div>
-            <hr/>
+            <hr />
             <div className="footer-info">
                 <p>Privacy Policy</p>
-                <p>All rights reserved 2013@Clothy</p>
+                <p>All rights reserved 2013 @Clothy</p>
                 <p>Terms & Conditions</p>
             </div>
         </footer>
