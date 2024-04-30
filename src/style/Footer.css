@@ -1,6 +1,8 @@
 .footer {
-    background-color: #e4e4e4;
+    background-color: #0A191C;
     padding: 20px 6%;
+    color: #FFFFFF;
+    /* Change text color to white */
 }
 
 .footer-container {
@@ -21,19 +23,39 @@
 .footer-brand h1 {
     font-size: 30px;
     font-weight: 600;
+    color: #FFFFFF;
+    /* Change text color to white */
 }
 
-.footer-brand h1, .link-section h4 {
+.footer-brand h1,
+.link-section h4 {
     margin-bottom: 10px;
 }
 
 .link-section h4 {
     font-weight: 600;
-    color: black;
 }
 
 .link-section p {
     margin: 5px 0;
+    color: #CCCCCC;
+}
+
+.link-section p:hover {
+    cursor: pointer;
+    color: rgb(85, 85, 214);
+}
+
+.link-section div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.link-section div:hover {
+    cursor: pointer;
+    transition: 1sec ease-in-out;
+    transform: scale(1.03);
 }
 
 .footer-info {
@@ -48,6 +70,8 @@
 .footer-info p {
     font-size: 14px;
     margin: 5px 0;
+    color: #CCCCCC;
+    /* Adjust text color for better visibility */
 }
 
 @media (max-width: 575px) {
@@ -91,7 +115,5 @@
 @media (min-width: 1200px) {
     .footer-info {
         justify-content: space-between;
-
-      
     }
 }

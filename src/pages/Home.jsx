@@ -5,6 +5,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../style/Home.css"
 import shopping from "../assets/shopping_men.jpg"
+import happy from "../assets/happy.png"
 import c1 from "../assets/c1.jpg"
 import c2 from "../assets/c2.jpeg"
 import c3 from "../assets/c3.jpeg"
@@ -17,6 +18,10 @@ import logo2 from "../assets/logo2.png"
 import logo1 from "../assets/logo1.png"
 import cnv1 from "../assets/cnv1.png"
 import cnv3 from "../assets/cnv3.png"
+import grp1 from "../assets/Group1.png"
+import grp2 from "../assets/Group2.png"
+import grp3 from "../assets/Group3.png"
+import { FaPhone } from 'react-icons/fa';
 
 const Home = () => {
   const product = productData.map((item, index) => (
@@ -40,18 +45,24 @@ const Home = () => {
 
   return (
     <div id="home">
-      <div class="flex-container">
-        <img src={cnv1} alt="cnv1" />
-        <h1>CLOTHS ARE THE SPIRIT OF FASHION</h1>
-        <img src={cnv3} alt="cnv3" />
-      </div>
-      <div id="newbx">
-        <img src={logo1} alt="newbx1" />
-        <img src={lgo} alt="newbx2" />
-        <img src={logo2} alt="newbx3" />
+      <div className="new_home">
+        <div className="home_left">
+          <p><i>Starting At only $0.5</i></p>
+          <h1><span className='summer'>SUMMER </span>SPECIAL  COLLECTION</h1>
+          <p>Brand day 20% off and free shopping</p>
+          <div className="shop_now">
+            <button className='shop_btn'>SHOP NOW</button>
+            <FaPhone className='icon' /> (+91)-0000-0000-00
+          </div>
+        </div>
+        <div className="home_right">
+          <img src={happy} alt="" />
+        </div>
       </div>
 
+
       <div className='text-container'>
+        <img src={p1c2} alt="img6" />
         <div id='text1'>
           <h1 id='header1'>WE THINK YOU'LL <span id='span1'>LIKE THESE</span></h1>
           <p>Fashion is a form of self-expression and autonomy at a particular period and place and in a specific context, of clothing, footwear, lifestyle, accessories. The latest fashion news, beauty coverage, celebrity style.</p>
@@ -66,7 +77,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <img src={p1c2} alt="img6" />
       </div>
 
       <div id="crousel">
@@ -76,34 +86,39 @@ const Home = () => {
         </Carousel>
       </div>
 
-      <div id="box">
-        <div id='bx'><img class='img-circle-large' src={c2} alt="" /></div>
-        <div id="box1">
-          <div class='box-detail'><h4>Pattern</h4> <p>Colourful & Print</p></div>
-          <div class='box-content'><h4>We are the online platform platform for fashion and lifestyle. </h4></div>
-          <div class='box-content'><p class='content-paragraph'>We are groen from a pioneer in e-commerce to become a leading European online platform.
-          </p>
-            <p>Read more --</p></div>
-          <div class='box-detail'><h4>Material</h4> <p>100% cotton & polyester</p></div>
+      <div className="inspire">
+        <div className="inspiration-container">
+          <div className="inspiration-text">
+            <p>20% Discount</p>
+            <h2>Outfit Inspiration: Snag Their Style</h2>
+            <p>Looking for a discount code for your surprise ?</p>
+            <div className="subscribe">
+              <input type="email" placeholder='Email' className="subscribe-input" />
+              <button className="subscribe-button">Subscribe</button>
+            </div>
+            <p>Sign up for our newsletter below to receive the latest discount codes for Your surprise.</p>
+          </div>
+          <div className="inspiration-visual">
+            <img className="style-image" src={shopping} alt="Shopping" />
+          </div>
         </div>
       </div>
 
-
-      <div id="crousel">
+      {/* <div id="crousel">
         <h3><span id='span1'>New Arrivals</span> </h3>
         <Carousel {...carouselOptions}>
           {product}
         </Carousel>
-      </div>
+      </div> */}
 
-
-      <div className="inspiration-container">
-        <div className="inspiration-text">
-          <h2>Outfit Inspiration: Snag Their Style</h2>
-          <p>Open Communication and participation are pivotal elements of our company culture. How a bold idea Spawned a leading European Online platform.</p>
+      <div className="client">
+        <div className='client_say'>
+          <h1>What Our clients Say ? </h1>
         </div>
-        <div className="inspiration-visual">
-          <img className="style-image" src={shopping} alt="Shopping" />
+        <div className='clinet_img'>
+          <img src={grp1} alt="" />
+          <img src={grp2} alt="" />
+          <img src={grp3} alt="" />
         </div>
       </div>
 
