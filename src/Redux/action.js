@@ -36,8 +36,7 @@ export const loginUser = (email, password, toast) => async (dispatch) => {
     const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => user.email === email && user.password === password);
     if (user.length === 1) {
-      localStorage.setItem("Users", JSON.stringify(user[0]));
-      dispatch({ type: LOGIN_SUCCESS });
+      dispatch({ type: LOGIN_SUCCESS,payload: user[0]});
       toast({
         title: "Login Successful",
         description: "You're now logged in.",

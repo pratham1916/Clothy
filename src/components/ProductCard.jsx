@@ -1,17 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '@chakra-ui/react';
+import { Alert, AlertIcon, useToast } from '@chakra-ui/react';
 import "../style/ProductCard.css";
 import { addToCart, addToWishlist } from '../Redux/action';
 
 function ProductCard({ ele, ShowButton }) {
-  const { id, imageURL, name, price, color, currency, category, description, rating, size, stock } = ele;
-  const user = useMemo(() => JSON.parse(localStorage.getItem("Users")) || {}, []);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const deleteId = useMemo(() => Math.floor(Math.random() * (id * (+user.id))), [id, user.id]);
-
   const login = useSelector(state => state.login);
+  const { id, category, name, price, size, imageURL, description, rating, stock } = ele;
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useToast();
@@ -22,18 +21,18 @@ function ProductCard({ ele, ShowButton }) {
     });
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
     if (!login.isAuth) {
-      alert("Please log in first.");
+      <Alert status='error'>
+        <AlertIcon />
+        There was an error processing your request
+      </Alert>
       navigate("/login");
       return;
     }
 
-    const obj = {
-      userId: +id, imageURL, price, color, currency, category, description, name, rating, size, stock, id: deleteId
-    };
-
-    toast.promise(dispatch(addToCart(obj, user.id)), {
+    toast.promise(dispatch(addToCart(ele,login.users.id)), {
       success: { position: 'top', title: 'added', description: 'Looks great' },
       error: { position: 'top', title: 'rejected', description: 'Something wrong' },
       loading: { position: 'top', title: 'pending', description: 'Please wait' },
@@ -43,13 +42,15 @@ function ProductCard({ ele, ShowButton }) {
   const handleAddToWishlist = (e) => {
     e.stopPropagation();
     if (!login.isAuth) {
-      alert("Please log in first.");
+      <Alert status='success'>
+        <AlertIcon />
+        Pleas Login First
+      </Alert>
+      navigate("/login");
       return;
     }
 
-    const obj = { imageURL, userId: id, price, color, currency, category, description, name, rating, size, stock, deleteId, cartId: deleteId, id: deleteId };
-
-    toast.promise(dispatch(addToWishlist(obj, user.id)), {
+    toast.promise(dispatch(addToWishlist(ele,login.users.id)), {
       success: { position: 'top', title: 'added', description: 'Looks great' },
       error: { position: 'top', title: 'rejected', description: 'Something wrong' },
       loading: { position: 'top', title: 'pending', description: 'Please wait' },

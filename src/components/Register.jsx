@@ -34,7 +34,6 @@ const Register = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setBackgroundImage(`url(${e.target.result})`);
-        // setForm({ ...form, image: e.target.result });
       };
       reader.readAsDataURL(file);
     }

@@ -6,13 +6,8 @@ import { deleteFromCart } from '../Redux/action';
 const SingleCart = ({ ele,setToggle,state }) => {
     const dispatch = useDispatch()
     const { userId,deleteId, id, imageURL, name, price } = ele;
-    // State to manage the quantity
     const [quantity, setQuantity] = useState(1);
-
-    // Calculate total based on quantity and price
     const total = quantity * price;
-
-    // Handle quantity change
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value, 10);
         setQuantity(newQuantity);
