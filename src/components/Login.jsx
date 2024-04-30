@@ -6,7 +6,6 @@ import { useToast } from '@chakra-ui/react';
 import { loginUser } from '../Redux/action';
 
 const Login = () => {
-
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState('');
     const login = useSelector(state=>state.login);

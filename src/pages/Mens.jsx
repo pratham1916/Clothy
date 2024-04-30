@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMensData } from '../Redux/action';
 import ProductCard from '../components/ProductCard';
-import "../style/Mens.css";
 import { Spinner } from '@chakra-ui/react';
+import "../style/Mens.css";
+import image1 from "../assets/image4.jpg"
+import image2 from "../assets/image3.jpg"
+import image3 from "../assets/image2.jpg"
 
 function Mens() {
   const dispatch = useDispatch();
@@ -30,14 +33,6 @@ function Mens() {
 
   return (
     <div className="Mens-container">
-      <div className="hero-image">
-        <input type="text" placeholder="Search..." className="search-input" />
-        <button className="filter-button">Filter</button>
-        <select className="sort-select">
-          <option value="price_asc">Price: Low to High</option>
-          <option value="price_desc">Price: High to Low</option>
-        </select>
-      </div>
       <div className="products-grid">
         {mensData.map(ele => (
           <ProductCard key={ele.id} ele={ele} ShowButton="default" />

@@ -31,7 +31,7 @@ import {
 
 const initialState_Login = {
     isError: false,
-    isAuth: JSON.parse(localStorage.getItem("Users")) ? true : false,
+    isAuth: false,
     users: {},
     isLoading: false
 }
@@ -60,14 +60,12 @@ const womansInitialSate = {
 const cartInitialSate = {
     cart: [],
     isError: false,
-    totleCart: 0,
     isLoading: false
 };
 
 const wishlistInitialSate = {
     wishlist: [],
     isError: false,
-    totalWishlist: 0, 
     isLoading: false
 };
 
@@ -76,7 +74,7 @@ export const LoginReducer = (state = initialState_Login, action) => {
         case LOGIN_LOADING:
             return { ...state, isLoading: true, isError: false }
         case LOGIN_SUCCESS:
-            return { ...state, isLoading: false, isError: false, isAuth: true }
+            return { ...state, isLoading: false, isError: false, isAuth: true, users: action.payload };
         case LOGIN_FAIL:
             return { ...state, isLoading: false, isError: true }
         default:
@@ -155,7 +153,7 @@ export const wishlistReducer = (state = wishlistInitialSate, action) => {
         case ADD_TO_WISHLIST_REQUEST:
             return { ...state, isLoading: true };
         case ADD_TO_WISHLIST_SUCCESS:
-            return { ...state, wishlist: [...state.wishlist, action.payload], totalWishlist: action.payload.totalWishlist, isLoading: false };
+            return { ...state, wishlist: [...state.wishlist, action.payload], isLoading: false };
         case ADD_TO_WISHLIST_ERROR:
             return { ...state, isError: true, isLoading: false };
         case GET_FROM_WISHLIST_REQUEST:

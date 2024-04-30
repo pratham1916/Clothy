@@ -11,24 +11,15 @@ import Payment from './Payment';
 ``
 const Cart = () => {
   const { cart } = useSelector(state => state.cart);
-  const { isloading } = useSelector(state => state.cart);
-  const { isError } = useSelector(state => state.cart);
-  const[toggle,setToggle] = useState(false)
   console.log(cart);
+  const [toggle, setToggle] = useState(false)
   const dispatch = useDispatch()
-  let user = JSON.parse(localStorage.getItem("Users")) || {};
   const login = useSelector(state => state.login);
-  useEffect(() => {
 
-    dispatch(getCarts(user.id));
-    console.log("line 20 cart.jsx")
+  useEffect(() => {
+    dispatch(getCarts(login.users.id));
   }, [toggle]);
-  if (isloading) {
-    return <h1>loading</h1>
-  }
-  if (isError) {
-    return <h1>Error</h1>
-  }
+
   return (
     <div className='cart-container'>
       <img src={cart_banner} />
@@ -77,8 +68,8 @@ const Cart = () => {
                 </tr>
               </tr>
             </table>
-            <Link className='normal' to={"/payment"} element={<Payment/>}>Proceed to checkout</Link>
-           
+            <Link className='normal' to={"/payment"} element={<Payment />}>Proceed to checkout</Link>
+
           </div>
         </section>
 
