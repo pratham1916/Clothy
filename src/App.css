@@ -10,9 +10,8 @@
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
-    font-family: "Roboto Condensed", sans-serif;
+    /* font-family: "Roboto Condensed", sans-serif; */
 }
-
 
 .btn {
     display: inline-block;
@@ -31,9 +30,11 @@
     color: var(--main-color);
     border: 1px solid var(--main-color);
 }
+
 section {
     scroll-margin-top: 80px;
-  }
+}
+
 .heading {
     font-size: 2rem;
     font-weight: 700;
@@ -41,6 +42,6 @@ section {
     text-align: center;
 }
 
-span{
+span {
     color: var(--main-color);
 }
