@@ -1,17 +1,31 @@
 .singleproductcontainer {
+    padding: 70px;
     display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    /* gap: 15px; */
-    padding: 60px;
+    flex-direction: row;
 }
 
 .singleproductcontainer img {
     height: 400px;
+    width: auto;
+    margin-right: 20px;
+}
+
+.single_product_images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 25px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0 0 16px;
 }
 
 .singleInfo {
     padding: 0 0 0 32px;
+    flex: 1;
 }
 
 .singleInfo>h4 {
@@ -32,30 +46,6 @@
     margin: 0 0 18px;
 }
 
-.product-para {
-    margin-top: 18px;
-    max-width: 450px;
-}
-
-
-/* singleProduct.css */
-
-
-/* ... existing styles ... */
-
-.single_button {
-    margin: 0 0 16px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.quantity-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
 .quantity-button {
     padding: 8px;
     font-size: 16px;
@@ -73,12 +63,13 @@
     .singleproductcontainer {
         flex-direction: column;
         align-items: center;
+        padding: 40px;
     }
     .singleproductcontainer img {
         width: 100%;
-        /* Make the image responsive */
         height: auto;
         margin-bottom: 20px;
+        margin-right: 0;
     }
     .singleInfo {
         padding: 0;
@@ -97,13 +88,7 @@
     }
 }
 
-
-/* Additional media queries for even smaller screens if needed */
-
 @media screen and (max-width: 480px) {
-    .singleproductcontainer {
-        padding: 40px;
-    }
     .singleInfo>h4 {
         font-size: 18px;
     }
