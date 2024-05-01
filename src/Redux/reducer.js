@@ -31,7 +31,7 @@ import {
 
 const initialState_Login = {
     isError: false,
-    isAuth: false,
+    isAuth: localStorage.getItem("User") ? true : false,
     users: {},
     isLoading: false
 }

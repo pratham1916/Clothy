@@ -35,9 +35,10 @@ export const loginUser = (email, password, toast) => async (dispatch) => {
   try {
     const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => user.email === email && user.password === password);
-    localStorage.setItem("User",user);
-    if (user.length === 1) {
-      dispatch({ type: LOGIN_SUCCESS,payload: user[0]});
+    
+    if (user) {
+      localStorage.setItem("User", JSON.stringify(user[0]));
+      dispatch({ type: LOGIN_SUCCESS, payload: user[0] });
       toast({
         title: "Login Successful",
         description: "You're now logged in.",
@@ -147,11 +148,11 @@ export const addToCart = (obj) => async (dispatch) => {
   console.log(obj);
   dispatch({ type: ADD_TO_CART_REQUEST });
   try {
-    const res = await axios.post(`https://clothy-api.onrender.com/cart`,{...obj});
+    const res = await axios.post(`https://clothy-api.onrender.com/cart`, { ...obj });
     console.log(res.data);
-    dispatch({ type: ADD_TO_CART_SUCCESS,payload: res.data});
+    dispatch({ type: ADD_TO_CART_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch({ type: ADD_TO_CART_ERROR,payload: err.response?.data?.message });
+    dispatch({ type: ADD_TO_CART_ERROR, payload: err.response?.data?.message });
   }
 };
 
@@ -162,18 +163,18 @@ export const getCarts = (userId) => async (dispatch) => {
     console.log(res.data);
     dispatch({ type: GET_FROM_CART_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch({ type: GET_FROM_CART_ERROR,payload: err.response?.data?.message });
+    dispatch({ type: GET_FROM_CART_ERROR, payload: err.response?.data?.message });
   }
 };
 
-export const deleteFromCart = (id,userId) => async (dispatch) => {
+export const deleteFromCart = (id, userId) => async (dispatch) => {
   dispatch({ type: DELETE_FROM_CART_REQUEST });
   try {
     await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
     getCarts(userId)(dispatch);
     dispatch({ type: DELETE_FROM_CART_SUCCESS });
   } catch (err) {
-    dispatch({ type: DELETE_FROM_CART_ERROR ,payload: err.response?.data?.message});
+    dispatch({ type: DELETE_FROM_CART_ERROR, payload: err.response?.data?.message });
   }
 };
 
