@@ -1,32 +1,35 @@
 import {
-  LOGIN_FAIL,
-  LOGIN_LOADING,
-  LOGIN_SUCCESS,
-  REGISTER_FAIL,
-  REGISTER_LOADING,
-  REGISTER_SUCCESS,
-  USER_PRESENT,
-  ADD_TO_CART_ERROR,
-  ADD_TO_CART_REQUEST,
-  ADD_TO_CART_SUCCESS,
-  GET_MENS_DATA,
-  GET_MENS_ERROR,
-  GET_MENS_REQUEST,
-  GET_WOMENS_DATA,
-  GET_WOMENS_ERROR,
-  GET_WOMENS_REQUEST,
-  GET_FROM_CART_REQUEST,
-  GET_FROM_CART_SUCCESS,
-  GET_FROM_CART_ERROR,
-  DELETE_FROM_CART_REQUEST,
-  DELETE_FROM_CART_SUCCESS,
-  DELETE_FROM_CART_ERROR,
-  ADD_TO_WISHLIST_REQUEST,
-  ADD_TO_WISHLIST_SUCCESS,
-  ADD_TO_WISHLIST_ERROR,
-  GET_FROM_WISHLIST_REQUEST,
-  GET_FROM_WISHLIST_SUCCESS,
-  GET_FROM_WISHLIST_ERROR
+    LOGIN_FAIL,
+    LOGIN_LOADING,
+    LOGIN_SUCCESS,
+    REGISTER_FAIL,
+    REGISTER_LOADING,
+    REGISTER_SUCCESS,
+    USER_PRESENT,
+    ADD_TO_CART_ERROR,
+    ADD_TO_CART_REQUEST,
+    ADD_TO_CART_SUCCESS,
+    GET_MENS_DATA,
+    GET_MENS_ERROR,
+    GET_MENS_REQUEST,
+    GET_WOMENS_DATA,
+    GET_WOMENS_ERROR,
+    GET_WOMENS_REQUEST,
+    GET_FROM_CART_REQUEST,
+    GET_FROM_CART_SUCCESS,
+    GET_FROM_CART_ERROR,
+    DELETE_FROM_CART_REQUEST,
+    DELETE_FROM_CART_SUCCESS,
+    DELETE_FROM_CART_ERROR,
+    ADD_TO_WISHLIST_REQUEST,
+    ADD_TO_WISHLIST_SUCCESS,
+    ADD_TO_WISHLIST_ERROR,
+    GET_FROM_WISHLIST_REQUEST,
+    GET_FROM_WISHLIST_SUCCESS,
+    GET_FROM_WISHLIST_ERROR,
+    DELETE_FROM_WISHLIST_ERROR,
+    DELETE_FROM_WISHLIST_REQUEST,
+    DELETE_FROM_WISHLIST_SUCCESS
 } from './actionType';
 
 const initialState_Login = {
@@ -47,7 +50,7 @@ const mansInitialSate = {
     mensData: [],
     isError: false,
     totalMens: 0,
-    isLoading: false 
+    isLoading: false
 }
 
 const womansInitialSate = {
@@ -61,13 +64,14 @@ const cartInitialSate = {
     data: [],
     isError: false,
     isLoading: false,
-    isSuccess:false,
+    isSuccess: false,
 };
 
 const wishlistInitialSate = {
-    wishlist: [],
+    data: [],
     isError: false,
-    isLoading: false
+    isLoading: false,
+    isSuccess: false,
 };
 
 export const LoginReducer = (state = initialState_Login, action) => {
@@ -129,7 +133,7 @@ export const cartReducer = (state = cartInitialSate, action) => {
         case ADD_TO_CART_REQUEST:
             return { ...state, isLoading: true };
         case ADD_TO_CART_SUCCESS:
-            return { ...state, data: [...state.data,action.payload], isLoading: false,isSuccess:true };
+            return { ...state, data: [...state.data, action.payload], isLoading: false, isSuccess: true };
         case ADD_TO_CART_ERROR:
             return { ...state, isError: true, isLoading: false };
         case GET_FROM_CART_REQUEST:
@@ -141,7 +145,7 @@ export const cartReducer = (state = cartInitialSate, action) => {
         case DELETE_FROM_CART_REQUEST:
             return { ...state, isLoading: true };
         case DELETE_FROM_CART_SUCCESS:
-            return { ...state, cart: state.cart.filter(item => item.id !== action.payload.id), isLoading: false };
+            return { ...state, data: state.data.filter(item => item.id !== action.payload.id), isLoading: false };
         case DELETE_FROM_CART_ERROR:
             return { ...state, isError: true, isLoading: false }
         default:
@@ -154,14 +158,20 @@ export const wishlistReducer = (state = wishlistInitialSate, action) => {
         case ADD_TO_WISHLIST_REQUEST:
             return { ...state, isLoading: true };
         case ADD_TO_WISHLIST_SUCCESS:
-            return { ...state, wishlist: [...state.wishlist, action.payload], isLoading: false };
+            return { ...state, data: [...state.data, action.payload], isLoading: false, isSuccess: true };
         case ADD_TO_WISHLIST_ERROR:
             return { ...state, isError: true, isLoading: false };
         case GET_FROM_WISHLIST_REQUEST:
             return { ...state, isLoading: true };
         case GET_FROM_WISHLIST_SUCCESS:
-            return { ...state, wishlist: [...action.payload], isLoading: false };
+            return { ...state, data: action.payload, isLoading: false };
         case GET_FROM_WISHLIST_ERROR:
+            return { ...state, isError: true, isLoading: false }
+        case DELETE_FROM_WISHLIST_REQUEST:
+            return { ...state, isLoading: true };
+        case DELETE_FROM_WISHLIST_SUCCESS:
+            return { ...state, data: state.data.filter(item => item.id !== action.payload.id), isLoading: false };
+        case DELETE_FROM_WISHLIST_ERROR:
             return { ...state, isError: true, isLoading: false }
         default:
             return state;

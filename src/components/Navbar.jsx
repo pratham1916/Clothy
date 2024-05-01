@@ -28,8 +28,6 @@ const Navbar = () => {
                 <Link to="/" className="navbar-link" onClick={closeMenu}>Home</Link>
                 <Link to="/mens" className="navbar-link" onClick={closeMenu}>Mens</Link>
                 <Link to="/womens" className="navbar-link" onClick={closeMenu}>Womens</Link>
-                <Link to="/kids" className="navbar-link" onClick={closeMenu}>Kids</Link>
-                <Link to="/accessories" className="navbar-link" onClick={closeMenu}>Accessories</Link>
 
                 <div className="navbar-profile-section">
                     {isAuthenticated ? (

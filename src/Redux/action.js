@@ -28,6 +28,9 @@ import {
   GET_FROM_WISHLIST_REQUEST,
   GET_FROM_WISHLIST_SUCCESS,
   GET_FROM_WISHLIST_ERROR,
+  DELETE_FROM_WISHLIST_REQUEST,
+  DELETE_FROM_WISHLIST_SUCCESS,
+  DELETE_FROM_WISHLIST_ERROR,
 } from "./actionType";
 
 export const loginUser = (email, password, toast) => async (dispatch) => {
@@ -145,11 +148,9 @@ export const getWomensData = (page = 1) => async (dispatch) => {
 };
 
 export const addToCart = (obj) => async (dispatch) => {
-  console.log(obj);
   dispatch({ type: ADD_TO_CART_REQUEST });
   try {
     const res = await axios.post(`https://clothy-api.onrender.com/cart`, { ...obj });
-    console.log(res.data);
     dispatch({ type: ADD_TO_CART_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: ADD_TO_CART_ERROR, payload: err.response?.data?.message });
@@ -178,12 +179,10 @@ export const deleteFromCart = (id, userId) => async (dispatch) => {
   }
 };
 
-
-
-export const addToWishlist = (obj, userId) => async (dispatch) => {
+export const addToWishlist = (obj) => async (dispatch) => {
   dispatch({ type: ADD_TO_WISHLIST_REQUEST });
   try {
-    const res = await axios.post(`https://clothy-api.onrender.com/wishlist`, { ...obj, userId });
+    const res = await axios.post(`https://clothy-api.onrender.com/wishlist`, {...obj});
     dispatch({ type: ADD_TO_WISHLIST_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: ADD_TO_WISHLIST_ERROR });
@@ -193,10 +192,20 @@ export const addToWishlist = (obj, userId) => async (dispatch) => {
 export const getWishlists = (userId) => async (dispatch) => {
   dispatch({ type: GET_FROM_WISHLIST_REQUEST });
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/wishlist`);
-    const wishlist = res.data.filter(wishlist => wishlist.userId === userId);
-    dispatch({ type: GET_FROM_WISHLIST_SUCCESS, payload: wishlist });
+    const res = await axios.get(`https://clothy-api.onrender.com/wishlist?userId=${userId}`);
+    dispatch({ type: GET_FROM_WISHLIST_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch({ type: GET_FROM_WISHLIST_ERROR });
+    dispatch({ type: GET_FROM_WISHLIST_ERROR,payload: err.response?.data?.message });
+  }
+};
+
+export const deleteFromWishlist = (id, userId) => async (dispatch) => {
+  dispatch({ type: DELETE_FROM_WISHLIST_REQUEST });
+  try {
+    await axios.delete(`https://clothy-api.onrender.com/wishlist/${id}`);
+    getWishlists(userId)(dispatch);
+    dispatch({ type: DELETE_FROM_WISHLIST_SUCCESS});
+  } catch (err) {
+    dispatch({ type: DELETE_FROM_WISHLIST_ERROR, payload: err.response?.data?.message });
   }
 };

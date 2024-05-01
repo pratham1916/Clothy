@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../Redux/action';
 import "../style/Cart.css"
 import cart_banner from "../assets/cart_banner.jpg"
 import SingleCart from '../components/SingleCart';
-import { useState } from 'react';
-import { useToast } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 import Payment from './Payment';
 ``
 const Cart = () => {
   const cart = useSelector(state => state.cart.data);
-  console.log(cart);
   const [toggle, setToggle] = useState(false)
   const dispatch = useDispatch()
   const login = useSelector(state => state.login);
@@ -29,7 +26,7 @@ const Cart = () => {
         <section id="cart" class="section-p1">
           <table width="100%" >
             <thead >
-              <tr>
+              <tr>  
                 <td>Remove</td>
                 <td>Image</td>
                 <td>Product</td>

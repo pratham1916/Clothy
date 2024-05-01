@@ -23,7 +23,6 @@ const AllRoutes = () => {
         <Route path='/mens/:id/checkout' element={<div>hello</div>}></Route>
         <Route path='/womens/:id' element={<SingleProduct />}></Route>
         <Route path='/womens/:id/checkout' element={<div>hello</div>}></Route>
-        <Route path='/accessories' element={<Accessories />}></Route>
         <Route path='/cart/' element={<PrivateRoute><Cart /></PrivateRoute>}></Route>
         <Route path='/cart/:id' element={<SingleProduct />}></Route>
         <Route path='/cart:id/checkout' element={<div>hello</div>}></Route>

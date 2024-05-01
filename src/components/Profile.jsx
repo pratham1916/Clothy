@@ -1,29 +1,18 @@
 import React from 'react';
-import { Avatar, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Text, Flex, Button, useToast } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Avatar, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Text, Flex, Button, } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const userDataString = localStorage.getItem("Users");
+    const userDataString = localStorage.getItem("User");
     const userData = JSON.parse(userDataString) || {};
-    const toast = useToast();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("Users");
+        localStorage.removeItem("User");
         onClose();
-        toast({
-            title: "Logout Successful",
-            position: "top",
-            description: "You are now logged out.",
-            status: "succes",
-            duration: 3000,
-            isClosable: true,
-        });
+        navigate("/")
         window.location.reload(true);
-    };
-
-    const handleLoginButtonClick = () => {
-        onClose();
     };
 
     return (
@@ -56,18 +45,7 @@ const Profile = () => {
                             <Text fontWeight='bold' mb='1rem' textAlign="center">
                                 Email: {userData.email}
                             </Text>
-                            <Text fontWeight='bold' mb='1rem' textAlign="center">
-                                Phone Number: {userData.phoneNumber || 'N/A'}
-                            </Text>
-                            {userData.name ? (
-                                <Button colorScheme="red" onClick={handleLogout} mt={4}>
-                                    Logout
-                                </Button>
-                            ) : (
-                                <Button colorScheme="green" onClick={handleLoginButtonClick} mt={4}>
-                                    <Link to="/login">Login</Link>
-                                </Button>
-                            )}
+                            <Button colorScheme="red" onClick={handleLogout} mt={4}>Logout</Button>
                         </Flex>
                     </ModalBody>
                 </ModalContent>

@@ -12,6 +12,9 @@
     text-decoration: none;
     /* font-family: "Roboto Condensed", sans-serif; */
 }
+body {
+    background-color: #f5f7fa !important;
+}
 
 .btn {
     display: inline-block;

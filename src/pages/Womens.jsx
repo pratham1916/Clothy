@@ -7,33 +7,42 @@ import { getWomensData } from '../Redux/action';
 
 function Womens() {
   const dispatch = useDispatch();
-  const { totalWoMens } = useSelector(state => state.womens);
+  const { totalWoMens, womensData,isloading,isError} = useSelector(state => state.womens);
   const [page, setPage] = useState(1);
-  const array = new Array(Math.ceil(+totalWoMens / 12)).fill(0);
-  const { womensData } = useSelector(state => state.womens);
-  const { isloading } = useSelector(state => state.womens);
-  const { isError } = useSelector(state => state.womens);
+  const totalPages = Math.ceil(totalWoMens / 12);
+  const array = Array.from({ length: totalPages }, (_, index) => index + 1);
+  
   useEffect(() => {
     dispatch(getWomensData(page));
   }, [page]);
 
-  if (isloading) {
-    return <h1>loading</h1>
-  }
-  if (isError) {
-    return <h1>Error</h1>
-  }
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  if (isloading) return <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />;
+  if (isError) return <h1>Error</h1>;
+
   return (
     <div className="womens-container">
       <div className="products-grid">
         {womensData.map((ele) => <ProductCard key={ele.id} ele={ele} ShowButton={"default"} />)}
       </div>
       <div className="pagination">
-        {array.map((e, ind) => {
-          return (
-            <button className={`page-button ${page === ind + 1 ? 'active' : ''}`} key={ind + 1} onClick={() => setPage(ind + 1)}>{ind + 1}</button>
-          )
-        })}
+        {array.map(number => (
+          <button
+            className={`page-button ${page === number ? 'active' : ''}`}
+            key={number}
+            onClick={() => handlePageChange(number)}
+          >
+            {number}
+          </button>
+        ))}
       </div>
     </div>
   )
