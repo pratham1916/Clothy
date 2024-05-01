@@ -4,6 +4,7 @@
     width: 90%;
     margin: auto;
     margin-top: 200px;
+    gap: 10px;
     border: 1px solid red;
 }
 
@@ -24,22 +25,24 @@
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
 
-.page-button:hover, .page-button:focus {
+.page-button:hover,
+.page-button:focus {
     background-color: #ff7e56;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .page-button.active {
     background: #fc4a1a;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
     .products-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
     }
 }
 

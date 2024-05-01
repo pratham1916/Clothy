@@ -1,7 +1,9 @@
 /* ---------------------section 1 */
 
-#home {
-    /* padding: 0 6%; */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .new_home {
