@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import Payment from './Payment';
 ``
 const Cart = () => {
-  const { cart } = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart.data);
   console.log(cart);
   const [toggle, setToggle] = useState(false)
   const dispatch = useDispatch()

@@ -58,9 +58,10 @@ const womansInitialSate = {
 }
 
 const cartInitialSate = {
-    cart: [],
+    data: [],
     isError: false,
-    isLoading: false
+    isLoading: false,
+    isSuccess:false,
 };
 
 const wishlistInitialSate = {
@@ -128,13 +129,13 @@ export const cartReducer = (state = cartInitialSate, action) => {
         case ADD_TO_CART_REQUEST:
             return { ...state, isLoading: true };
         case ADD_TO_CART_SUCCESS:
-            return { ...state, cart: [...state.cart, action.payload], isLoading: false };
+            return { ...state, data: [...state.data,action.payload], isLoading: false,isSuccess:true };
         case ADD_TO_CART_ERROR:
             return { ...state, isError: true, isLoading: false };
         case GET_FROM_CART_REQUEST:
             return { ...state, isLoading: true };
         case GET_FROM_CART_SUCCESS:
-            return { ...state, cart: [...action.payload], isLoading: false };
+            return { ...state, data: action.payload, isLoading: false };
         case GET_FROM_CART_ERROR:
             return { ...state, isError: true, isLoading: false };
         case DELETE_FROM_CART_REQUEST:

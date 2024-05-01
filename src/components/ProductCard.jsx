@@ -7,22 +7,22 @@ import { addToCart, addToWishlist } from '../Redux/action';
 
 function ProductCard({ ele, ShowButton }) {
   const login = useSelector(state => state.login);
+  const cart = useSelector(state => state.cart);
+  // console.log(cart)
   const { id, category, name, price, size, imageURL, description, rating, stock } = ele;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useToast();
 
-  const handleNavigation = () => {
-    navigate(`${location.pathname}/${id}`, {
-      state: { data: { ...ele, userId: user.id } }
-    });
-  };
+  // const handleNavigation = () => {
+  //   navigate(`${location.pathname}/${id}`, {
+  //     state: { data: { ...ele, userId: user.id } }
+  //   });
+  // };
 
-  const handleAddToCart = (e) => {
-    e.stopPropagation();
+  const handleAddToCart = () => {
+
     if (!login.isAuth) {
       <Alert status='error'>
         <AlertIcon />
@@ -32,11 +32,24 @@ function ProductCard({ ele, ShowButton }) {
       return;
     }
 
-    toast.promise(dispatch(addToCart(ele,login.users.id)), {
-      success: { position: 'top', title: 'added', description: 'Looks great' },
-      error: { position: 'top', title: 'rejected', description: 'Something wrong' },
-      loading: { position: 'top', title: 'pending', description: 'Please wait' },
+    const obj = { ...ele, userId: login.users.id };
+    console.log(obj);
+    
+    dispatch(addToCart(obj));
+    toast({
+      title: "Successfully added to Cart",
+      position: "top-right",
+      duration: 3000,
+      isClosable: true,
+      variant: "solid",
+      color: "green"
     });
+
+    // toast.promise(dispatch(addToCart(obj)), {
+    //   success: { position: 'top', title: 'added', description: 'Looks great' },
+    //   error: { position: 'top', title: 'rejected', description: 'Something wrong' },
+    //   loading: { position: 'top', title: 'pending', description: 'Please wait' },
+    // });
   };
 
   const handleAddToWishlist = (e) => {
@@ -50,7 +63,9 @@ function ProductCard({ ele, ShowButton }) {
       return;
     }
 
-    toast.promise(dispatch(addToWishlist(ele,login.users.id)), {
+    const obj = { ...ele, userId: login.users.id };
+    console.log(obj);
+    toast.promise(dispatch(addToWishlist(obj)), {
       success: { position: 'top', title: 'added', description: 'Looks great' },
       error: { position: 'top', title: 'rejected', description: 'Something wrong' },
       loading: { position: 'top', title: 'pending', description: 'Please wait' },
@@ -72,7 +87,7 @@ function ProductCard({ ele, ShowButton }) {
         <button className="prev" onClick={handlePrevImage}>&#10094;</button>
         <button className="next" onClick={handleNextImage}>&#10095;</button>
       </div>
-      <div className="card-front" onClick={handleNavigation}>
+      <div className="card-front">
         <h1 className="product-name">{name}</h1>
         <div className="product-detail">
           <p className="price"><b>Price:</b> ${price}</p>

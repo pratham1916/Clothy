@@ -35,6 +35,7 @@ export const loginUser = (email, password, toast) => async (dispatch) => {
   try {
     const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => user.email === email && user.password === password);
+    localStorage.setItem("User",user);
     if (user.length === 1) {
       dispatch({ type: LOGIN_SUCCESS,payload: user[0]});
       toast({
@@ -142,37 +143,41 @@ export const getWomensData = (page = 1) => async (dispatch) => {
   }
 };
 
-export const addToCart = (obj, userId) => async (dispatch) => {
+export const addToCart = (obj) => async (dispatch) => {
+  console.log(obj);
   dispatch({ type: ADD_TO_CART_REQUEST });
   try {
-    const res = await axios.post(`https://clothy-api.onrender.com/cart`, { ...obj, userId });
-    dispatch({ type: ADD_TO_CART_SUCCESS, payload: res.data });
+    const res = await axios.post(`https://clothy-api.onrender.com/cart`,{...obj});
+    console.log(res.data);
+    dispatch({ type: ADD_TO_CART_SUCCESS,payload: res.data});
   } catch (err) {
-    dispatch({ type: ADD_TO_CART_ERROR });
-  }
-};
-
-export const deleteFromCart = (id, userId) => async (dispatch) => {
-  dispatch({ type: DELETE_FROM_CART_REQUEST });
-  try {
-    await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
-    dispatch({ type: DELETE_FROM_CART_SUCCESS });
-    getCarts(userId)(dispatch); 
-  } catch (err) {
-    dispatch({ type: DELETE_FROM_CART_ERROR });
+    dispatch({ type: ADD_TO_CART_ERROR,payload: err.response?.data?.message });
   }
 };
 
 export const getCarts = (userId) => async (dispatch) => {
   dispatch({ type: GET_FROM_CART_REQUEST });
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/cart`);
-    const cart = res.data.filter(cart => cart.userId === userId);
-    dispatch({ type: GET_FROM_CART_SUCCESS, payload: cart });
+    const res = await axios.get(`https://clothy-api.onrender.com/cart?userId=${userId}`);
+    console.log(res.data);
+    dispatch({ type: GET_FROM_CART_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch({ type: GET_FROM_CART_ERROR });
+    dispatch({ type: GET_FROM_CART_ERROR,payload: err.response?.data?.message });
   }
 };
+
+export const deleteFromCart = (id,userId) => async (dispatch) => {
+  dispatch({ type: DELETE_FROM_CART_REQUEST });
+  try {
+    await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
+    getCarts(userId)(dispatch);
+    dispatch({ type: DELETE_FROM_CART_SUCCESS });
+  } catch (err) {
+    dispatch({ type: DELETE_FROM_CART_ERROR ,payload: err.response?.data?.message});
+  }
+};
+
+
 
 export const addToWishlist = (obj, userId) => async (dispatch) => {
   dispatch({ type: ADD_TO_WISHLIST_REQUEST });
