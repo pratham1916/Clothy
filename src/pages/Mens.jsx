@@ -4,20 +4,19 @@ import { getMensData } from '../Redux/action';
 import ProductCard from '../components/ProductCard';
 import { Spinner } from '@chakra-ui/react';
 import "../style/Mens.css";
-import image1 from "../assets/image4.jpg"
-import image2 from "../assets/image3.jpg"
-import image3 from "../assets/image2.jpg"
 
 function Mens() {
   const dispatch = useDispatch();
   const { totalMens, mensData, isloading, isError } = useSelector(state => state.mens);
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState('');
+  const [sort, setSort] = useState('');
   const totalPages = Math.ceil(totalMens / 12);
   const array = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   useEffect(() => {
-    dispatch(getMensData(page));
-  }, [page, dispatch]);
+    dispatch(getMensData(page, filter, sort));
+  }, [page, filter, sort, dispatch]);
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
@@ -28,11 +27,27 @@ function Mens() {
     });
   };
 
+  const handleFilterChange = (e) => setFilter(e.target.value);
+  const handleSortChange = (e) => setSort(e.target.value);
+
   if (isloading) return <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />;
   if (isError) return <h1>Error</h1>;
 
   return (
     <div className="Mens-container">
+      <div className="filter-sort-container">
+        <select value={filter} onChange={handleFilterChange}>
+          <option value="">All Categories</option>
+          <option value="shirts">Shirts</option>
+          <option value="pants">Pants</option>
+          <option value="accessories">Accessories</option>
+        </select>
+        <select value={sort} onChange={handleSortChange}>
+          <option value="">Default</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+        </select>
+      </div>
       <div className="products-grid">
         {mensData.map(ele => (
           <ProductCard key={ele.id} ele={ele} ShowButton="default" />
