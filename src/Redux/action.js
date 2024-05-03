@@ -31,6 +31,8 @@ import {
   DELETE_FROM_WISHLIST_REQUEST,
   DELETE_FROM_WISHLIST_SUCCESS,
   DELETE_FROM_WISHLIST_ERROR,
+  GET_ALL_MENS_DATA,
+  GET_ALL_WOMENS_DATA,
 } from "./actionType";
 
 export const loginUser = (email, password, toast) => async (dispatch) => {
@@ -38,7 +40,7 @@ export const loginUser = (email, password, toast) => async (dispatch) => {
   try {
     const res = await axios.get("https://clothy-api.onrender.com/users");
     const user = res.data.filter(user => user.email === email && user.password === password);
-    
+
     if (user) {
       localStorage.setItem("User", JSON.stringify(user[0]));
       dispatch({ type: LOGIN_SUCCESS, payload: user[0] });
@@ -127,21 +129,55 @@ export const registerUser = ({ name, email, password, phoneNumber, image, type }
   }
 };
 
-export const getMensData = (page = 1) => async (dispatch) => {
+export const getMensData = (page = 1,filter="",sort="") => async (dispatch) => {
   dispatch({ type: GET_MENS_REQUEST });
+  let queryParams = [];
+  if(filter){queryParams.push(`category=${encodeURIComponent(filter)}`)}
+  if(sort){queryParams.push(`_sort=price&_order=${encodeURIComponent(sort)}`)}
+  if(page){queryParams.push(`_page=${page}&_limit=12`)}
+
+  const queryString = queryParams.join("&")
+  console.log(queryString);
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/mens?_page=${page}&_limit=12`);
-    dispatch({ type: GET_MENS_DATA, payload: { data: res.data, totalMens: res.headers["x-total-count"] } });
+    const res = await axios.get(`https://clothy-api.onrender.com/mens?${queryString}`);
+    dispatch({ type: GET_MENS_DATA, payload: { data: res.data, totalMens: parseInt(res.headers["x-total-count"])}});
   } catch (err) {
     dispatch({ type: GET_MENS_ERROR });
   }
 };
 
-export const getWomensData = (page = 1) => async (dispatch) => {
+export const getAllMensData = () => async (dispatch) => {
+  dispatch({ type: GET_MENS_REQUEST });
+  try {
+    const res = await axios.get(`https://clothy-api.onrender.com/mens`);
+    dispatch({ type: GET_ALL_MENS_DATA, payload: res.data });
+  } catch (err) {
+    dispatch({ type: GET_MENS_ERROR });
+  }
+};
+
+export const getWomensData = (page = 1,filter="",sort="") => async (dispatch) => {
+  dispatch({ type: GET_WOMENS_REQUEST });
+  let queryParams = [];
+  if(filter){queryParams.push(`category=${encodeURIComponent(filter)}`)}
+  if(sort){queryParams.push(`_sort=price&_order=${encodeURIComponent(sort)}`)}
+  if(page){queryParams.push(`_page=${page}&_limit=12`)}
+
+  const queryString = queryParams.join("&")
+  console.log(queryString);
+  try {
+    const res = await axios.get(`https://clothy-api.onrender.com/womens?${queryString}`);
+    dispatch({ type: GET_WOMENS_DATA, payload: { data: res.data, totalWoMens: parseInt(res.headers["x-total-count"])}});
+  } catch (err) {
+    dispatch({ type: GET_WOMENS_ERROR });
+  }
+};
+
+export const getAllWomensData = () => async (dispatch) => {
   dispatch({ type: GET_WOMENS_REQUEST });
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/womens?_page=${page}&_limit=12`);
-    dispatch({ type: GET_WOMENS_DATA, payload: { data: res.data, totalWoMens: res.headers["x-total-count"] } });
+    const res = await axios.get(`https://clothy-api.onrender.com/womens`);
+    dispatch({ type: GET_ALL_WOMENS_DATA, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_WOMENS_ERROR });
   }
@@ -182,7 +218,7 @@ export const deleteFromCart = (id, userId) => async (dispatch) => {
 export const addToWishlist = (obj) => async (dispatch) => {
   dispatch({ type: ADD_TO_WISHLIST_REQUEST });
   try {
-    const res = await axios.post(`https://clothy-api.onrender.com/wishlist`, {...obj});
+    const res = await axios.post(`https://clothy-api.onrender.com/wishlist`, { ...obj });
     dispatch({ type: ADD_TO_WISHLIST_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: ADD_TO_WISHLIST_ERROR });
@@ -195,7 +231,7 @@ export const getWishlists = (userId) => async (dispatch) => {
     const res = await axios.get(`https://clothy-api.onrender.com/wishlist?userId=${userId}`);
     dispatch({ type: GET_FROM_WISHLIST_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch({ type: GET_FROM_WISHLIST_ERROR,payload: err.response?.data?.message });
+    dispatch({ type: GET_FROM_WISHLIST_ERROR, payload: err.response?.data?.message });
   }
 };
 
@@ -204,7 +240,7 @@ export const deleteFromWishlist = (id, userId) => async (dispatch) => {
   try {
     await axios.delete(`https://clothy-api.onrender.com/wishlist/${id}`);
     getWishlists(userId)(dispatch);
-    dispatch({ type: DELETE_FROM_WISHLIST_SUCCESS});
+    dispatch({ type: DELETE_FROM_WISHLIST_SUCCESS });
   } catch (err) {
     dispatch({ type: DELETE_FROM_WISHLIST_ERROR, payload: err.response?.data?.message });
   }

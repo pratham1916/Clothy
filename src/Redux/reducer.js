@@ -29,7 +29,9 @@ import {
     GET_FROM_WISHLIST_ERROR,
     DELETE_FROM_WISHLIST_ERROR,
     DELETE_FROM_WISHLIST_REQUEST,
-    DELETE_FROM_WISHLIST_SUCCESS
+    DELETE_FROM_WISHLIST_SUCCESS,
+    GET_ALL_MENS_DATA,
+    GET_ALL_WOMENS_DATA
 } from './actionType';
 
 const initialState_Login = {
@@ -48,6 +50,7 @@ const initialState_Register = {
 
 const mansInitialSate = {
     mensData: [],
+    AllData: [],
     isError: false,
     totalMens: 0,
     isLoading: false
@@ -55,6 +58,7 @@ const mansInitialSate = {
 
 const womansInitialSate = {
     womensData: [],
+    AllData: [],
     isError: false,
     totalWoMens: 0,
     isLoading: false
@@ -108,6 +112,8 @@ export const mensReducer = (state = mansInitialSate, action) => {
             return { ...state, isLoading: true }
         case GET_MENS_DATA:
             return { ...state, mensData: action.payload.data, totalMens: action.payload.totalMens, isLoading: false };
+        case GET_ALL_MENS_DATA:
+            return { ...state, AllData: action.payload, isLoading: false };
         case GET_MENS_ERROR:
             return { ...state, isError: true, isLoading: false };
         default:
@@ -121,6 +127,8 @@ export const womensReducer = (state = womansInitialSate, action) => {
             return { ...state, isLoading: true }
         case GET_WOMENS_DATA:
             return { ...state, womensData: action.payload.data, totalWoMens: action.payload.totalWoMens, isLoading: false };
+        case GET_ALL_WOMENS_DATA:
+            return { ...state, AllData: action.payload, isLoading: false };
         case GET_WOMENS_ERROR:
             return { ...state, isError: true, isLoading: false };
         default:

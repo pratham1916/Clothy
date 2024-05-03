@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMensData } from '../Redux/action';
+import { getAllMensData, getMensData } from '../Redux/action';
 import ProductCard from '../components/ProductCard';
-import { Spinner } from '@chakra-ui/react';
 import "../style/Mens.css";
 
 function Mens() {
   const dispatch = useDispatch();
-  const { totalMens, mensData, isloading, isError } = useSelector(state => state.mens);
+  const { totalMens, mensData, AllData} = useSelector(state => state.mens);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('');
@@ -15,8 +14,12 @@ function Mens() {
   const array = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   useEffect(() => {
-    dispatch(getMensData(page, filter, sort));
-  }, [page, filter, sort, dispatch]);
+    dispatch(getMensData(page,filter,sort));
+  }, [page,dispatch,filter,sort]);
+
+  useEffect(() => {
+    dispatch(getAllMensData())
+  }, [dispatch]);
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
@@ -30,22 +33,19 @@ function Mens() {
   const handleFilterChange = (e) => setFilter(e.target.value);
   const handleSortChange = (e) => setSort(e.target.value);
 
-  if (isloading) return <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />;
-  if (isError) return <h1>Error</h1>;
+  const uniqueCategories = [...new Set(AllData.map(item => item.category))];
 
   return (
     <div className="Mens-container">
       <div className="filter-sort-container">
         <select value={filter} onChange={handleFilterChange}>
           <option value="">All Categories</option>
-          <option value="shirts">Shirts</option>
-          <option value="pants">Pants</option>
-          <option value="accessories">Accessories</option>
+          {uniqueCategories.map((category)=> <option key={category} value={category}>{category}</option> )}
         </select>
         <select value={sort} onChange={handleSortChange}>
           <option value="">Default</option>
-          <option value="price-low-high">Price: Low to High</option>
-          <option value="price-high-low">Price: High to Low</option>
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
         </select>
       </div>
       <div className="products-grid">
