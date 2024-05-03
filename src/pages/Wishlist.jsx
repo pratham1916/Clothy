@@ -17,9 +17,9 @@ const Wishlist = () => {
   
   return (
     <div className='cart-container'>
-      <img src={cart_banner} />
+      <div className="wishlist-banner"></div>
       {wishlist.length === 0 ? (
-        <div className='not-found'><i className="fa-solid fa-cart-shopping"></i><h1>Your Wishlist is Empty</h1></div>
+        <div className='not-found'><i className="fa-solid fa-heart wishlist-icon"></i><h1>Your Wishlist is Empty</h1></div>
       ) : (<div >
         <section id="cart" class="section-p1">
           <table width="100%" >

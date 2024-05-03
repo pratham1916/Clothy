@@ -10,7 +10,14 @@ const Navbar = () => {
     const isAuthenticated = useSelector(state => state.login.isAuth); 
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    const closeMenu = () => setIsMenuOpen(false);
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    };
 
     const handleScroll = () => {
         setIsScrolled(window.pageYOffset > 0);

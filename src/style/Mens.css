@@ -1,6 +1,34 @@
 .Mens-container {
     width: 100%;
 }
+#page-header-mens {
+    background-image: url("../assets/mens-banner-3.jpg");
+    width: 100%;
+    height: 50vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+}
+
+#page-header-womens {
+    background-image: url("../assets/women-banner-4.jpg");
+    width: 100%;
+    height: 50vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+}
+
 
 .products-grid {
     display: grid;
@@ -21,7 +49,7 @@
     border-radius: 5px;
     background: white;
     border: 2px solid var(--main-color);
-    width: 30%;
+    width: 25%;
     height: 30px;
     padding: 0 10px;
 }

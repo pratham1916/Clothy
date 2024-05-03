@@ -1,47 +1,61 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Button } from '@chakra-ui/react';
+import { useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Button, useToast } from '@chakra-ui/react';
 import StarRating from "./StarRating";
-import "../style/singleProduct.css"
+import "../style/singleProduct.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../Redux/action";
 
 function SingleProduct() {
-  const [user, setUser] = useState({});
-  const [quantity, setQuantity] = useState(1);
-  const params = useParams();
   const location = useLocation();
-  const handleIncrement = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
+  const data = location.state;
+  const dispatch = useDispatch();
+  const login = useSelector(state => state.login);
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const handleAddToCart = (data) => {
+    if (!login.isAuth) {
+      toast({
+        title: "Authentication required",
+        description: "Please login to add items to your cart.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right"
+      });
+      navigate("/login");
+      return;
+    }
+
+    dispatch(addToCart({ ...data, userId: login.users.id }));
+    toast({
+      title: "Successfully added to Cart",
+      position: "top-left",
+      duration: 2000,
+      isClosable: true,
+      variant: "solid",
+      color: "green"
+    });
   };
 
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
   return (
     <div className="singleproductcontainer">
       <div className="single_product_images">
-        <img src={location.state.data.imageURL[0]} alt={location.state.data.name} />
-        <img src={location.state.data.imageURL[1]} alt={location.state.data.name} />
-        <img src={location.state.data.imageURL[2]} alt={location.state.data.name} />
+        <img src={data.imageURL[0]} alt={data.name} />
+        <img src={data.imageURL[1]} alt={data.name} />
+        <img src={data.imageURL[2]} alt={data.name} />
       </div>
       <div className="singleInfo">
-        <h4>{location.state.data.name}</h4>
-        <h5>{location.state.data.description}</h5>
-        <p><b>Category:</b> {location.state.data.category}</p>
-        <p><b>Price:</b> ${location.state.data.price}</p>
+        <h4>{data.name}</h4>
+        <h5>{data.description}</h5>
+        <p><b>Category:</b> {data.category}</p>
+        <p><b>Price:</b> ${data.price}</p>
         <div className="rating">
           <p><b>Rating:</b> </p>
-          <StarRating rating={location.state.data.rating} />
+          <StarRating rating={data.rating} />
         </div>
-        <div className="rating">
-          <p><b>Quantity: </b> </p>
-          <button className="quantity-button" onClick={handleDecrement}>-</button>
-          <span className="quantity">{quantity}</span>
-          <button className="quantity-button" onClick={handleIncrement}>+</button>
-        </div>
-        <Button colorScheme='red' size='md' marginRight={2} >ADD TO CART</Button>
+        <Button onClick={()=> handleAddToCart(data)} colorScheme='red' size='md' marginRight={2} >ADD TO CART</Button>
       </div>
     </div>
   );

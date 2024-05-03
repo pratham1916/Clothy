@@ -6,7 +6,7 @@ import "../style/Mens.css";
 
 function Mens() {
   const dispatch = useDispatch();
-  const { totalMens, mensData, AllData} = useSelector(state => state.mens);
+  const { totalMens, mensData, AllMensData } = useSelector(state => state.mens);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('');
@@ -14,8 +14,8 @@ function Mens() {
   const array = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   useEffect(() => {
-    dispatch(getMensData(page,filter,sort));
-  }, [page,dispatch,filter,sort]);
+    dispatch(getMensData(page, filter, sort));
+  }, [page, dispatch, filter, sort]);
 
   useEffect(() => {
     dispatch(getAllMensData())
@@ -33,14 +33,17 @@ function Mens() {
   const handleFilterChange = (e) => setFilter(e.target.value);
   const handleSortChange = (e) => setSort(e.target.value);
 
-  const uniqueCategories = [...new Set(AllData.map(item => item.category))];
+  const uniqueCategories = [...new Set(AllMensData.map(item => item.category))];
 
   return (
     <div className="Mens-container">
+
+      <section id="page-header-mens"></section>
+
       <div className="filter-sort-container">
         <select value={filter} onChange={handleFilterChange}>
           <option value="">All Categories</option>
-          {uniqueCategories.map((category)=> <option key={category} value={category}>{category}</option> )}
+          {uniqueCategories.map((category) => <option key={category} value={category}>{category}</option>)}
         </select>
         <select value={sort} onChange={handleSortChange}>
           <option value="">Default</option>
@@ -50,7 +53,7 @@ function Mens() {
       </div>
       <div className="products-grid">
         {mensData.map(ele => (
-          <ProductCard key={ele.id} ele={ele} ShowButton="default" />
+          <ProductCard key={ele.id} ele={ele} />
         ))}
       </div>
       <div className="pagination">

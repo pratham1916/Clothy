@@ -6,16 +6,16 @@ import { getAllWomensData, getWomensData } from '../Redux/action';
 
 function Womens() {
   const dispatch = useDispatch();
-  const { totalWoMens, womensData, AllData} = useSelector(state => state.womens);
+  const { totalWoMens, womensData, AllWomensData } = useSelector(state => state.womens);
   const [page, setPage] = useState(1);
   const totalPages = Math.ceil(totalWoMens / 12);
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('');
   const array = Array.from({ length: totalPages }, (_, index) => index + 1);
-  
+
   useEffect(() => {
-    dispatch(getWomensData(page,filter,sort));
-  }, [page,dispatch,filter, sort]);
+    dispatch(getWomensData(page, filter, sort));
+  }, [page, dispatch, filter, sort]);
 
   useEffect(() => {
     dispatch(getAllWomensData())
@@ -30,17 +30,20 @@ function Womens() {
     });
   };
 
-  const uniqueCategories = [...new Set(AllData.map(item => item.category))]
-  
+  const uniqueCategories = [...new Set(AllWomensData.map(item => item.category))]
+
   const handleFilterChange = (e) => setFilter(e.target.value);
   const handleSortChange = (e) => setSort(e.target.value);
 
   return (
     <div className="womens-container">
+
+      <section id="page-header-womens"></section>
+
       <div className="filter-sort-container">
         <select value={filter} onChange={handleFilterChange}>
           <option value="">All Categories</option>
-          {uniqueCategories.map(category => <option key={category} value={category}>{category}</option> )}
+          {uniqueCategories.map(category => <option key={category} value={category}>{category}</option>)}
         </select>
         <select value={sort} onChange={handleSortChange}>
           <option value="">Default</option>

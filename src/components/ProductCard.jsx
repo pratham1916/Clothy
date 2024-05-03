@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Alert, AlertIcon, useToast } from '@chakra-ui/react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react';
 import "../style/ProductCard.css";
 import { addToCart, addToWishlist } from '../Redux/action';
 
-function ProductCard({ ele, ShowButton }) {
+function ProductCard({ ele }) {
   const login = useSelector(state => state.login);
   const { id, name, price, imageURL } = ele;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -14,28 +14,39 @@ function ProductCard({ ele, ShowButton }) {
   const toast = useToast();
 
   const handleNavigation = () => {
-    navigate(`${location.pathname}/${id}`, {
-      state: { data: { ...ele, userId: login.users.id } }
-    });
+    if (!login.isAuth) {
+      toast({
+        title: "Please login first",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate("/login");
+    } else {
+      navigate(`/mens/${id}`, {state: {...ele, userId: login.users.id}});
+    }
   };
 
   const handleAddToCart = () => {
-
     if (!login.isAuth) {
-      <Alert status='error'>
-        <AlertIcon />
-        There was an error processing your request
-      </Alert>
+      toast({
+        title: "Authentication required",
+        description: "Please login to add items to your cart.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right"
+      });
       navigate("/login");
       return;
     }
 
-    const obj = { ...ele, userId: login.users.id };
-    dispatch(addToCart(obj));
+    dispatch(addToCart({ ...ele, userId: login.users.id }));
     toast({
       title: "Successfully added to Cart",
-      position: "top-right",
-      duration: 3000,
+      position: "top-left",
+      duration: 2000,
       isClosable: true,
       variant: "solid",
       color: "green"
@@ -44,20 +55,23 @@ function ProductCard({ ele, ShowButton }) {
 
   const handleAddToWishlist = () => {
     if (!login.isAuth) {
-      <Alert status='success'>
-        <AlertIcon />
-        Pleas Login First
-      </Alert>
+      toast({
+        title: "Authentication required",
+        description: "Please login to add items to your wishlist.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right"
+      });
       navigate("/login");
       return;
     }
 
-    const obj = { ...ele, userId: login.users.id };
-    dispatch(addToWishlist(obj));
+    dispatch(addToWishlist({ ...ele, userId: login.users.id }));
     toast({
-      title: "Successfully added to Cart",
-      position: "top-right",
-      duration: 3000,
+      title: "Successfully added to Wishlist",
+      position: "top-left",
+      duration: 2000,
       isClosable: true,
       variant: "solid",
       color: "green"
@@ -73,7 +87,7 @@ function ProductCard({ ele, ShowButton }) {
   };
 
   return (
-    <div className="product-card" >
+    <div className="product-card">
       <div className="carousel-container">
         <img className="carousel-image" src={imageURL[currentImageIndex]} alt={name} />
         <button className="prev" onClick={handlePrevImage}>&#10094;</button>
@@ -93,7 +107,7 @@ function ProductCard({ ele, ShowButton }) {
           </button>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

@@ -197,7 +197,6 @@ export const getCarts = (userId) => async (dispatch) => {
   dispatch({ type: GET_FROM_CART_REQUEST });
   try {
     const res = await axios.get(`https://clothy-api.onrender.com/cart?userId=${userId}`);
-    console.log(res.data);
     dispatch({ type: GET_FROM_CART_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_FROM_CART_ERROR, payload: err.response?.data?.message });

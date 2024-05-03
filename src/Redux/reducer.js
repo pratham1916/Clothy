@@ -50,7 +50,7 @@ const initialState_Register = {
 
 const mansInitialSate = {
     mensData: [],
-    AllData: [],
+    AllMensData: [],
     isError: false,
     totalMens: 0,
     isLoading: false
@@ -58,7 +58,7 @@ const mansInitialSate = {
 
 const womansInitialSate = {
     womensData: [],
-    AllData: [],
+    AllWomensData: [],
     isError: false,
     totalWoMens: 0,
     isLoading: false
@@ -113,7 +113,7 @@ export const mensReducer = (state = mansInitialSate, action) => {
         case GET_MENS_DATA:
             return { ...state, mensData: action.payload.data, totalMens: action.payload.totalMens, isLoading: false };
         case GET_ALL_MENS_DATA:
-            return { ...state, AllData: action.payload, isLoading: false };
+            return { ...state, AllMensData: action.payload, isLoading: false };
         case GET_MENS_ERROR:
             return { ...state, isError: true, isLoading: false };
         default:
@@ -128,7 +128,7 @@ export const womensReducer = (state = womansInitialSate, action) => {
         case GET_WOMENS_DATA:
             return { ...state, womensData: action.payload.data, totalWoMens: action.payload.totalWoMens, isLoading: false };
         case GET_ALL_WOMENS_DATA:
-            return { ...state, AllData: action.payload, isLoading: false };
+            return { ...state, AllWomensData: action.payload, isLoading: false };
         case GET_WOMENS_ERROR:
             return { ...state, isError: true, isLoading: false };
         default:

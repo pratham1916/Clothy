@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../Redux/action';
 import "../style/Cart.css"
-import cart_banner from "../assets/cart_banner.jpg"
 import SingleCart from '../components/SingleCart';
 import { Link } from 'react-router-dom';
 import Payment from './Payment';
@@ -19,7 +18,7 @@ const Cart = () => {
 
   return (
     <div className='cart-container'>
-      <img src={cart_banner} />
+      <div className="cart-banner"></div>
       {cart.length === 0 ? (
         <div className='not-found'><i className="fa-solid fa-cart-shopping"></i><h1>Your Cart is Empty</h1></div>
       ) : (<div >
