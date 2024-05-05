@@ -30,16 +30,20 @@ function Mens() {
     });
   };
 
-  const handleFilterChange = (e) => setFilter(e.target.value);
-  const handleSortChange = (e) => setSort(e.target.value);
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+    setPage(1);
+  };
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+    setPage(1);
+  };
 
   const uniqueCategories = [...new Set(AllMensData.map(item => item.category))];
 
   return (
     <div className="Mens-container">
-
       <section id="page-header-mens"></section>
-
       <div className="filter-sort-container">
         <select value={filter} onChange={handleFilterChange}>
           <option value="">All Categories</option>

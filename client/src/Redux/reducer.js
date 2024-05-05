@@ -53,7 +53,7 @@ const mansInitialSate = {
     AllMensData: [],
     isError: false,
     totalMens: 0,
-    isLoading: false
+    isLoading: false,
 }
 
 const womansInitialSate = {
@@ -116,7 +116,7 @@ export const mensReducer = (state = mansInitialSate, action) => {
             return { ...state, AllMensData: action.payload, isLoading: false };
         case GET_MENS_ERROR:
             return { ...state, isError: true, isLoading: false };
-        default:
+        default:    
             return state;
     }
 }

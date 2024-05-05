@@ -32,14 +32,18 @@ function Womens() {
 
   const uniqueCategories = [...new Set(AllWomensData.map(item => item.category))]
 
-  const handleFilterChange = (e) => setFilter(e.target.value);
-  const handleSortChange = (e) => setSort(e.target.value);
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+    setPage(1);
+  };
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+    setPage(1);
+  };
 
   return (
     <div className="womens-container">
-
       <section id="page-header-womens"></section>
-
       <div className="filter-sort-container">
         <select value={filter} onChange={handleFilterChange}>
           <option value="">All Categories</option>

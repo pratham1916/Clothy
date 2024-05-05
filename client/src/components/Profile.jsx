@@ -38,9 +38,12 @@ const Profile = () => {
                     <ModalCloseButton onClick={onClose} />
                     <ModalBody >
                         <Flex direction="column" align="center">
-                            <Avatar size='lg' name={userData.name} src={userData.image} mb={4} />
+                            <Avatar size='lg' name={userData.avatar} src={userData.avatar} mb={4} />
                             <Text fontWeight='bold' mb='1rem' textAlign="center">
-                                Name: {userData.name}
+                                URL: {userData.avatar}
+                            </Text>
+                            <Text fontWeight='bold' mb='1rem' textAlign="center">
+                                Name: {userData.fullname}
                             </Text>
                             <Text fontWeight='bold' mb='1rem' textAlign="center">
                                 Email: {userData.email}

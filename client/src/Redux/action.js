@@ -6,7 +6,6 @@ import {
   REGISTER_LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_PRESENT,
   GET_MENS_DATA,
   GET_MENS_REQUEST,
   GET_MENS_ERROR,
@@ -38,12 +37,12 @@ import {
 export const loginUser = (email, password, toast) => async (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
   try {
-    const res = await axios.get("https://clothy-api.onrender.com/users");
-    const user = res.data.filter(user => user.email === email && user.password === password);
-
+    const response = await axios.post("https://clothy-7fcq.onrender.com/login", { email, password });
+    const user = response.data.user;
+    
     if (user) {
-      localStorage.setItem("User", JSON.stringify(user[0]));
-      dispatch({ type: LOGIN_SUCCESS, payload: user[0] });
+      localStorage.setItem("User", JSON.stringify(user));
+      dispatch({ type: LOGIN_SUCCESS, payload: user });
       toast({
         title: "Login Successful",
         description: "You're now logged in.",
@@ -67,7 +66,7 @@ export const loginUser = (email, password, toast) => async (dispatch) => {
     dispatch({ type: LOGIN_FAIL });
     toast({
       title: "An error occurred.",
-      description: "Unable to log in. Please try again later.",
+      description: error.response?.data?.message || "Unable to log in. Please try again later.",
       status: "error",
       position: 'top',
       duration: 3000,
@@ -76,71 +75,47 @@ export const loginUser = (email, password, toast) => async (dispatch) => {
   }
 };
 
-export const registerUser = ({ name, email, password, phoneNumber, image, type }, toast) => async (dispatch) => {
+export const registerUser = (formData, toast) => async (dispatch) => {
+  dispatch({ type: REGISTER_LOADING });
   try {
-    const res = await axios.get("https://clothy-api.onrender.com/users");
-    const userExists = res.data.some(user => user.email === email);
-    if (userExists) {
-      dispatch({ type: USER_PRESENT });
-      toast({
-        title: "User Already Exist",
-        description: "Please try with a new email!",
-        position: 'top',
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-    } else {
-      dispatch({ type: REGISTER_LOADING });
-      await axios.post('https://clothy-api.onrender.com/users', { name, email, password, phoneNumber, image, type })
-        .then(() => {
-          dispatch({ type: REGISTER_SUCCESS });
-          toast({
-            title: "Registration successful!",
-            description: "You can now log in.",
-            position: 'top',
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-          });
-        })
-        .catch(() => {
-          dispatch({ type: REGISTER_FAIL });
-          toast({
-            title: "Register Unsuccessful!",
-            description: "Please check your details and try again.",
-            position: 'top',
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          });
-        });
-    }
+    const response = await axios.post('https://clothy-7fcq.onrender.com/register', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+
+    dispatch({ type: REGISTER_SUCCESS });
+    toast({
+      title: "Registration successful!",
+      description: "You can now log in.",
+      position: 'top',
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+
   } catch (error) {
     dispatch({ type: REGISTER_FAIL });
     toast({
-      title: "An error occurred.",
-      description: "Unable to register. Please try again later.",
+      title: "Registration Unsuccessful!",
+      description: error.response?.data?.message || "Please check your details and try again.",
       position: 'top',
       status: "error",
       duration: 3000,
       isClosable: true,
     });
   }
-};
+}
 
-export const getMensData = (page = 1,filter="",sort="") => async (dispatch) => {
+export const getMensData = (page = 1, filter = "", sort = "") => async (dispatch) => {
   dispatch({ type: GET_MENS_REQUEST });
   let queryParams = [];
-  if(filter){queryParams.push(`category=${encodeURIComponent(filter)}`)}
-  if(sort){queryParams.push(`_sort=price&_order=${encodeURIComponent(sort)}`)}
-  if(page){queryParams.push(`_page=${page}&_limit=12`)}
+  if (filter) queryParams.push(`category=${encodeURIComponent(filter)}`);
+  if (sort) { queryParams.push(`sort=${encodeURIComponent(sort)}`) }
+  queryParams.push(`page=${page}&limit=12`);
 
-  const queryString = queryParams.join("&")
-  console.log(queryString);
+  const queryString = queryParams.join("&");
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/mens?${queryString}`);
-    dispatch({ type: GET_MENS_DATA, payload: { data: res.data, totalMens: parseInt(res.headers["x-total-count"])}});
+    const res = await axios.get(`http://localhost:8080/mens?${queryString}`);
+    dispatch({ type: GET_MENS_DATA, payload: { data: res.data.products, totalMens: res.data.total} });
   } catch (err) {
     dispatch({ type: GET_MENS_ERROR });
   }
@@ -149,25 +124,24 @@ export const getMensData = (page = 1,filter="",sort="") => async (dispatch) => {
 export const getAllMensData = () => async (dispatch) => {
   dispatch({ type: GET_MENS_REQUEST });
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/mens`);
+    const res = await axios.get(`http://localhost:8080/mens/all`);
     dispatch({ type: GET_ALL_MENS_DATA, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_MENS_ERROR });
   }
 };
 
-export const getWomensData = (page = 1,filter="",sort="") => async (dispatch) => {
+export const getWomensData = (page = 1, filter = "", sort = "") => async (dispatch) => {
   dispatch({ type: GET_WOMENS_REQUEST });
   let queryParams = [];
-  if(filter){queryParams.push(`category=${encodeURIComponent(filter)}`)}
-  if(sort){queryParams.push(`_sort=price&_order=${encodeURIComponent(sort)}`)}
-  if(page){queryParams.push(`_page=${page}&_limit=12`)}
+  if (filter) queryParams.push(`category=${encodeURIComponent(filter)}`);
+  if (sort) { queryParams.push(`sort=${encodeURIComponent(sort)}`) }
+  queryParams.push(`page=${page}&limit=12`);
 
-  const queryString = queryParams.join("&")
-  console.log(queryString);
+  const queryString = queryParams.join("&");
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/womens?${queryString}`);
-    dispatch({ type: GET_WOMENS_DATA, payload: { data: res.data, totalWoMens: parseInt(res.headers["x-total-count"])}});
+    const res = await axios.get(`http://localhost:8080/womens?${queryString}`);
+    dispatch({ type: GET_WOMENS_DATA, payload: { data: res.data.products, totalWoMens: res.data.total}});
   } catch (err) {
     dispatch({ type: GET_WOMENS_ERROR });
   }
@@ -176,7 +150,7 @@ export const getWomensData = (page = 1,filter="",sort="") => async (dispatch) =>
 export const getAllWomensData = () => async (dispatch) => {
   dispatch({ type: GET_WOMENS_REQUEST });
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/womens`);
+    const res = await axios.get(`http://localhost:8080/womens/all`);
     dispatch({ type: GET_ALL_WOMENS_DATA, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_WOMENS_ERROR });
