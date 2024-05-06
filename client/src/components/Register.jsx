@@ -16,7 +16,7 @@ const Register = () => {
       if (register.success) {
         navigate('/login')
       }
-      else if (register.isError || register.isData) {
+      else if (register.isError) {
         navigate('/register');
       }
     }, [register])

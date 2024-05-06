@@ -23,7 +23,7 @@ const Login = () => {
         e.preventDefault();
         dispatch(loginUser(email,password,toast));
     }
-
+    
     return (
         <div className="login-body">
             <div className="container">

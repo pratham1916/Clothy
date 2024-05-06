@@ -34,6 +34,15 @@ import {
   GET_ALL_WOMENS_DATA,
 } from "./actionType";
 
+const axiosAuth = () => {
+  const token = localStorage.getItem('token');
+  return axios.create({
+    headers: {
+      'Authorization': token
+    }
+  });
+}
+
 export const loginUser = (email, password, toast) => async (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
   try {
@@ -42,7 +51,9 @@ export const loginUser = (email, password, toast) => async (dispatch) => {
     
     if (user) {
       localStorage.setItem("User", JSON.stringify(user));
-      dispatch({ type: LOGIN_SUCCESS, payload: user });
+      localStorage.setItem("token", response.data.token);
+      console.log(user);
+      dispatch({ type: LOGIN_SUCCESS , payload:user});
       toast({
         title: "Login Successful",
         description: "You're now logged in.",
@@ -158,9 +169,11 @@ export const getAllWomensData = () => async (dispatch) => {
 };
 
 export const addToCart = (obj) => async (dispatch) => {
+  console.log(obj);
   dispatch({ type: ADD_TO_CART_REQUEST });
   try {
-    const res = await axios.post(`https://clothy-api.onrender.com/cart`, { ...obj });
+    const authAxios = axiosAuth();
+    const res = await authAxios.post(`http://localhost:8080/cart`,(obj));
     dispatch({ type: ADD_TO_CART_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: ADD_TO_CART_ERROR, payload: err.response?.data?.message });
@@ -170,17 +183,18 @@ export const addToCart = (obj) => async (dispatch) => {
 export const getCarts = (userId) => async (dispatch) => {
   dispatch({ type: GET_FROM_CART_REQUEST });
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/cart?userId=${userId}`);
+    const authAxios = axiosAuth();
+    const res = await authAxios.get(`http://localhost:8080/cart/${userId}`);
     dispatch({ type: GET_FROM_CART_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_FROM_CART_ERROR, payload: err.response?.data?.message });
   }
 };
 
-export const deleteFromCart = (id, userId) => async (dispatch) => {
+export const deleteFromCart = (_id, userId) => async (dispatch) => {
   dispatch({ type: DELETE_FROM_CART_REQUEST });
   try {
-    await axios.delete(`https://clothy-api.onrender.com/cart/${id}`);
+    await axios.delete(`https://clothy-api.onrender.com/cart/${_id}`);
     getCarts(userId)(dispatch);
     dispatch({ type: DELETE_FROM_CART_SUCCESS });
   } catch (err) {
@@ -189,9 +203,12 @@ export const deleteFromCart = (id, userId) => async (dispatch) => {
 };
 
 export const addToWishlist = (obj) => async (dispatch) => {
+  console.log(obj);
   dispatch({ type: ADD_TO_WISHLIST_REQUEST });
   try {
-    const res = await axios.post(`https://clothy-api.onrender.com/wishlist`, { ...obj });
+    const authAxios = axiosAuth();
+    const res = await authAxios.post(`http://localhost:8080/wishlist`,(obj));
+    console.log(res.data);
     dispatch({ type: ADD_TO_WISHLIST_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: ADD_TO_WISHLIST_ERROR });
@@ -201,7 +218,8 @@ export const addToWishlist = (obj) => async (dispatch) => {
 export const getWishlists = (userId) => async (dispatch) => {
   dispatch({ type: GET_FROM_WISHLIST_REQUEST });
   try {
-    const res = await axios.get(`https://clothy-api.onrender.com/wishlist?userId=${userId}`);
+    const authAxios = axiosAuth();
+    const res = await authAxios.get(`http://localhost:8080/wishlist/${userId}`);
     dispatch({ type: GET_FROM_WISHLIST_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: GET_FROM_WISHLIST_ERROR, payload: err.response?.data?.message });

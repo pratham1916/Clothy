@@ -19,12 +19,12 @@ function Womens() {
 
   useEffect(() => {
     dispatch(getAllWomensData())
-  }, []);
+  }, [dispatch]);
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
     window.scrollTo({
-      top: 0,
+      top: 350,
       left: 0,
       behavior: 'smooth'
     });
@@ -56,7 +56,7 @@ function Womens() {
         </select>
       </div>
       <div className="products-grid">
-        {womensData.map((ele) => <ProductCard key={ele.id} ele={ele} ShowButton={"default"} />)}
+        {womensData.map((item) => <ProductCard key={item._id} item={item}/>)}
       </div>
       <div className="pagination">
         {array.map(number => (

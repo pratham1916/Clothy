@@ -37,14 +37,13 @@ import {
 const initialState_Login = {
     isError: false,
     isAuth: localStorage.getItem("User") ? true : false,
-    users: {},
+    userData: JSON.parse(localStorage.getItem('User')) || null,
     isLoading: false
 }
 
 const initialState_Register = {
     isError: false,
     success: false,
-    isData: false,
     isLoading: false
 }
 
@@ -83,7 +82,7 @@ export const LoginReducer = (state = initialState_Login, action) => {
         case LOGIN_LOADING:
             return { ...state, isLoading: true, isError: false }
         case LOGIN_SUCCESS:
-            return { ...state, isLoading: false, isError: false, isAuth: true, users: action.payload };
+            return { ...state, isLoading: false, isError: false, isAuth: true,userData :action.paylaod};
         case LOGIN_FAIL:
             return { ...state, isLoading: false, isError: true }
         default:
@@ -98,9 +97,7 @@ export const RegisterReducer = (state = initialState_Register, action) => {
         case REGISTER_SUCCESS:
             return { ...state, isLoading: false, isError: false, success: true }
         case REGISTER_FAIL:
-            return { ...state, isLoading: false, isError: true, isData: false }
-        case USER_PRESENT:
-            return { ...state, isData: true }
+            return { ...state, isLoading: false, isError: true}
         default:
             return state;
     }
@@ -147,7 +144,7 @@ export const cartReducer = (state = cartInitialSate, action) => {
         case GET_FROM_CART_REQUEST:
             return { ...state, isLoading: true };
         case GET_FROM_CART_SUCCESS:
-            return { ...state, data: action.payload, isLoading: false };
+            return { ...state,data: action.payload,isLoading: false };
         case GET_FROM_CART_ERROR:
             return { ...state, isError: true, isLoading: false };
         case DELETE_FROM_CART_REQUEST:

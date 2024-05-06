@@ -5,9 +5,10 @@ import { useToast } from '@chakra-ui/react';
 import "../style/ProductCard.css";
 import { addToCart, addToWishlist } from '../Redux/action';
 
-function ProductCard({ ele }) {
+function ProductCard({ item }) {
   const login = useSelector(state => state.login);
-  const { id, name, price, imageURL } = ele;
+  const user = JSON.parse(localStorage.getItem("User"))
+  const { id, name, price, imageURL } = item;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function ProductCard({ ele }) {
       });
       navigate("/login");
     } else {
-      navigate(`/mens/${id}`, {state: {...ele, userId: login.users.id}});
+      navigate(`/mens/${id}`, { state: { ...item, userId: user._id } });
     }
   };
 
@@ -41,15 +42,13 @@ function ProductCard({ ele }) {
       navigate("/login");
       return;
     }
-
-    dispatch(addToCart({ ...ele, userId: login.users.id }));
+    dispatch(addToCart(item));
     toast({
       title: "Successfully added to Cart",
+      status: "success",
       position: "top-left",
       duration: 2000,
       isClosable: true,
-      variant: "solid",
-      color: "green"
     });
   };
 
@@ -67,14 +66,13 @@ function ProductCard({ ele }) {
       return;
     }
 
-    dispatch(addToWishlist({ ...ele, userId: login.users.id }));
+    dispatch(addToWishlist(item));
     toast({
       title: "Successfully added to Wishlist",
+      status: "success",
       position: "top-left",
       duration: 2000,
       isClosable: true,
-      variant: "solid",
-      color: "green"
     });
   };
 

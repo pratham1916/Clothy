@@ -13,6 +13,7 @@ function SingleProduct() {
   const login = useSelector(state => state.login);
   const navigate = useNavigate();
   const toast = useToast();
+  const user = JSON.parse(localStorage.getItem("User"))
 
   const handleAddToCart = (data) => {
     if (!login.isAuth) {
@@ -28,7 +29,7 @@ function SingleProduct() {
       return;
     }
 
-    dispatch(addToCart({ ...data, userId: login.users.id }));
+    dispatch(addToCart(data));
     toast({
       title: "Successfully added to Cart",
       position: "top-left",

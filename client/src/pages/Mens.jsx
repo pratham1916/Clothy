@@ -24,7 +24,7 @@ function Mens() {
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
     window.scrollTo({
-      top: 0,
+      top: 350,
       left: 0,
       behavior: 'smooth'
     });
@@ -56,8 +56,8 @@ function Mens() {
         </select>
       </div>
       <div className="products-grid">
-        {mensData.map(ele => (
-          <ProductCard key={ele.id} ele={ele} />
+        {mensData.map(item => (
+          <ProductCard key={item._id} item={item} />
         ))}
       </div>
       <div className="pagination">

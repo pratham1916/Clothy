@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import "../style/singleCart.css";
 import { useDispatch } from 'react-redux';
 import { deleteFromCart } from '../Redux/action';
 
-const SingleCart = ({ ele, setToggle, state }) => {
+const SingleCart = ({item}) => {
     const dispatch = useDispatch()
-    const { userId, id, imageURL, name, price } = ele;
     const [quantity, setQuantity] = useState(1);
-    const total = quantity * price;
+    const total = quantity * item.price;
 
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value, 10);
@@ -16,17 +14,15 @@ const SingleCart = ({ ele, setToggle, state }) => {
 
     return (
         <tr>
-            <td onClick={() => { dispatch(deleteFromCart(id, userId)); setToggle(!state) }}><a><i className="far fa-times-circle"></i></a></td>
-            <td><img src={imageURL} alt={name} /></td>
-            <td>{name}</td>
-            <td>{price}</td>
+            <td onClick={() => { dispatch(deleteFromCart(item._id, item.userId))}}><a><i className="far fa-times-circle"></i></a></td>
+            <td><img src={item.imageURL[0]} alt={item.name} /></td>
+            <td>{item.name}</td>
+            <td>{item.price}</td>
             <td>
                 <input
                     type="number"
                     value={quantity}
                     onChange={handleQuantityChange}
-                    name={quantity - `${id}`}
-                    id={quantity - `${id}`}
                 />
             </td>
             <td>{total.toFixed(2)}</td>
